@@ -20,7 +20,7 @@ public class IonicFormato {
  * @param usuario
  * @return 
  */
-    public static UsuarioIonic buildUserMobileData(Usuario usuario) {
+    public static UsuarioIonic ConstruirUsuarioIonic(Usuario usuario) {
         UsuarioIonic user = new UsuarioIonic();
         user.setIdusuario(usuario.getIdusuario());
         user.setNombres(usuario.getNombres());

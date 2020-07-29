@@ -5,16 +5,11 @@
  */
 package com.software.fnj.model.ionic;
 
-import com.software.fnj.model.Asignacionperfil;
 import com.software.fnj.model.Ciudad;
-import com.software.fnj.model.Documento;
 import com.software.fnj.model.Genero;
 import com.software.fnj.model.Lugaringreso;
 import com.software.fnj.model.Nacionalidad;
 import com.software.fnj.model.Pais;
-import com.software.fnj.model.Parentescofamiliarusuario;
-import com.software.fnj.model.Salud;
-import java.util.Collection;
 import java.util.Date;
 
 /**

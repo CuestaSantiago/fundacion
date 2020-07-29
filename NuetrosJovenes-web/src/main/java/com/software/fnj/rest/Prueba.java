@@ -6,10 +6,10 @@
 package com.software.fnj.rest;
 
 
+import com.software.fnj.model.ionic.UsuarioIonic;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.ServicioRestAcceso;
-import com.software.fnj.rest.wsresponse.WsResponse;
-import java.io.UnsupportedEncodingException;
+import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.ws.rs.core.Context;
@@ -46,7 +46,7 @@ public class Prueba {
     @Path("usuarios")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public WsResponse autenticarUsuario() throws ServiceException{
+    public List<UsuarioIonic> autenticarUsuario() throws ServiceException{
         return servicioRestAcceso.getAllUsers();
     }
     
