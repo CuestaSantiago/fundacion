@@ -35,11 +35,11 @@ public class UsuarioIonic {
     private Date fechaEgresoFundacion;
     private String provincia;
     private String situacionMigratoria;
-    private Ciudad idciudad;
-    private Genero idgenero;
-    private Lugaringreso idlugarIngreso;
-    private Nacionalidad idnacionalidad;
-    private Pais idpais;
+    private Integer idciudad;
+    private Integer idgenero;
+    private Integer idlugarIngreso;
+    private Integer idnacionalidad;
+    private Integer idpais;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -177,45 +177,44 @@ public class UsuarioIonic {
         this.situacionMigratoria = situacionMigratoria;
     }
 
-    public Ciudad getIdciudad() {
+    public Integer getIdciudad() {
         return idciudad;
     }
 
-    public void setIdciudad(Ciudad idciudad) {
+    public void setIdciudad(Integer idciudad) {
         this.idciudad = idciudad;
     }
 
-    public Genero getIdgenero() {
+    public Integer getIdgenero() {
         return idgenero;
     }
 
-    public void setIdgenero(Genero idgenero) {
+    public void setIdgenero(Integer idgenero) {
         this.idgenero = idgenero;
     }
 
-    public Lugaringreso getIdlugarIngreso() {
+    public Integer getIdlugarIngreso() {
         return idlugarIngreso;
     }
 
-    public void setIdlugarIngreso(Lugaringreso idlugarIngreso) {
+    public void setIdlugarIngreso(Integer idlugarIngreso) {
         this.idlugarIngreso = idlugarIngreso;
     }
 
-    public Nacionalidad getIdnacionalidad() {
+    public Integer getIdnacionalidad() {
         return idnacionalidad;
     }
 
-    public void setIdnacionalidad(Nacionalidad idnacionalidad) {
+    public void setIdnacionalidad(Integer idnacionalidad) {
         this.idnacionalidad = idnacionalidad;
     }
 
-    public Pais getIdpais() {
+    public Integer getIdpais() {
         return idpais;
     }
 
-    public void setIdpais(Pais idpais) {
+    public void setIdpais(Integer idpais) {
         this.idpais = idpais;
     }
-    
-    
+
 }

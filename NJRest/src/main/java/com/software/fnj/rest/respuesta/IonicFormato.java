@@ -14,12 +14,11 @@ import com.software.fnj.modelo.ionic.*;
  */
 public class IonicFormato {
 
-   
-/**
- * 
- * @param usuario
- * @return 
- */
+    /**
+     *
+     * @param usuario
+     * @return
+     */
     public static UsuarioIonic ConstruirUsuarioIonic(Usuario usuario) {
         UsuarioIonic user = new UsuarioIonic();
         user.setIdusuario(usuario.getIdusuario());
@@ -27,4 +26,13 @@ public class IonicFormato {
         user.setApellidos(usuario.getApellidos());
         return user;
     }
+
+    public static Usuario ConstruirUsuario(UsuarioIonic usuarioIonic) {
+        Usuario user = new Usuario();
+        user.setIdusuario(usuarioIonic.getIdusuario());
+        user.setNombres(usuarioIonic.getNombres());
+        user.setApellidos(usuarioIonic.getApellidos());
+        return user;
+    }
+
 }

@@ -43,9 +43,9 @@ public class UsuarioServicio {
         try {
             usuarioFacade.edit(user);
             edit = true;
-            LOG.log(Level.SEVERE, "UserService: User: " + user.getNombres() + " successfully edited");
+            LOG.log(Level.SEVERE, "UsuarioServicio: User: " + user.getNombres() + " successfully edited");
         } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "UserService: Error editing user: " + user);
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error editing user: " + user);
             LOG.log(Level.SEVERE, "", ex);
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
@@ -53,21 +53,52 @@ public class UsuarioServicio {
     }
 
     /**
-     * 
-     * @return
-     * @throws ServiceException 
+     *
+     * @return @throws ServiceException
      */
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Usuario> getAllUsers() throws ServiceException {
         List<Usuario> usuarios = new ArrayList();
         try {
             usuarios = usuarioFacade.findAll();
-            LOG.log(Level.SEVERE, "UserService: User: successfully edited");
-        } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "UserService: Error get all users: " + usuarios);
-            LOG.log(Level.SEVERE, "", ex);
+            LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
+            LOG.log(Level.SEVERE, "", e);
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuarios;
+    }
+
+    /**
+     *
+     * @param idUsuario
+     * @return
+     * @throws ServiceException
+     */
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Usuario obtenerUsarioPorIdUsuario(int idUsuario) throws ServiceException {
+        Usuario usuario = new Usuario();
+        try {
+            usuario = usuarioFacade.obtenerusuarioPorIdUusario(idUsuario);
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener usuario por id:" + idUsuario);
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuario;
+    }
+
+    public boolean crearUsuario(Usuario usuario) throws ServiceException {
+        boolean exito = false;
+        try {
+            usuarioFacade.create(usuario);
+            exito = true;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario: " + usuario.getNombres());
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
     }
 }
