@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.software.fnj.response.exception.ServiceExceptionMapper.class);
         resources.add(com.software.fnj.rest.Prueba.class);
     }
     
