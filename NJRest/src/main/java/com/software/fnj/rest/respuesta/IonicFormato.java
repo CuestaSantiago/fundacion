@@ -29,9 +29,27 @@ public class IonicFormato {
 
     public static Usuario ConstruirUsuario(UsuarioIonic usuarioIonic) {
         Usuario user = new Usuario();
-        user.setIdusuario(usuarioIonic.getIdusuario());
+        Ciudad ciudad = new Ciudad();
+        Genero genero = new Genero();
+        Lugaringreso lugarIngreso = new Lugaringreso();
+        Nacionalidad nacionalidad = new Nacionalidad();
+        Pais pais = new Pais();
+        
+        ciudad.setIdciudad(usuarioIonic.getIdciudad());
+        genero.setIdgenero(usuarioIonic.getIdgenero());
+        lugarIngreso.setIdlugarIngreso(usuarioIonic.getIdlugarIngreso());
+        nacionalidad.setIdnacionalidad(usuarioIonic.getIdgenero());
+        pais.setIdpais(usuarioIonic.getIdpais());
+        
         user.setNombres(usuarioIonic.getNombres());
         user.setApellidos(usuarioIonic.getApellidos());
+        user.setIdentificacion(usuarioIonic.getIdentificacion());
+        user.setEstado(1);
+        user.setIdciudad(ciudad);
+        user.setIdgenero(genero);
+        user.setIdlugarIngreso(lugarIngreso);
+        user.setIdnacionalidad(nacionalidad);
+        user.setIdpais(pais);
         return user;
     }
 

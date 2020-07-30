@@ -38,17 +38,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     
     /**
      * 
-     * @param identificaion
+     * @param identificacion
      * @return
      * @throws ServiceException 
      */
-    public Boolean verificarUsuarioRegistrado(String identificaion) throws ServiceException {
+    public Boolean verificarUsuarioRegistrado(String identificacion) throws ServiceException {
         Long userBoolean = -1l;
         try {
             userBoolean = em.createQuery("select count(u.identificacion) from Usuario u where u.identificacion=:identificacion", Long.class)
-                    .setParameter("identification", identificaion).getSingleResult();
+                    .setParameter("identificacion", identificacion).getSingleResult();
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por identificación: {0}{1}", new Object[]{identificaion, e.toString()});
+            LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por identificación: {0}{1}", new Object[]{identificacion, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return userBoolean.equals(0l);//es cero long no uno   si encuentra algo es falso 

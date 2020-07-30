@@ -89,11 +89,16 @@ public class UsuarioServicio {
         return usuario;
     }
 
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public boolean crearUsuario(Usuario usuario) throws ServiceException {
         boolean exito = false;
         try {
-            usuarioFacade.create(usuario);
-            exito = true;
+            if (usuarioFacade.verificarUsuarioRegistrado(usuario.getIdentificacion())) {
+                usuarioFacade.create(usuario);
+                exito = true;
+            } else {
+                LOG.log(Level.SEVERE, "UsuarioServicio: Usuario ya registrado: " + usuario.getNombres());
+            }
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario: " + usuario.getNombres());
             LOG.log(Level.SEVERE, "", e);
