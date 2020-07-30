@@ -7,6 +7,8 @@ package com.software.fnj.facade;
 
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -64,6 +66,20 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         } catch (Exception e) {
             LOG.log(Level.SEVERE,"UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{idUsuario, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuario;
+    }
+    
+    public List<Usuario> obtenerUsuariosPorIdCiudad(int idCiudad) throws ServiceException{
+    List<Usuario> usuario = new ArrayList();
+        try {
+            usuario = em.createQuery("select u from Usuario u JOIN FETCH u.idciudad JOIN FETCH u.idgenero JOIN FETCH u.idlugarIngreso JOIN FETCH u.idnacionalidad JOIN FETCH u.idpais JOIN FETCH u.saludCollection WHERE u.idciudad.idciudad = :idCiudad ", 
+                    Usuario.class)
+                    .setParameter("idCiudad", idCiudad)
+                    .getResultList();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,"UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{idCiudad, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor : "+e, Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuario;
     }
