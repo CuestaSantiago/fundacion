@@ -13,6 +13,7 @@ import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
 import com.software.fnj.modelo.Salud;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -42,8 +43,8 @@ public class UsuarioIonic {
     private Lugaringreso idlugarIngreso;
     private Nacionalidad idnacionalidad;
     private Pais idpais;
-    private Salud salud;
-    private Documento documento;
+    private List<Salud> salud;
+    private List<Documento> documento;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -221,21 +222,23 @@ public class UsuarioIonic {
         this.idpais = idpais;
     }
 
-    public Salud getSalud() {
+    public List<Salud> getSalud() {
         return salud;
     }
 
-    public void setSalud(Salud salud) {
+    public void setSalud(List<Salud> salud) {
         this.salud = salud;
     }
 
-    public Documento getDocumento() {
+    public List<Documento> getDocumento() {
         return documento;
     }
 
-    public void setDocumento(Documento documento) {
+    public void setDocumento(List<Documento> documento) {
         this.documento = documento;
     }
+
+
 
 
 }

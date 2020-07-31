@@ -56,19 +56,19 @@ public class UsuarioServicio {
      *
      * @return @throws ServiceException
      */
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Usuario> obtenerUsuariosActivos() throws ServiceException {
-        List<Usuario> usuarios = new ArrayList();
-        try {
-            usuarios = usuarioFacade.obtenerUsuariosActivos();
-            LOG.log(Level.SEVERE, "UsuarioServicio: Useuarios activos obtenidos");
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
-            LOG.log(Level.SEVERE, "", e);
-            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return usuarios;
-    }
+//    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+//    public List<Usuario> obtenerUsuariosActivos() throws ServiceException {
+//        List<Usuario> usuarios = new ArrayList();
+//        try {
+//            usuarios = usuarioFacade.obtenerUsuariosActivos();
+//            LOG.log(Level.SEVERE, "UsuarioServicio: Useuarios activos obtenidos");
+//        } catch (Exception e) {
+//            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
+//            LOG.log(Level.SEVERE, "", e);
+//            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+//        }
+//        return usuarios;
+//    }
 
     /**
      *

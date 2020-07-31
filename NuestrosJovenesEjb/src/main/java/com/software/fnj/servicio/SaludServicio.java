@@ -33,8 +33,8 @@ public class SaludServicio {
     @EJB
     SaludFacade saludFacade;
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Salud obtenerSaludPorUsuario(Usuario usuario) throws ServiceException {
-        Salud salud = new Salud();
+    public List<Salud> obtenerSaludPorUsuario(Usuario usuario) throws ServiceException {
+        List<Salud> salud = new ArrayList();
         try {
             salud = saludFacade.obtenerSaludPorUsuarios(usuario);
         } catch (Exception e) {

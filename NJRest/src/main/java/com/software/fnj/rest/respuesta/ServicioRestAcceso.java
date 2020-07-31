@@ -32,20 +32,20 @@ public class ServicioRestAcceso {
 
     @EJB
     UsuarioServicio usuarioServicio;
-
-    public List<UsuarioIonic> getAllUsers() throws ServiceException {
-        List<UsuarioIonic> usuariosIonic = new ArrayList();
-        List<Usuario> usuarios = new ArrayList();
-        usuarios = usuarioServicio.obtenerUsuariosActivos();
-        if (usuarios.size() > 0 || usuarios != null) {
-            for (Usuario usuario : usuarios) {
-                //usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario));
-            }
-        } else {
-            throw new ServiceException("No se ha podido encontrar clientes por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return usuariosIonic;
-    }
+//
+//    public List<UsuarioIonic> getAllUsers() throws ServiceException {
+//        List<UsuarioIonic> usuariosIonic = new ArrayList();
+//        List<Usuario> usuarios = new ArrayList();
+//        usuarios = usuarioServicio.obtenerUsuariosActivos();
+//        if (usuarios.size() > 0 || usuarios != null) {
+//            for (Usuario usuario : usuarios) {
+//                //usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario));
+//            }
+//        } else {
+//            throw new ServiceException("No se ha podido encontrar clientes por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+//        }
+//        return usuariosIonic;
+//    }
 
     public boolean crearUsuario(UsuarioIonic usuarioIonic) throws ServiceException {
         Boolean exito = false;

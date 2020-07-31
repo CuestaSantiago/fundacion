@@ -44,8 +44,8 @@ public class ServicioRestUsuarioRecurso {
         usuarios = usuarioServicio.obtenerUsuariosActivos();
         if (usuarios.size() > 0 || usuarios != null) {
             for (Parentescofamiliarusuario usuario : usuarios) {
-                Salud salud = new Salud();
-                Documento documento = new Documento();
+                List<Salud> salud = new ArrayList();
+                List<Documento> documento = new ArrayList();
                 salud = saludServicio.obtenerSaludPorUsuario(usuario.getIdusuario());
                 documento = documentoServicio.obtenerDocumentoPorUsuario(usuario.getIdusuario());
                 usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario,salud,documento));

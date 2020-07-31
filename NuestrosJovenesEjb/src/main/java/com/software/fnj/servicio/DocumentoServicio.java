@@ -37,8 +37,8 @@ public class DocumentoServicio {
     @EJB
     DocumentoFacade documentoFacade;
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Documento obtenerDocumentoPorUsuario(Usuario usuario) throws ServiceException {
-        Documento documento = new Documento();
+    public List<Documento> obtenerDocumentoPorUsuario(Usuario usuario) throws ServiceException {
+        List<Documento> documento = new ArrayList();
         try {
             documento = documentoFacade.obtenerDocumentoPorUsuarios(usuario);
         } catch (Exception e) {

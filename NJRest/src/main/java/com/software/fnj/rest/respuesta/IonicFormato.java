@@ -7,6 +7,7 @@ package com.software.fnj.rest.respuesta;
 
 import com.software.fnj.modelo.*;
 import com.software.fnj.modelo.ionic.*;
+import java.util.List;
 
 /**
  *
@@ -19,12 +20,16 @@ public class IonicFormato {
      * @param usuario
      * @return
      */
-    public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, Salud salud, Documento documento) {
+    public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, List<Salud> salud, List<Documento> documento) {
         UsuarioIonic user = new UsuarioIonic();
         usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
         usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
-        salud.setIdusuario(null);
-        documento.setIdusuario(null);
+        for (Documento doc : documento) {
+        doc.setIdusuario(null);
+        }
+        for (Salud sal : salud) {
+        sal.setIdusuario(null);
+        }
         //usuario.getIdusuario().getIdlugarIngreso().setUsuarioCollection(null);
         
         user.setIdusuario(usuario.getIdusuario().getIdusuario());

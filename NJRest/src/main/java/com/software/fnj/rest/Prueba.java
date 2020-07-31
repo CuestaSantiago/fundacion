@@ -42,13 +42,13 @@ public class Prueba {
     public Prueba() {
     }
 
-    @GET
-    @Path("obtener_usuarios")
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<UsuarioIonic> autenticarUsuario() throws ServiceException {
-        return servicioRestAcceso.getAllUsers();
-    }
+//    @GET
+//    @Path("obtener_usuarios")
+//    @Consumes(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+//    public List<UsuarioIonic> autenticarUsuario() throws ServiceException {
+//        return servicioRestAcceso.getAllUsers();
+//    }
 
     @POST
     @Path("crear_usuario")

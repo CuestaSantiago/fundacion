@@ -9,6 +9,8 @@ import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -37,13 +39,13 @@ public class DocumentoFacade extends AbstractFacade<Documento> {
         super(Documento.class);
     }
 
-    public Documento obtenerDocumentoPorUsuarios(Usuario usuario) throws ServiceException {
-        Documento documento = new Documento();
+    public List<Documento> obtenerDocumentoPorUsuarios(Usuario usuario) throws ServiceException {
+        List<Documento> documento = new ArrayList();
         try {
             documento = em.createQuery("SELECT d FROM Documento d WHERE d.idusuario=:usuario",
                     Documento.class)
                     .setParameter("usuario", usuario)
-                    .getSingleResult();
+                    .getResultList();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "DocumentoFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{usuario, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
