@@ -6,10 +6,12 @@
 package com.software.fnj.modelo.ionic;
 
 import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Salud;
 import java.util.Date;
 
 /**
@@ -35,11 +37,13 @@ public class UsuarioIonic {
     private Date fechaEgresoFundacion;
     private String provincia;
     private String situacionMigratoria;
-    private Integer idciudad;
-    private Integer idgenero;
-    private Integer idlugarIngreso;
-    private Integer idnacionalidad;
-    private Integer idpais;
+    private Ciudad idciudad;
+    private Genero idgenero;
+    private Lugaringreso idlugarIngreso;
+    private Nacionalidad idnacionalidad;
+    private Pais idpais;
+    private Salud salud;
+    private Documento documento;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -177,44 +181,61 @@ public class UsuarioIonic {
         this.situacionMigratoria = situacionMigratoria;
     }
 
-    public Integer getIdciudad() {
+    public Ciudad getIdciudad() {
         return idciudad;
     }
 
-    public void setIdciudad(Integer idciudad) {
+    public void setIdciudad(Ciudad idciudad) {
         this.idciudad = idciudad;
     }
 
-    public Integer getIdgenero() {
+    public Genero getIdgenero() {
         return idgenero;
     }
 
-    public void setIdgenero(Integer idgenero) {
+    public void setIdgenero(Genero idgenero) {
         this.idgenero = idgenero;
     }
 
-    public Integer getIdlugarIngreso() {
+    public Lugaringreso getIdlugarIngreso() {
         return idlugarIngreso;
     }
 
-    public void setIdlugarIngreso(Integer idlugarIngreso) {
+    public void setIdlugarIngreso(Lugaringreso idlugarIngreso) {
         this.idlugarIngreso = idlugarIngreso;
     }
 
-    public Integer getIdnacionalidad() {
+    public Nacionalidad getIdnacionalidad() {
         return idnacionalidad;
     }
 
-    public void setIdnacionalidad(Integer idnacionalidad) {
+    public void setIdnacionalidad(Nacionalidad idnacionalidad) {
         this.idnacionalidad = idnacionalidad;
     }
 
-    public Integer getIdpais() {
+    public Pais getIdpais() {
         return idpais;
     }
 
-    public void setIdpais(Integer idpais) {
+    public void setIdpais(Pais idpais) {
         this.idpais = idpais;
     }
+
+    public Salud getSalud() {
+        return salud;
+    }
+
+    public void setSalud(Salud salud) {
+        this.salud = salud;
+    }
+
+    public Documento getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(Documento documento) {
+        this.documento = documento;
+    }
+
 
 }
