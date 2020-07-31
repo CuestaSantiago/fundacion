@@ -7,10 +7,6 @@ package com.software.fnj.facade;
 
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
-import com.software.fnj.util.Constante;
-import com.software.fnj.util.Constante.UsuarioConstante;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
@@ -70,21 +66,5 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuario;
-    }
-
-    public List<Usuario> obtenerUsuariosActivos() throws ServiceException {
-        List<Usuario> usuarios = new ArrayList();
-        try {
-            usuarios = em.createQuery("select u from Usuario u "
-                    + "JOIN FETCH u.idlugarIngreso JOIN FETCH u.idciudad JOIN FETCH u.idgenero "
-                    + "JOIN FETCH u.idpais WHERE u.estado=:estado",
-                    Usuario.class)
-                    .setParameter("estado", UsuarioConstante.ACTIVO.getUsuarioConstanteId())
-                    .getResultList();
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE,"UsuarioFacade: Error al consultar usuarios Activos: {0}{1}", new Object[]{UsuarioConstante.ACTIVO.getUsuarioConstanteId(), e.toString()});
-            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return usuarios;
     }
 }
