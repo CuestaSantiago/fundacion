@@ -19,11 +19,23 @@ public class IonicFormato {
      * @param usuario
      * @return
      */
-    public static UsuarioIonic ConstruirUsuarioIonic(Usuario usuario) {
+    public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, Salud salud, Documento documento) {
         UsuarioIonic user = new UsuarioIonic();
-        user.setIdusuario(usuario.getIdusuario());
-        user.setNombres(usuario.getNombres());
-        user.setApellidos(usuario.getApellidos());
+        usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
+        usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
+        salud.setIdusuario(null);
+        documento.setIdusuario(null);
+        //usuario.getIdusuario().getIdlugarIngreso().setUsuarioCollection(null);
+        
+        user.setIdusuario(usuario.getIdusuario().getIdusuario());
+        user.setNombres(usuario.getIdusuario().getNombres());
+        user.setApellidos(usuario.getIdusuario().getApellidos());
+        user.setIdentificacion(usuario.getIdusuario().getIdentificacion());
+        user.setFoto(usuario.getIdusuario().getFoto());
+        user.setIdgenero(usuario.getIdusuario().getIdgenero());
+        user.setIdciudad(usuario.getIdusuario().getIdciudad());
+        user.setDocumento(documento);
+        user.setSalud(salud);
         return user;
     }
 
@@ -35,11 +47,11 @@ public class IonicFormato {
         Nacionalidad nacionalidad = new Nacionalidad();
         Pais pais = new Pais();
         
-        ciudad.setIdciudad(usuarioIonic.getIdciudad());
-        genero.setIdgenero(usuarioIonic.getIdgenero());
-        lugarIngreso.setIdlugarIngreso(usuarioIonic.getIdlugarIngreso());
-        nacionalidad.setIdnacionalidad(usuarioIonic.getIdgenero());
-        pais.setIdpais(usuarioIonic.getIdpais());
+//        ciudad.setIdciudad(usuarioIonic.getIdciudad());
+//        genero.setIdgenero(usuarioIonic.getIdgenero());
+//        lugarIngreso.setIdlugarIngreso(usuarioIonic.getIdlugarIngreso());
+//        nacionalidad.setIdnacionalidad(usuarioIonic.getIdgenero());
+//        pais.setIdpais(usuarioIonic.getIdpais());
         
         user.setNombres(usuarioIonic.getNombres());
         user.setApellidos(usuarioIonic.getApellidos());

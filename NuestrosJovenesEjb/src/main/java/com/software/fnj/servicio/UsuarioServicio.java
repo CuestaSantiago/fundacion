@@ -57,11 +57,11 @@ public class UsuarioServicio {
      * @return @throws ServiceException
      */
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Usuario> getAllUsers() throws ServiceException {
+    public List<Usuario> obtenerUsuariosActivos() throws ServiceException {
         List<Usuario> usuarios = new ArrayList();
         try {
-            usuarios = usuarioFacade.findAll();
-            LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
+            usuarios = usuarioFacade.obtenerUsuariosActivos();
+            LOG.log(Level.SEVERE, "UsuarioServicio: Useuarios activos obtenidos");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
             LOG.log(Level.SEVERE, "", e);

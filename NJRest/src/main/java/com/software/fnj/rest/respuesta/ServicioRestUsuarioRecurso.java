@@ -12,6 +12,7 @@ import com.software.fnj.modelo.Usuario;
 import com.software.fnj.modelo.ionic.AutoIonic;
 import com.software.fnj.modelo.ionic.UsuarioIonic;
 import com.software.fnj.response.exception.ServiceException;
+import com.software.fnj.servicio.DocumentoServicio;
 import com.software.fnj.servicio.ParentescoFamiliarUsuarioServicio;
 import com.software.fnj.servicio.SaludServicio;
 import com.software.fnj.servicio.UsuarioServicio;
@@ -28,47 +29,31 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 @LocalBean
-public class ServicioRestAcceso {
+public class ServicioRestUsuarioRecurso {
 
     @EJB
-    UsuarioServicio usuarioServicio;
+    ParentescoFamiliarUsuarioServicio usuarioServicio;
+    @EJB
+    SaludServicio saludServicio;
+    @EJB
+    DocumentoServicio documentoServicio;
 
     public List<UsuarioIonic> getAllUsers() throws ServiceException {
         List<UsuarioIonic> usuariosIonic = new ArrayList();
-        List<Usuario> usuarios = new ArrayList();
+        List<Parentescofamiliarusuario> usuarios = new ArrayList();
         usuarios = usuarioServicio.obtenerUsuariosActivos();
         if (usuarios.size() > 0 || usuarios != null) {
-            for (Usuario usuario : usuarios) {
-                //usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario));
+            for (Parentescofamiliarusuario usuario : usuarios) {
+                Salud salud = new Salud();
+                Documento documento = new Documento();
+                salud = saludServicio.obtenerSaludPorUsuario(usuario.getIdusuario());
+                documento = documentoServicio.obtenerDocumentoPorUsuario(usuario.getIdusuario());
+                usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario,salud,documento));
             }
         } else {
             throw new ServiceException("No se ha podido encontrar clientes por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuariosIonic;
-    }
-
-    public boolean crearUsuario(UsuarioIonic usuarioIonic) throws ServiceException {
-        Boolean exito = false;
-        Usuario usuario = new Usuario();
-        if (usuarioIonic != null) {
-            usuario = IonicFormato.ConstruirUsuario(usuarioIonic);
-            exito = usuarioServicio.crearUsuario(usuario);
-        }else {
-            throw new ServiceException("No se ha podido encontrar clientes por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return exito;
-    }
-
-    public boolean modificarUsuario(UsuarioIonic usuarioIonic) throws ServiceException {
-        Boolean exito = false;
-        Usuario usuario = new Usuario();
-        if (usuarioIonic != null) {
-            usuario = IonicFormato.ConstruirUsuario(usuarioIonic);
-            exito = usuarioServicio.editarUsuario(usuario);
-        }else {
-            throw new ServiceException("No se ha podido encontrar clientes por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return exito;
     }
 
 }
