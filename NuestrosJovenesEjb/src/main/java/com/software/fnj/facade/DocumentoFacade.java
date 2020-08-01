@@ -6,7 +6,6 @@
 package com.software.fnj.facade;
 
 import com.software.fnj.modelo.Documento;
-import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ import javax.ws.rs.core.Response;
 @Stateless
 public class DocumentoFacade extends AbstractFacade<Documento> {
 
-    private static final Logger LOG = Logger.getLogger(Salud.class.getName());
+    private static final Logger LOG = Logger.getLogger(Documento.class.getName());
 
     @PersistenceContext(unitName = "fundacion")
     private EntityManager em;

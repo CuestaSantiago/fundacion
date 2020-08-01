@@ -3,14 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.software.fnj.modelo.ionic;
+package com.software.fnj.model.Ionic;
 
 import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Documento;
+import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Genero;
+import com.software.fnj.modelo.Genero;
+import com.software.fnj.modelo.Genero;
+import com.software.fnj.modelo.Lugaringreso;
+import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
+import com.software.fnj.modelo.Nacionalidad;
+import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Salud;
+import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Salud;
 import java.util.Date;
 import java.util.List;

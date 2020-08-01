@@ -6,6 +6,7 @@
 package com.software.fnj.facade;
 
 import com.software.fnj.modelo.Parentescofamiliar;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +17,8 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class ParentescofamiliarFacade extends AbstractFacade<Parentescofamiliar> {
+    
+     private static final Logger LOG = Logger.getLogger(Parentescofamiliar.class.getName());
 
     @PersistenceContext(unitName = "fundacion")
     private EntityManager em;
