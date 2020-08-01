@@ -30,7 +30,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author santiago
  */
-@Path("usuarioRecurso")
+@Path("usuario_recurso")
 @RequestScoped
 public class UsuarioRecurso {
 
