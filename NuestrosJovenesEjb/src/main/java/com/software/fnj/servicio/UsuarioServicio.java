@@ -5,7 +5,17 @@
  */
 package com.software.fnj.servicio;
 
+import com.software.fnj.facade.CiudadFacade;
+import com.software.fnj.facade.GeneroFacade;
+import com.software.fnj.facade.LugaringresoFacade;
+import com.software.fnj.facade.NacionalidadFacade;
+import com.software.fnj.facade.PaisFacade;
 import com.software.fnj.facade.UsuarioFacade;
+import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Genero;
+import com.software.fnj.modelo.Lugaringreso;
+import com.software.fnj.modelo.Nacionalidad;
+import com.software.fnj.modelo.Pais;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import java.util.ArrayList;
@@ -30,6 +40,17 @@ public class UsuarioServicio {
 
     @EJB
     UsuarioFacade usuarioFacade;
+    @EJB
+    CiudadFacade ciudadFacade;
+    @EJB
+    PaisFacade paisFacade;
+    @EJB
+    GeneroFacade generoFacade;
+    @EJB
+    NacionalidadFacade nacionalidadFacade;
+
+    @EJB
+    LugaringresoFacade lugaringresoFacade;
 
     /**
      * Method that carries out the edition of an event already created in the
@@ -69,7 +90,6 @@ public class UsuarioServicio {
 //        }
 //        return usuarios;
 //    }
-
     /**
      *
      * @param idUsuario
@@ -105,5 +125,70 @@ public class UsuarioServicio {
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return exito;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Ciudad> obtenerCiudades() throws ServiceException {
+        List<Ciudad> ciudades = new ArrayList();
+        try {
+            ciudades = ciudadFacade.findAll();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener ciudades");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return ciudades;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Pais> obtenerPaises() throws ServiceException {
+        List<Pais> paises = new ArrayList();
+        try {
+            paises = paisFacade.findAll();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener ciudades");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return paises;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Genero> obtenerGeneros() throws ServiceException {
+        List<Genero> generos = new ArrayList();
+        try {
+            generos = generoFacade.findAll();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener ciudades");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return generos;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Nacionalidad> obtenernacionalidades() throws ServiceException {
+        List<Nacionalidad> nacionalidad = new ArrayList();
+        try {
+            nacionalidad = nacionalidadFacade.findAll();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener ciudades");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return nacionalidad;
+    }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Lugaringreso> obtenernLugarIngreso() throws ServiceException {
+        List<Lugaringreso> nacionalidad = new ArrayList();
+        try {
+            nacionalidad = lugaringresoFacade.findAll();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener Lugares de ingreso");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return nacionalidad;
     }
 }

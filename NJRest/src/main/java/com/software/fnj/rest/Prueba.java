@@ -5,8 +5,8 @@
  */
 package com.software.fnj.rest;
 
-import com.software.fnj.modelo.ionic.AutoIonic;
-import com.software.fnj.modelo.ionic.UsuarioIonic;
+import com.software.fnj.model.Ionic.AutoIonic;
+import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.ServicioRestAcceso;
 import com.software.fnj.util.Constante;

@@ -5,9 +5,13 @@
  */
 package com.software.fnj.rest;
 
-import com.software.fnj.modelo.ionic.UsuarioIonic;
+import com.software.fnj.model.Ionic.UsuarioIonic;
+import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Genero;
+import com.software.fnj.modelo.Lugaringreso;
+import com.software.fnj.modelo.Nacionalidad;
+import com.software.fnj.modelo.Pais;
 import com.software.fnj.response.exception.ServiceException;
-import com.software.fnj.rest.respuesta.ServicioRestAcceso;
 import com.software.fnj.rest.respuesta.ServicioRestUsuarioRecurso;
 import com.software.fnj.util.Constante;
 import java.util.List;
@@ -26,7 +30,7 @@ import javax.ws.rs.core.MediaType;
  *
  * @author santiago
  */
-@Path("usuarioRecurso")
+@Path("usuario_recurso")
 @RequestScoped
 public class UsuarioRecurso {
 
@@ -49,6 +53,47 @@ public class UsuarioRecurso {
     public List<UsuarioIonic> autenticarUsuario() throws ServiceException {
         return servicioRestUsuarioRecurso.getAllUsers();
     }
+
+    @GET
+    @Path("obtener_ciudades")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Ciudad> obtenerCiudades() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerCiudades();
+    }
+
+    @GET
+    @Path("obtener_generos")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Genero> obtenerGeneros() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerGeneros();
+    }
+
+    @GET
+    @Path("obtener_nacionalidades")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Nacionalidad> obtenerNacionalidades() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerNacionalidades();
+    }
+
+    @GET
+    @Path("obtener_paises")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Pais> obtenerPaises() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerPaises();
+    }
+    
+    @GET
+    @Path("obtener_lugaringreso")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Lugaringreso> obtenernLugarIngreso() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenernLugarIngreso();
+    }
+
 //
 //    @POST
 //    @Path("crear_usuario")
@@ -65,5 +110,4 @@ public class UsuarioRecurso {
 //    public boolean editar(UsuarioIonic usuarioIonic) throws ServiceException {
 //        return servicioRestAcceso.crearUsuario(usuarioIonic);
 //    }
-
 }

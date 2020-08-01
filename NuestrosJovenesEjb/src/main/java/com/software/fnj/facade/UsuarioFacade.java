@@ -57,7 +57,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     public Usuario obtenerusuarioPorIdUusario(int idUsuario) throws ServiceException{
     Usuario usuario = new Usuario();
         try {
-            usuario = em.createQuery("select u from Usuario u JOIN FETCH u.idciudad JOIN FETCH u.idgenero JOIN FETCH u.idlugarIngreso JOIN FETCH u.idnacionalidad JOIN FETCH u.idpais JOIN FETCH u.saludCollection WHERE u.idusuario = :idusuario ", 
+            usuario = em.createQuery("select u from Usuario u JOIN FETCH u.idciudad JOIN FETCH u.idgenero JOIN FETCH u.idlugarIngreso JOIN FETCH u.idnacionalidad JOIN FETCH u.idpais WHERE u.idusuario = :idusuario ", 
                     Usuario.class)
                     .setParameter("idusuario", idUsuario)
                     .getSingleResult();

@@ -5,8 +5,17 @@
  */
 package com.software.fnj.rest.respuesta;
 
+import com.software.fnj.modelo.Nacionalidad;
+import com.software.fnj.modelo.Genero;
+import com.software.fnj.modelo.Documento;
+import com.software.fnj.modelo.Parentescofamiliarusuario;
+import com.software.fnj.modelo.Lugaringreso;
+import com.software.fnj.model.Ionic.UsuarioIonic;
+import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Salud;
+import com.software.fnj.modelo.Usuario;
 import com.software.fnj.modelo.*;
-import com.software.fnj.modelo.ionic.*;
 import java.util.List;
 
 /**

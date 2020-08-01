@@ -6,6 +6,7 @@
 package com.software.fnj.facade;
 
 import com.software.fnj.modelo.Ciudad;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +17,7 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class CiudadFacade extends AbstractFacade<Ciudad> {
+     private static final Logger LOG = Logger.getLogger(Ciudad.class.getName());
 
     @PersistenceContext(unitName = "fundacion")
     private EntityManager em;
