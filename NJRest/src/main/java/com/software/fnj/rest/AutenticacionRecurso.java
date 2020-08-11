@@ -43,7 +43,6 @@ public class AutenticacionRecurso {
     public AutenticacionRecurso() {
     }
 
-
     @POST
     @Path("crear_administrador")
     @Consumes(MediaType.APPLICATION_JSON)
