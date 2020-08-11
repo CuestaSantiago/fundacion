@@ -59,7 +59,7 @@ public class AutenticacionRecurso {
         return servicioRestAcceso.obtenerAdministradores();
     }
     
-    @POST
+    @PUT
     @Path("desactivar_administrador")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)

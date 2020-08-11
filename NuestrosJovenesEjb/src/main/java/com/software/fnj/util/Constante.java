@@ -64,4 +64,55 @@ public class Constante {
         }
 
     }
+    
+    public enum SaludConstante {
+        SALUDABLE(0),
+        DISCAPACITADO(1),
+        EMBARAZADA(2),
+        LACTANCIA(3);
+
+        private final Integer saludConstanteId;
+
+        private SaludConstante(Integer saludConstanteId) {
+            this.saludConstanteId = saludConstanteId;
+        }
+
+        public Integer getSaludConstanteId() {
+            return saludConstanteId;
+        }
+
+        public static Map<Integer, String> getSaludConstanteMap() {
+            Map<Integer, String> saludConstanteMap = new HashMap<>();
+            for (SaludConstante type : SaludConstante.values()) {
+                saludConstanteMap.put(type.getSaludConstanteId(), type.name());
+            }
+            return saludConstanteMap;
+        }
+
+    }
+    
+       public enum IdentificacionConstante {
+        CEDULA(0),
+        PASAPORTE(1),
+        CARTAANDINA(2);
+
+        private final Integer identificacionConstanteID;
+
+        private IdentificacionConstante(Integer identificacionConstanteID) {
+            this.identificacionConstanteID = identificacionConstanteID;
+        }
+
+        public Integer getIdentificacionConstanteID() {
+            return identificacionConstanteID;
+        }
+
+        public static Map<Integer, String> getIdentificacionConstanteMap() {
+            Map<Integer, String> identificacionConstanteID = new HashMap<>();
+            for (IdentificacionConstante type : IdentificacionConstante.values()) {
+                identificacionConstanteID.put(type.getIdentificacionConstanteID(), type.name());
+            }
+            return identificacionConstanteID;
+        }
+
+    }
 }
