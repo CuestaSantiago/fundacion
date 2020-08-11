@@ -6,6 +6,7 @@
 package com.software.fnj.rest;
 
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
+import com.software.fnj.model.Ionic.AutoIonic;
 import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.AutenticacionRestRecurso;
@@ -67,4 +68,14 @@ public class AutenticacionRecurso {
         return servicioRestAcceso.desactivarAsignacionPerfil(idAsignacionPerfil);
     }
 
+    
+    //servicio rest Post comunicacion final con el postman
+    @POST
+    @Path("login")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException {
+        return servicioRestAcceso.login(autoIonic);
+    }
+    
 }

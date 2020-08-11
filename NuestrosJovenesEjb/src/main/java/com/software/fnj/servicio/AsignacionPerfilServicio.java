@@ -12,6 +12,7 @@ import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.modelo.Perfil;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
+import com.software.fnj.model.Ionic.AutoIonic;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.util.Constante.UsuarioConstante;
 import java.util.ArrayList;
@@ -114,6 +115,36 @@ public class AsignacionPerfilServicio {
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return asignacion;
+    }
+
+    //ante penultimo servicio
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException {
+        Asignacionperfil asignacionperfil = new Asignacionperfil();
+        try {
+            asignacionperfil = asignacionperfilFacade.obtenerAsignacionPerfilPorNombreYContraseña(autoIonic.getNombre());
+            if (asignacionperfil.getContrasena() != null) {
+                asignacionperfil.getIdperfil().setAsignacionperfilCollection(null);
+                asignacionperfil.getIdusuario().setAsignacionperfilCollection(null);
+                asignacionperfil.getIdusuario().setDocumentoCollection(null);
+                asignacionperfil.getIdusuario().setParentescofamiliarusuarioCollection(null);
+                asignacionperfil.getIdusuario().setSaludCollection(null);
+                asignacionperfil.getIdusuario().setIdciudad(null);
+                asignacionperfil.getIdusuario().setIdgenero(null);
+                asignacionperfil.getIdusuario().setIdlugarIngreso(null);
+                asignacionperfil.getIdusuario().setIdnacionalidad(null);
+                asignacionperfil.getIdusuario().setIdpais(null);
+            } else {
+                throw new ServiceException("Credenciales Incorrectas", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+            }
+
+        } catch (ServiceException e) {
+            LOG.log(Level.SEVERE, "AsignacionPerfilServicio: Error desactivar asignacion por id: {0}", autoIonic);
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return asignacionperfil;
+
     }
 
 }
