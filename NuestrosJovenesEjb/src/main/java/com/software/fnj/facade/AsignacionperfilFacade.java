@@ -20,7 +20,7 @@ import javax.ws.rs.core.Response;
 
 /**
  *
- * @author Alterbios
+ * @author bryan
  */
 @Stateless
 public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
@@ -76,5 +76,18 @@ public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
         }
         return asignacionBoolean;
     }
-    
+        //facade primer filtro. creo query similar con  sql
+       public Asignacionperfil obtenerAsignacionPerfilPorNombreYContraseña (String nombre) throws ServiceException {
+         Asignacionperfil asignacionBoolean = new Asignacionperfil();
+        try {
+            asignacionBoolean = em.createQuery("select a FROM Asignacionperfil a JOIN FETCH a.idperfil JOIN FETCH a.idusuario WHERE a.nombrePerfil =:nombreUsuario and a.estado =:estado", Asignacionperfil.class)
+                    .setParameter("nombreUsuario", nombre)
+                    .setParameter("estado",UsuarioConstante.ACTIVO.getUsuarioConstanteId()).getSingleResult();//forma de traer una constante de otra clase.
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "AsignacionperfilFacade: Error al consultar usuario y password ", new Object[]{e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return asignacionBoolean;
+    }   
+      
 }
