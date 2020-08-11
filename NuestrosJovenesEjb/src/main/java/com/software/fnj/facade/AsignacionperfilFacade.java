@@ -24,8 +24,8 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
-    
-     private static final Logger LOG = Logger.getLogger(Asignacionperfil.class.getName());
+
+    private static final Logger LOG = Logger.getLogger(Asignacionperfil.class.getName());
 
     @PersistenceContext(unitName = "fundacion")
     private EntityManager em;
@@ -40,7 +40,7 @@ public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
     }
 
     public boolean verificarEmail(String correo) throws ServiceException {
-         Long asignacionBoolean = -1l;
+        Long asignacionBoolean = -1l;
         try {
             asignacionBoolean = em.createQuery("select count(a.correo) FROM Asignacionperfil a WHERE a.correo = :correo", Long.class)
                     .setParameter("correo", correo).getSingleResult();
@@ -50,9 +50,9 @@ public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
         }
         return asignacionBoolean.equals(0l);//es cero long no uno   si encuentra algo es falso 
     }
-    
-     public List<Asignacionperfil> obetenerAsignaciones() throws ServiceException {
-         List<Asignacionperfil> asignacion = new ArrayList();
+
+    public List<Asignacionperfil> obetenerAsignaciones() throws ServiceException {
+        List<Asignacionperfil> asignacion = new ArrayList();
         try {
             asignacion = em.createQuery("select a FROM Asignacionperfil a JOIN FETCH a.idperfil pa JOIN FETCH a.idusuario au  WHERE au.estado = :estadoActivo and pa.idperfil=:admin", Asignacionperfil.class)
                     .setParameter("admin", Constante.PerfilConstante.ADMIN.getProfileId())
@@ -64,9 +64,9 @@ public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
         }
         return asignacion;
     }
-     
-      public Asignacionperfil obtenerAsignacionPorIdAsignacion(Integer idAsignacion) throws ServiceException {
-         Asignacionperfil asignacionBoolean = new Asignacionperfil();
+
+    public Asignacionperfil obtenerAsignacionPorIdAsignacion(Integer idAsignacion) throws ServiceException {
+        Asignacionperfil asignacionBoolean = new Asignacionperfil();
         try {
             asignacionBoolean = em.createQuery("select a FROM Asignacionperfil a WHERE a.idasignacionPerfil = :idasignacionPerfil", Asignacionperfil.class)
                     .setParameter("idasignacionPerfil", idAsignacion).getSingleResult();
@@ -76,18 +76,30 @@ public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
         }
         return asignacionBoolean;
     }
-        //facade primer filtro. creo query similar con  sql
-       public Asignacionperfil obtenerAsignacionPerfilPorNombreYContraseña (String nombre) throws ServiceException {
-         Asignacionperfil asignacionBoolean = new Asignacionperfil();
+
+    public Asignacionperfil obtenerAsignacionPerfilPorNombre(String nombre) throws ServiceException {
+        Asignacionperfil asignacionBoolean = new Asignacionperfil();
         try {
             asignacionBoolean = em.createQuery("select a FROM Asignacionperfil a JOIN FETCH a.idperfil JOIN FETCH a.idusuario WHERE a.nombrePerfil =:nombreUsuario and a.estado =:estado", Asignacionperfil.class)
                     .setParameter("nombreUsuario", nombre)
-                    .setParameter("estado",UsuarioConstante.ACTIVO.getUsuarioConstanteId()).getSingleResult();//forma de traer una constante de otra clase.
+                    .setParameter("estado", UsuarioConstante.ACTIVO.getUsuarioConstanteId()).getSingleResult();//forma de traer una constante de otra clase.
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "AsignacionperfilFacade: Error al consultar usuario y password ", new Object[]{e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return asignacionBoolean;
-    }   
-      
+    }
+
+    public boolean verificarNombre(String nombre) throws ServiceException {
+        Long asignacionBoolean = -1l;
+        try {
+            asignacionBoolean = em.createQuery("select count(a.nombrePerfil) FROM Asignacionperfil a WHERE a.nombrePerfil = :nombrePerfil", Long.class)
+                    .setParameter("nombrePerfil", nombre).getSingleResult();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "AsignacionperfilFacade: Error al consultar asignacion por correo: {0}{1}", new Object[]{nombre, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return asignacionBoolean.equals(0l);//es cero long no uno   si encuentra algo es falso 
+    }
+
 }

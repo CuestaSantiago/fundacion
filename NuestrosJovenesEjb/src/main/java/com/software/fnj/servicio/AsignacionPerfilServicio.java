@@ -24,6 +24,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ws.rs.core.Response;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -56,12 +57,12 @@ public class AsignacionPerfilServicio {
         Usuario usuario = new Usuario();
         Asignacionperfil asignaciones = new Asignacionperfil();
         try {
-            if (asignacionperfilFacade.verificarEmail(asignacionPerfil.getCorreo())) {
+            if (asignacionperfilFacade.verificarEmail(asignacionPerfil.getCorreo()) && asignacionperfilFacade.verificarNombre(asignacionPerfil.getNombrePerfil())) {
                 perfil = perfilFacade.obtenerPerfilAdmin();
                 usuario = usuarioFacade.obtenerusuarioPorIdUusario(asignacionPerfil.getIdusuario());
                 asignaciones.setIdperfil(perfil);
                 asignaciones.setIdusuario(usuario);
-                asignaciones.setContrasena(asignacionPerfil.getContrasena());
+                asignaciones.setContrasena(BCrypt.hashpw(asignacionPerfil.getContrasena(), BCrypt.gensalt()));
                 asignaciones.setCorreo(asignacionPerfil.getCorreo());
                 asignaciones.setNombrePerfil(asignacionPerfil.getNombrePerfil());
                 asignaciones.setEstado(UsuarioConstante.ACTIVO.getUsuarioConstanteId());
@@ -123,20 +124,24 @@ public class AsignacionPerfilServicio {
     public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException {
         Asignacionperfil asignacionperfil = new Asignacionperfil();
         try {
-            asignacionperfil = asignacionperfilFacade.obtenerAsignacionPerfilPorNombreYContraseña(autoIonic.getNombre());
-            if (asignacionperfil.getContrasena() != null) {
-                asignacionperfil.getIdperfil().setAsignacionperfilCollection(null);
-                asignacionperfil.getIdusuario().setAsignacionperfilCollection(null);
-                asignacionperfil.getIdusuario().setDocumentoCollection(null);
-                asignacionperfil.getIdusuario().setParentescofamiliarusuarioCollection(null);
-                asignacionperfil.getIdusuario().setSaludCollection(null);
-                asignacionperfil.getIdusuario().setIdciudad(null);
-                asignacionperfil.getIdusuario().setIdgenero(null);
-                asignacionperfil.getIdusuario().setIdlugarIngreso(null);
-                asignacionperfil.getIdusuario().setIdnacionalidad(null);
-                asignacionperfil.getIdusuario().setIdpais(null);
+            asignacionperfil = asignacionperfilFacade.obtenerAsignacionPerfilPorNombre(autoIonic.getNombre());
+            if (asignacionperfil != null) {
+                if (BCrypt.checkpw(autoIonic.getContrasena(), asignacionperfil.getContrasena())) {
+                    asignacionperfil.getIdperfil().setAsignacionperfilCollection(null);
+                    asignacionperfil.getIdusuario().setAsignacionperfilCollection(null);
+                    asignacionperfil.getIdusuario().setDocumentoCollection(null);
+                    asignacionperfil.getIdusuario().setParentescofamiliarusuarioCollection(null);
+                    asignacionperfil.getIdusuario().setSaludCollection(null);
+                    asignacionperfil.getIdusuario().setIdciudad(null);
+                    asignacionperfil.getIdusuario().setIdgenero(null);
+                    asignacionperfil.getIdusuario().setIdlugarIngreso(null);
+                    asignacionperfil.getIdusuario().setIdnacionalidad(null);
+                    asignacionperfil.getIdusuario().setIdpais(null);
+                } else {
+                    throw new ServiceException("Credenciales Incorrectas", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+                }
             } else {
-                throw new ServiceException("Credenciales Incorrectas", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+                throw new ServiceException("Usuario no existe", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
             }
 
         } catch (ServiceException e) {
