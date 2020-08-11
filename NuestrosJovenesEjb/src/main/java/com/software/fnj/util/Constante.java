@@ -43,7 +43,9 @@ public class Constante {
     public enum UsuarioConstante {
         ACTIVO(1),
         DESACTIVADO(2),
-        SINFIRMA(3);
+        SINFIRMA(3),
+        SUPERADMIN(4);
+        
 
         private final Integer usuarioConstanteId;
 

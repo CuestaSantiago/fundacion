@@ -7,6 +7,7 @@ package com.software.fnj.rest.respuesta;
 
 import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
+import com.software.fnj.model.Ionic.AutoIonic;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.servicio.AsignacionPerfilServicio;
 import java.util.ArrayList;
@@ -46,16 +47,28 @@ public class AutenticacionRestRecurso {
             throw new ServiceException("No se ha podido encontrar asignaciones de perfiles por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
     }
-    
+
     public Boolean desactivarAsignacionPerfil(Integer idAdministrador) throws ServiceException {
         boolean asignacion = false;
-        
+
         if (idAdministrador != null) {
             asignacion = asignacionPerfilServicio.desactivarAsignacionPerfil(idAdministrador);
         } else {
             throw new ServiceException("No se ha podido desactivar asignaciones de perfiles por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return asignacion;
+    }
+
+    //metodo para asignacion perfil penultimo paso
+    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException {
+        Asignacionperfil asignacionperfil = new Asignacionperfil();
+        asignacionperfil = asignacionPerfilServicio.login(autoIonic);
+        if (asignacionperfil != null) {
+            return asignacionperfil;
+        } else {
+            throw new ServiceException("No se ha podido encontrar al usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+
     }
 
 }
