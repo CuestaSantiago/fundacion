@@ -108,6 +108,7 @@ public class AsignacionPerfilServicio {
             asignacionperfil = asignacionperfilFacade.obtenerAsignacionPorIdAsignacion(idAsignacion);
             asignacionperfil.setEstado(UsuarioConstante.DESACTIVADO.getUsuarioConstanteId());
             asignacionperfilFacade.edit(asignacionperfil);
+            asignacion = true;
         } catch (ServiceException e) {
             LOG.log(Level.SEVERE, "AsignacionPerfilServicio: Error desactivar asignacion por id: {0}", idAsignacion);
             LOG.log(Level.SEVERE, "", e);

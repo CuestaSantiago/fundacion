@@ -5,11 +5,10 @@
  */
 package com.software.fnj.rest.respuesta;
 
+import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.modelo.Salud;
-import com.software.fnj.modelo.Usuario;
-import com.software.fnj.model.Ionic.AutoIonic;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.modelo.Ciudad;
 import com.software.fnj.modelo.Genero;
@@ -114,7 +113,7 @@ public class ServicioRestUsuarioRecurso {
         }
         return nacionalidades;
     }
-    
+
     public List<Lugaringreso> obtenernLugarIngreso() throws ServiceException {
         List<Lugaringreso> lugaringresos = new ArrayList();
         lugaringresos = usuarioServicio.obtenernLugarIngreso();
@@ -128,4 +127,13 @@ public class ServicioRestUsuarioRecurso {
         return lugaringresos;
     }
 
+    public Boolean agregarDocumento(DocumentoIonic documento) throws ServiceException {
+        boolean lugaringresos = false;
+        if (documento != null) {
+            lugaringresos = usuarioServicio.agregarDocumento(documento);
+        } else {
+            throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return lugaringresos;
+    }
 }

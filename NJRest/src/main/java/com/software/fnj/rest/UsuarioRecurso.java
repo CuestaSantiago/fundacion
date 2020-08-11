@@ -5,7 +5,10 @@
  */
 package com.software.fnj.rest;
 
+import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.ParentescoFamiliarUsuarioIonic;
 import com.software.fnj.model.Ionic.UsuarioIonic;
+import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
 import com.software.fnj.modelo.Ciudad;
 import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
@@ -85,7 +88,7 @@ public class UsuarioRecurso {
     public List<Pais> obtenerPaises() throws ServiceException {
         return servicioRestUsuarioRecurso.obtenerPaises();
     }
-    
+
     @GET
     @Path("obtener_lugaringreso")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -94,20 +97,21 @@ public class UsuarioRecurso {
         return servicioRestUsuarioRecurso.obtenernLugarIngreso();
     }
 
-//
-//    @POST
-//    @Path("crear_usuario")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-//    public boolean crearUsuario(UsuarioIonic usuarioIonic) throws ServiceException {
-//        return servicioRestAcceso.crearUsuario(usuarioIonic);
-//    }
-//
-//    @PUT
-//    @Path("editar_usuario")
-//    @Consumes(MediaType.APPLICATION_JSON)
-//    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-//    public boolean editar(UsuarioIonic usuarioIonic) throws ServiceException {
-//        return servicioRestAcceso.crearUsuario(usuarioIonic);
-//    }
+    @POST
+    @Path("agregar_documento")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public boolean agregarDocumento(DocumentoIonic documendo) throws ServiceException {
+        return servicioRestUsuarioRecurso.agregarDocumento(documendo);
+    }
+
+    @POST
+    @Path("registrar_usuario")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<UsuarioNuevoIonic> registrarUsuario() throws ServiceException {
+        List<UsuarioNuevoIonic> lista = null;
+        return lista;
+    }
+
 }

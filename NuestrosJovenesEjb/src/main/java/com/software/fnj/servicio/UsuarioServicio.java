@@ -6,12 +6,15 @@
 package com.software.fnj.servicio;
 
 import com.software.fnj.facade.CiudadFacade;
+import com.software.fnj.facade.DocumentoFacade;
 import com.software.fnj.facade.GeneroFacade;
 import com.software.fnj.facade.LugaringresoFacade;
 import com.software.fnj.facade.NacionalidadFacade;
 import com.software.fnj.facade.PaisFacade;
 import com.software.fnj.facade.UsuarioFacade;
+import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.modelo.Ciudad;
+import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
@@ -48,9 +51,10 @@ public class UsuarioServicio {
     GeneroFacade generoFacade;
     @EJB
     NacionalidadFacade nacionalidadFacade;
-
     @EJB
     LugaringresoFacade lugaringresoFacade;
+    @EJB
+    DocumentoFacade documentoFacade; 
 
     /**
      * Method that carries out the edition of an event already created in the
@@ -75,23 +79,6 @@ public class UsuarioServicio {
 
     /**
      *
-     * @return @throws ServiceException
-     */
-//    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-//    public List<Usuario> obtenerUsuariosActivos() throws ServiceException {
-//        List<Usuario> usuarios = new ArrayList();
-//        try {
-//            usuarios = usuarioFacade.obtenerUsuariosActivos();
-//            LOG.log(Level.SEVERE, "UsuarioServicio: Useuarios activos obtenidos");
-//        } catch (Exception e) {
-//            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
-//            LOG.log(Level.SEVERE, "", e);
-//            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-//        }
-//        return usuarios;
-//    }
-    /**
-     *
      * @param idUsuario
      * @return
      * @throws ServiceException
@@ -109,7 +96,6 @@ public class UsuarioServicio {
         return usuario;
     }
 
-    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public boolean crearUsuario(Usuario usuario) throws ServiceException {
         boolean exito = false;
         try {
@@ -190,5 +176,28 @@ public class UsuarioServicio {
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return nacionalidad;
+    }
+    
+     public boolean agregarDocumento(DocumentoIonic docUsuario) throws ServiceException {
+        boolean exito = false;
+        Usuario usuario = new Usuario();
+        Documento documento = new Documento();
+        try {
+            usuario = usuarioFacade.obtenerusuarioPorIdUusario(docUsuario.getIdUsuario());
+            if (usuario != null) {
+                documento.setDocumento(docUsuario.getDocumento());
+                documento.setIdusuario(usuario);
+                documento.setObservacion(docUsuario.getObservacion());
+                documentoFacade.create(documento);
+                exito = true;
+            } else {
+                LOG.log(Level.SEVERE, "UsuarioServicio: Usuario ya registrado: " + docUsuario.getIdUsuario());
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario: " + docUsuario.getIdUsuario());
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
     }
 }
