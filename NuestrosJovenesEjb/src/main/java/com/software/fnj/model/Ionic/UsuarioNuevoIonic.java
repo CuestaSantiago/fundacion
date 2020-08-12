@@ -26,7 +26,6 @@ public class UsuarioNuevoIonic {
     private String habilidades;
     private String nivelInstruccion;
     private Date fechaIngresoEcuador;
-    private Date fechaIngresoFundacion;
     private Integer estado;
     private String razonEgreso;
     private byte[] foto;
@@ -35,7 +34,7 @@ public class UsuarioNuevoIonic {
     private String situacionMigratoria;
     private Integer idciudad;
     private Integer idgenero;
-    private Integer idlugarIngreso;
+    private String lugarIngreso;
     private Integer idnacionalidad;
     private Integer idpais;
     private Integer idRegistrador;
@@ -123,14 +122,6 @@ public class UsuarioNuevoIonic {
         this.fechaIngresoEcuador = fechaIngresoEcuador;
     }
 
-    public Date getFechaIngresoFundacion() {
-        return fechaIngresoFundacion;
-    }
-
-    public void setFechaIngresoFundacion(Date fechaIngresoFundacion) {
-        this.fechaIngresoFundacion = fechaIngresoFundacion;
-    }
-
     public Integer getEstado() {
         return estado;
     }
@@ -195,12 +186,12 @@ public class UsuarioNuevoIonic {
         this.idgenero = idgenero;
     }
 
-    public Integer getIdlugarIngreso() {
-        return idlugarIngreso;
+    public String getLugarIngreso() {
+        return lugarIngreso;
     }
 
-    public void setIdlugarIngreso(Integer idlugarIngreso) {
-        this.idlugarIngreso = idlugarIngreso;
+    public void setLugarIngreso(String lugarIngreso) {
+        this.lugarIngreso = lugarIngreso;
     }
 
     public Integer getIdnacionalidad() {
@@ -233,6 +224,22 @@ public class UsuarioNuevoIonic {
 
     public void setDocumento(List<Documento> documento) {
         this.documento = documento;
+    }
+
+    public Integer getIdRegistrador() {
+        return idRegistrador;
+    }
+
+    public void setIdRegistrador(Integer idRegistrador) {
+        this.idRegistrador = idRegistrador;
+    }
+
+    public Integer getIdParentesco() {
+        return idParentesco;
+    }
+
+    public void setIdParentesco(Integer idParentesco) {
+        this.idParentesco = idParentesco;
     }
 
 }

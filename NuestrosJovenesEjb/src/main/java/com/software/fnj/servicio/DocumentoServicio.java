@@ -6,10 +6,8 @@
 package com.software.fnj.servicio;
 
 import com.software.fnj.facade.DocumentoFacade;
-import com.software.fnj.facade.SaludFacade;
 import com.software.fnj.facade.UsuarioFacade;
 import com.software.fnj.modelo.Documento;
-import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import java.util.ArrayList;

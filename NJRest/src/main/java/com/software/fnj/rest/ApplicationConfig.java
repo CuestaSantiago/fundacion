@@ -31,7 +31,6 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.software.fnj.response.exception.ServiceExceptionMapper.class);
         resources.add(com.software.fnj.rest.AutenticacionRecurso.class);
-        resources.add(com.software.fnj.rest.Prueba.class);
         resources.add(com.software.fnj.rest.UsuarioRecurso.class);
     }
     
