@@ -70,8 +70,9 @@ public class Constante {
     public enum SaludConstante {
         SALUDABLE(0),
         DISCAPACITADO(1),
-        EMBARAZADA(2),
-        LACTANCIA(3);
+        ENFERMO(2),
+        EMBARAZADA(3),
+        LACTANCIA(4);
 
         private final Integer saludConstanteId;
 

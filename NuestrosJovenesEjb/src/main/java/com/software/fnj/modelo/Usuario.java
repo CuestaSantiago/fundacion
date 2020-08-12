@@ -25,6 +25,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -53,7 +54,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByRazonEgreso", query = "SELECT u FROM Usuario u WHERE u.razonEgreso = :razonEgreso")
     , @NamedQuery(name = "Usuario.findByFechaEgresoFundacion", query = "SELECT u FROM Usuario u WHERE u.fechaEgresoFundacion = :fechaEgresoFundacion")
     , @NamedQuery(name = "Usuario.findByProvincia", query = "SELECT u FROM Usuario u WHERE u.provincia = :provincia")
-    , @NamedQuery(name = "Usuario.findBySituacionMigratoria", query = "SELECT u FROM Usuario u WHERE u.situacionMigratoria = :situacionMigratoria")})
+    , @NamedQuery(name = "Usuario.findBySituacionMigratoria", query = "SELECT u FROM Usuario u WHERE u.situacionMigratoria = :situacionMigratoria")
+    , @NamedQuery(name = "Usuario.findByTipoIdentificacion", query = "SELECT u FROM Usuario u WHERE u.tipoIdentificacion = :tipoIdentificacion")
+    , @NamedQuery(name = "Usuario.findByIdRegistrador", query = "SELECT u FROM Usuario u WHERE u.idRegistrador = :idRegistrador")
+    , @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")
+    , @NamedQuery(name = "Usuario.findByTelefonoContacto", query = "SELECT u FROM Usuario u WHERE u.telefonoContacto = :telefonoContacto")
+    , @NamedQuery(name = "Usuario.findByObservacioIngreso", query = "SELECT u FROM Usuario u WHERE u.observacioIngreso = :observacioIngreso")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -109,6 +115,21 @@ public class Usuario implements Serializable {
     @Size(max = 500)
     @Column(name = "situacionMigratoria")
     private String situacionMigratoria;
+    @Column(name = "tipoIdentificacion")
+    private Integer tipoIdentificacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idRegistrador")
+    private int idRegistrador;
+    @Size(max = 45)
+    @Column(name = "telefono")
+    private String telefono;
+    @Size(max = 500)
+    @Column(name = "telefonoContacto")
+    private String telefonoContacto;
+    @Size(max = 999)
+    @Column(name = "observacioIngreso")
+    private String observacioIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
     private Collection<Parentescofamiliarusuario> parentescofamiliarusuarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
@@ -138,6 +159,11 @@ public class Usuario implements Serializable {
 
     public Usuario(Integer idusuario) {
         this.idusuario = idusuario;
+    }
+
+    public Usuario(Integer idusuario, int idRegistrador) {
+        this.idusuario = idusuario;
+        this.idRegistrador = idRegistrador;
     }
 
     public Integer getIdusuario() {
@@ -274,6 +300,46 @@ public class Usuario implements Serializable {
 
     public void setSituacionMigratoria(String situacionMigratoria) {
         this.situacionMigratoria = situacionMigratoria;
+    }
+
+    public Integer getTipoIdentificacion() {
+        return tipoIdentificacion;
+    }
+
+    public void setTipoIdentificacion(Integer tipoIdentificacion) {
+        this.tipoIdentificacion = tipoIdentificacion;
+    }
+
+    public int getIdRegistrador() {
+        return idRegistrador;
+    }
+
+    public void setIdRegistrador(int idRegistrador) {
+        this.idRegistrador = idRegistrador;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getObservacioIngreso() {
+        return observacioIngreso;
+    }
+
+    public void setObservacioIngreso(String observacioIngreso) {
+        this.observacioIngreso = observacioIngreso;
     }
 
     @XmlTransient

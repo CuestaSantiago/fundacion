@@ -6,7 +6,6 @@
 package com.software.fnj.rest;
 
 import com.software.fnj.model.Ionic.DocumentoIonic;
-import com.software.fnj.model.Ionic.ParentescoFamiliarUsuarioIonic;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
 import com.software.fnj.modelo.Ciudad;
@@ -57,12 +56,12 @@ public class UsuarioRecurso {
         return servicioRestUsuarioRecurso.getAllUsers();
     }
 
-    @GET
+    @POST
     @Path("obtener_ciudades")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<Ciudad> obtenerCiudades() throws ServiceException {
-        return servicioRestUsuarioRecurso.obtenerCiudades();
+    public List<Ciudad> obtenerCiudades(@QueryParam("codigoPais") String codigoPais) throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerCiudades(codigoPais);
     }
 
     @GET
@@ -109,9 +108,8 @@ public class UsuarioRecurso {
     @Path("registrar_usuario")
     @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<UsuarioNuevoIonic> registrarUsuario() throws ServiceException {
-        List<UsuarioNuevoIonic> lista = null;
-        return lista;
+    public boolean registrarUsuario(List<UsuarioNuevoIonic>  newUsuario) throws ServiceException {
+       return servicioRestUsuarioRecurso.agregarUsuarios(newUsuario);
     }
 
 }

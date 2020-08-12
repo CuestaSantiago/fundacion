@@ -7,10 +7,13 @@ package com.software.fnj.facade;
 
 import com.software.fnj.modelo.Pais;
 import com.software.fnj.modelo.Perfil;
+import com.software.fnj.response.exception.ServiceException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -18,8 +21,8 @@ import javax.persistence.PersistenceContext;
  */
 @Stateless
 public class PaisFacade extends AbstractFacade<Pais> {
-    
-     private static final Logger LOG = Logger.getLogger(Perfil.class.getName());
+
+    private static final Logger LOG = Logger.getLogger(Perfil.class.getName());
 
     @PersistenceContext(unitName = "fundacion")
     private EntityManager em;
@@ -32,5 +35,19 @@ public class PaisFacade extends AbstractFacade<Pais> {
     public PaisFacade() {
         super(Pais.class);
     }
-    
+
+    public Pais obtenerPaisPorId(Integer idpais) throws ServiceException {
+        Pais pais = new Pais();
+        try {
+            pais = em.createQuery("SELECT p FROM Pais p WHERE p.idpais = :idpais",
+                    Pais.class)
+                    .setParameter("idpais", idpais)
+                    .getSingleResult();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{idpais, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return pais;
+    }
+
 }

@@ -10,6 +10,7 @@ import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.modelo.Salud;
 import com.software.fnj.model.Ionic.UsuarioIonic;
+import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
 import com.software.fnj.modelo.Ciudad;
 import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
@@ -62,9 +63,9 @@ public class ServicioRestUsuarioRecurso {
         return usuariosIonic;
     }
 
-    public List<Ciudad> obtenerCiudades() throws ServiceException {
+    public List<Ciudad> obtenerCiudades(String codigoPais) throws ServiceException {
         List<Ciudad> ciudades = new ArrayList();
-        ciudades = usuarioServicio.obtenerCiudades();
+        ciudades = usuarioServicio.obtenerCiudades(codigoPais);
         if (ciudades.size() > 0 || ciudades != null) {
             for (Ciudad ciudad : ciudades) {
                 ciudad.setUsuarioCollection(null);
@@ -131,6 +132,16 @@ public class ServicioRestUsuarioRecurso {
         boolean lugaringresos = false;
         if (documento != null) {
             lugaringresos = usuarioServicio.agregarDocumento(documento);
+        } else {
+            throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return lugaringresos;
+    }
+    
+    public Boolean agregarUsuarios(List<UsuarioNuevoIonic>  newUsuario) throws ServiceException {
+        boolean lugaringresos = false;
+        if (newUsuario != null) {
+            lugaringresos = usuarioServicio.agregarUsuarios(newUsuario);
         } else {
             throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }

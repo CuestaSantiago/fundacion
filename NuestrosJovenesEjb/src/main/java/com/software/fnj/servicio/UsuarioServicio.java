@@ -11,17 +11,26 @@ import com.software.fnj.facade.GeneroFacade;
 import com.software.fnj.facade.LugaringresoFacade;
 import com.software.fnj.facade.NacionalidadFacade;
 import com.software.fnj.facade.PaisFacade;
+import com.software.fnj.facade.ParentescofamiliarFacade;
+import com.software.fnj.facade.ParentescofamiliarusuarioFacade;
+import com.software.fnj.facade.SaludFacade;
 import com.software.fnj.facade.UsuarioFacade;
 import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
 import com.software.fnj.modelo.Ciudad;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Parentescofamiliarusuario;
+import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
+import com.software.fnj.util.Constante;
+import com.software.fnj.util.Constante.SaludConstante;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.EJB;
@@ -54,7 +63,13 @@ public class UsuarioServicio {
     @EJB
     LugaringresoFacade lugaringresoFacade;
     @EJB
-    DocumentoFacade documentoFacade; 
+    DocumentoFacade documentoFacade;
+    @EJB
+    ParentescofamiliarFacade parentescofamiliarFacade;
+    @EJB
+    ParentescofamiliarusuarioFacade parentescofamiliarusuarioFacade;
+    @EJB
+    SaludFacade saludFacade;
 
     /**
      * Method that carries out the edition of an event already created in the
@@ -114,10 +129,10 @@ public class UsuarioServicio {
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Ciudad> obtenerCiudades() throws ServiceException {
+    public List<Ciudad> obtenerCiudades(String paisCodigo) throws ServiceException {
         List<Ciudad> ciudades = new ArrayList();
         try {
-            ciudades = ciudadFacade.findAll();
+            ciudades = ciudadFacade.obtenerCiudadesPorCodigoPais(paisCodigo);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener ciudades");
             LOG.log(Level.SEVERE, "", e);
@@ -177,8 +192,8 @@ public class UsuarioServicio {
         }
         return nacionalidad;
     }
-    
-     public boolean agregarDocumento(DocumentoIonic docUsuario) throws ServiceException {
+
+    public boolean agregarDocumento(DocumentoIonic docUsuario) throws ServiceException {
         boolean exito = false;
         Usuario usuario = new Usuario();
         Documento documento = new Documento();
@@ -200,4 +215,115 @@ public class UsuarioServicio {
         }
         return exito;
     }
+
+    public boolean agregarUsuarios(List<UsuarioNuevoIonic> newUsuario) throws ServiceException {
+        boolean exito = false;
+        Usuario usuario = new Usuario();
+        Parentescofamiliarusuario parentesco = new Parentescofamiliarusuario();
+        int idCabezaHogar = 0;
+        try {
+            for (UsuarioNuevoIonic usuarioNuevoIonic : newUsuario) {
+                if (newUsuario.size() > 1) {
+                    usuario = agrearUsaurio(usuarioNuevoIonic);
+                     if (newUsuario.size() == 0) {
+                        idCabezaHogar = usuario.getIdusuario();
+                    }
+                    parentesco.setIdusuario(usuario);
+                    parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
+                    parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
+                    parentesco.setIdusuarioCabezaHogar(idCabezaHogar);
+                    llenarDocumentos(usuarioNuevoIonic, usuario);
+                    parentescofamiliarusuarioFacade.create(parentesco);
+                } else {
+                    usuario = agrearUsaurio(usuarioNuevoIonic);
+                    parentesco.setIdusuario(usuario);
+                    parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
+                    parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
+                    parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
+                    llenarDocumentos(usuarioNuevoIonic, usuario);
+                    parentescofamiliarusuarioFacade.create(parentesco);
+                }
+            }
+            exito = true;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
+    }
+
+    private Usuario agrearUsaurio(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        Usuario usuario = new Usuario();
+        Genero genero = new Genero();
+        Ciudad ciudad = new Ciudad();
+        Pais pais = new Pais();
+        Nacionalidad nacionaliad = new Nacionalidad();
+        Lugaringreso lugarIngreso = new Lugaringreso();
+        try {
+            if (usuarioFacade.verificarUsuarioRegistrado(newUsuario.getIdentificacion())) {
+                genero = generoFacade.obtenerGeneroPorId(newUsuario.getIdgenero());
+                ciudad = ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad());
+                pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
+                nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
+                lugarIngreso = lugaringresoFacade.obtenerLugarIngresoPorId(newUsuario.getLugarIngreso());
+                if (lugarIngreso == null) {
+                    lugarIngreso.setNombre(newUsuario.getLugarIngreso());
+                    lugaringresoFacade.create(lugarIngreso);
+                }
+                usuario.setApellidos(newUsuario.getApellidos());
+                usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
+                usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
+                usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
+                usuario.setFechaIngresoFundacion(new Date());
+                usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
+                usuario.setFoto(newUsuario.getFoto());
+                usuario.setHabilidades(newUsuario.getHabilidades());
+                usuario.setIdciudad(ciudad);
+                usuario.setIdentificacion(newUsuario.getIdentificacion());
+                usuario.setIdgenero(genero);
+                usuario.setIdlugarIngreso(lugarIngreso);
+                usuario.setIdnacionalidad(nacionaliad);
+                usuario.setIdpais(pais);
+                usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());
+                usuario.setNombres(newUsuario.getNombres());
+                usuario.setOficio(newUsuario.getOficio());
+                usuario.setProfesion(newUsuario.getProfesion());
+                usuario.setProvincia(newUsuario.getProvincia());
+                usuario.setRazonEgreso(newUsuario.getRazonEgreso());
+                usuario.setSituacionMigratoria(newUsuario.getSituacionMigratoria());
+                usuario.setIdRegistrador(newUsuario.getIdRegistrador());
+                usuarioFacade.create(usuario);
+            } else {
+                throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+
+        return usuario;
+    }
+
+    private void llenarDocumentos(UsuarioNuevoIonic newUsuario, Usuario usuario) {
+        Salud salud = new Salud();
+        if (newUsuario.getDocumento() != null) {
+            for (Documento object : newUsuario.getDocumento()) {
+                object.setIdusuario(usuario);
+                documentoFacade.create(object);
+            }
+        }
+        if (newUsuario.getSalud() != null) {
+            for (Salud object : newUsuario.getSalud()) {
+                object.setIdusuario(usuario);
+                saludFacade.create(object);
+            }
+        }else{
+            salud.setEstadoDiscapacidad(SaludConstante.SALUDABLE.getSaludConstanteId());
+            salud.setIdusuario(usuario);
+            saludFacade.create(salud);
+        }
+    }
+
 }
