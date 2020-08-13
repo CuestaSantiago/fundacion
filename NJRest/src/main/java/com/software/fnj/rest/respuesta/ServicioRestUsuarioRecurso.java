@@ -5,6 +5,7 @@
  */
 package com.software.fnj.rest.respuesta;
 
+import com.software.fnj.model.Ionic.CodigoPaisIonic;
 import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
@@ -63,9 +64,9 @@ public class ServicioRestUsuarioRecurso {
         return usuariosIonic;
     }
 
-    public List<Ciudad> obtenerCiudades(String codigoPais) throws ServiceException {
+    public List<Ciudad> obtenerCiudades(CodigoPaisIonic codigoPais) throws ServiceException {
         List<Ciudad> ciudades = new ArrayList();
-        ciudades = usuarioServicio.obtenerCiudades(codigoPais);
+        ciudades = usuarioServicio.obtenerCiudades(codigoPais.getCodigoPais());
         if (ciudades.size() > 0 || ciudades != null) {
             for (Ciudad ciudad : ciudades) {
                 ciudad.setUsuarioCollection(null);

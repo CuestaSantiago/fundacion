@@ -59,7 +59,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByIdRegistrador", query = "SELECT u FROM Usuario u WHERE u.idRegistrador = :idRegistrador")
     , @NamedQuery(name = "Usuario.findByTelefono", query = "SELECT u FROM Usuario u WHERE u.telefono = :telefono")
     , @NamedQuery(name = "Usuario.findByTelefonoContacto", query = "SELECT u FROM Usuario u WHERE u.telefonoContacto = :telefonoContacto")
-    , @NamedQuery(name = "Usuario.findByObservacioIngreso", query = "SELECT u FROM Usuario u WHERE u.observacioIngreso = :observacioIngreso")})
+    , @NamedQuery(name = "Usuario.findByObservacionIngreso", query = "SELECT u FROM Usuario u WHERE u.observacionIngreso = :observacionIngreso")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -128,8 +128,8 @@ public class Usuario implements Serializable {
     @Column(name = "telefonoContacto")
     private String telefonoContacto;
     @Size(max = 999)
-    @Column(name = "observacioIngreso")
-    private String observacioIngreso;
+    @Column(name = "observacionIngreso")
+    private String observacionIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
     private Collection<Parentescofamiliarusuario> parentescofamiliarusuarioCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
@@ -334,12 +334,12 @@ public class Usuario implements Serializable {
         this.telefonoContacto = telefonoContacto;
     }
 
-    public String getObservacioIngreso() {
-        return observacioIngreso;
+    public String getObservacionIngreso() {
+        return observacionIngreso;
     }
 
-    public void setObservacioIngreso(String observacioIngreso) {
-        this.observacioIngreso = observacioIngreso;
+    public void setObservacionIngreso(String observacionIngreso) {
+        this.observacionIngreso = observacionIngreso;
     }
 
     @XmlTransient

@@ -5,6 +5,7 @@
  */
 package com.software.fnj.rest;
 
+import com.software.fnj.model.Ionic.CodigoPaisIonic;
 import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
@@ -60,7 +61,7 @@ public class UsuarioRecurso {
     @Path("obtener_ciudades")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<Ciudad> obtenerCiudades(@QueryParam("codigoPais") String codigoPais) throws ServiceException {
+    public List<Ciudad> obtenerCiudades(CodigoPaisIonic codigoPais) throws ServiceException {
         return servicioRestUsuarioRecurso.obtenerCiudades(codigoPais);
     }
 
