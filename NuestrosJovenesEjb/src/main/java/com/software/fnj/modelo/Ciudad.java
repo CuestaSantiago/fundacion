@@ -19,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -33,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c")
     , @NamedQuery(name = "Ciudad.findByIdciudad", query = "SELECT c FROM Ciudad c WHERE c.idciudad = :idciudad")
-    , @NamedQuery(name = "Ciudad.findByPaisCodigo", query = "SELECT c FROM Ciudad c WHERE c.paisCodigo = :paisCodigo")
     , @NamedQuery(name = "Ciudad.findByCiudad", query = "SELECT c FROM Ciudad c WHERE c.ciudad = :ciudad")})
 public class Ciudad implements Serializable {
 
@@ -43,10 +43,9 @@ public class Ciudad implements Serializable {
     @Basic(optional = false)
     @Column(name = "idciudad")
     private Integer idciudad;
-    @Size(max = 2)
-    @Column(name = "paisCodigo")
-    private String paisCodigo;
-    @Size(max = 100)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "ciudad")
     private String ciudad;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idciudad", fetch = FetchType.LAZY)
@@ -59,20 +58,17 @@ public class Ciudad implements Serializable {
         this.idciudad = idciudad;
     }
 
+    public Ciudad(Integer idciudad, String ciudad) {
+        this.idciudad = idciudad;
+        this.ciudad = ciudad;
+    }
+
     public Integer getIdciudad() {
         return idciudad;
     }
 
     public void setIdciudad(Integer idciudad) {
         this.idciudad = idciudad;
-    }
-
-    public String getPaisCodigo() {
-        return paisCodigo;
-    }
-
-    public void setPaisCodigo(String paisCodigo) {
-        this.paisCodigo = paisCodigo;
     }
 
     public String getCiudad() {

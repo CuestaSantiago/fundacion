@@ -6,25 +6,11 @@
 package com.software.fnj.model.Ionic;
 
 import com.software.fnj.modelo.Ciudad;
-import com.software.fnj.modelo.Ciudad;
-import com.software.fnj.modelo.Ciudad;
-import com.software.fnj.modelo.Documento;
-import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Genero;
-import com.software.fnj.modelo.Genero;
-import com.software.fnj.modelo.Genero;
-import com.software.fnj.modelo.Lugaringreso;
-import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
-import com.software.fnj.modelo.Nacionalidad;
-import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
-import com.software.fnj.modelo.Pais;
-import com.software.fnj.modelo.Pais;
-import com.software.fnj.modelo.Salud;
-import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Salud;
 import java.util.Date;
 import java.util.List;
@@ -53,12 +39,19 @@ public class UsuarioIonic {
     private String provincia;
     private String situacionMigratoria;
     private Ciudad idciudad;
+    private Pais idpais;
+    private Nacionalidad idnacionalidad;
     private Genero idgenero;
     private Lugaringreso idlugarIngreso;
-    private Nacionalidad idnacionalidad;
-    private Pais idpais;
+    private Integer tipoIdentificacion;
+    private Integer idRegistrador;
+    private String telefono;
+    private String telefonoContacto;
+    private String observacionIngreso;
     private List<Salud> salud;
     private List<Documento> documento;
+    private Integer idCabezaHogar;
+    private String parentesco;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -204,6 +197,22 @@ public class UsuarioIonic {
         this.idciudad = idciudad;
     }
 
+    public Pais getIdpais() {
+        return idpais;
+    }
+
+    public void setIdpais(Pais idpais) {
+        this.idpais = idpais;
+    }
+
+    public Nacionalidad getIdnacionalidad() {
+        return idnacionalidad;
+    }
+
+    public void setIdnacionalidad(Nacionalidad idnacionalidad) {
+        this.idnacionalidad = idnacionalidad;
+    }
+
     public Genero getIdgenero() {
         return idgenero;
     }
@@ -220,20 +229,44 @@ public class UsuarioIonic {
         this.idlugarIngreso = idlugarIngreso;
     }
 
-    public Nacionalidad getIdnacionalidad() {
-        return idnacionalidad;
+    public Integer getTipoIdentificacion() {
+        return tipoIdentificacion;
     }
 
-    public void setIdnacionalidad(Nacionalidad idnacionalidad) {
-        this.idnacionalidad = idnacionalidad;
+    public void setTipoIdentificacion(Integer tipoIdentificacion) {
+        this.tipoIdentificacion = tipoIdentificacion;
     }
 
-    public Pais getIdpais() {
-        return idpais;
+    public Integer getIdRegistrador() {
+        return idRegistrador;
     }
 
-    public void setIdpais(Pais idpais) {
-        this.idpais = idpais;
+    public void setIdRegistrador(Integer idRegistrador) {
+        this.idRegistrador = idRegistrador;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getObservacionIngreso() {
+        return observacionIngreso;
+    }
+
+    public void setObservacionIngreso(String observacionIngreso) {
+        this.observacionIngreso = observacionIngreso;
     }
 
     public List<Salud> getSalud() {
@@ -252,7 +285,20 @@ public class UsuarioIonic {
         this.documento = documento;
     }
 
+    public Integer getIdCabezaHogar() {
+        return idCabezaHogar;
+    }
 
+    public void setIdCabezaHogar(Integer idCabezaHogar) {
+        this.idCabezaHogar = idCabezaHogar;
+    }
 
+    public String getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(String parentesco) {
+        this.parentesco = parentesco;
+    }
 
 }

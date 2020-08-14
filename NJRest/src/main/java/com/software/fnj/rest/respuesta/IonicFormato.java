@@ -35,49 +35,50 @@ public class IonicFormato {
         UsuarioIonic user = new UsuarioIonic();
         usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
         usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
+        usuario.getIdusuario().getIdlugarIngreso().setUsuarioCollection(null);
+        usuario.getIdusuario().getIdpais().setUsuarioCollection(null);
+        usuario.getIdusuario().getIdnacionalidad().setUsuarioCollection(null);
+        usuario.getIdparentescoFamiliar().setParentescofamiliarusuarioCollection(null);
+        usuario.getIdusuario().setAsignacionperfilCollection(null);
+        usuario.getIdusuario().setDocumentoCollection(null);
+        usuario.getIdusuario().setParentescofamiliarusuarioCollection(null);
+        usuario.getIdusuario().setSaludCollection(null);
         for (Documento doc : documento) {
             doc.setIdusuario(null);
         }
         for (Salud sal : salud) {
             sal.setIdusuario(null);
         }
-        //usuario.getIdusuario().getIdlugarIngreso().setUsuarioCollection(null);
-
         user.setIdusuario(usuario.getIdusuario().getIdusuario());
         user.setNombres(usuario.getIdusuario().getNombres());
         user.setApellidos(usuario.getIdusuario().getApellidos());
         user.setIdentificacion(usuario.getIdusuario().getIdentificacion());
+        user.setOficio(usuario.getIdusuario().getOficio());
+        user.setProfesion(usuario.getIdusuario().getProfesion());
+        user.setHabilidades(usuario.getIdusuario().getHabilidades());
+        user.setNivelInstruccion(usuario.getIdusuario().getNivelInstruccion());
+        user.setFechaIngresoEcuador(usuario.getIdusuario().getFechaIngresoEcuador());
+        user.setFechaIngresoFundacion(usuario.getIdusuario().getFechaIngresoFundacion());
+        user.setEstado(usuario.getIdusuario().getEstado());
+        user.setRazonEgreso(usuario.getIdusuario().getRazonEgreso());
         user.setFoto(usuario.getIdusuario().getFoto());
-        user.setIdgenero(usuario.getIdusuario().getIdgenero());
+        user.setFechaEgresoFundacion(usuario.getIdusuario().getFechaEgresoFundacion());
+        user.setProvincia(usuario.getIdusuario().getProvincia());
+        user.setSituacionMigratoria(usuario.getIdusuario().getSituacionMigratoria());
         user.setIdciudad(usuario.getIdusuario().getIdciudad());
+        user.setIdpais(usuario.getIdusuario().getIdpais());
+        user.setIdnacionalidad(usuario.getIdusuario().getIdnacionalidad());
+        user.setIdgenero(usuario.getIdusuario().getIdgenero());
+        user.setIdlugarIngreso(usuario.getIdusuario().getIdlugarIngreso());
+        user.setTipoIdentificacion(usuario.getIdusuario().getTipoIdentificacion());
+        user.setIdRegistrador(usuario.getIdusuario().getIdRegistrador());
+        user.setTelefono(usuario.getIdusuario().getTelefono());
+        user.setTelefonoContacto(usuario.getIdusuario().getTelefonoContacto());
+        user.setObservacionIngreso(usuario.getIdusuario().getObservacionIngreso());
         user.setDocumento(documento);
         user.setSalud(salud);
+        user.setIdCabezaHogar(usuario.getIdusuarioCabezaHogar());
+        user.setParentesco(usuario.getIdparentescoFamiliar().getParentesco());
         return user;
     }
-
-    public static Usuario ConstruirUsuario(UsuarioIonic usuarioIonic) {
-        Usuario user = new Usuario();
-        Ciudad ciudad = new Ciudad();
-        Genero genero = new Genero();
-        Lugaringreso lugarIngreso = new Lugaringreso();
-        Nacionalidad nacionalidad = new Nacionalidad();
-        Pais pais = new Pais();
-
-//        ciudad.setIdciudad(usuarioIonic.getIdciudad());
-//        genero.setIdgenero(usuarioIonic.getIdgenero());
-//        lugarIngreso.setIdlugarIngreso(usuarioIonic.getIdlugarIngreso());
-//        nacionalidad.setIdnacionalidad(usuarioIonic.getIdgenero());
-//        pais.setIdpais(usuarioIonic.getIdpais());
-        user.setNombres(usuarioIonic.getNombres());
-        user.setApellidos(usuarioIonic.getApellidos());
-        user.setIdentificacion(usuarioIonic.getIdentificacion());
-        user.setEstado(1);
-        user.setIdciudad(ciudad);
-        user.setIdgenero(genero);
-        user.setIdlugarIngreso(lugarIngreso);
-        user.setIdnacionalidad(nacionalidad);
-        user.setIdpais(pais);
-        return user;
-    }
-
 }

@@ -14,6 +14,7 @@ public class DocumentoIonic {
     private Integer idUsuario;
     private String observacion;
     private String documento;
+    private boolean estado;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -37,6 +38,14 @@ public class DocumentoIonic {
 
     public void setDocumento(String documento) {
         this.documento = documento;
+    }
+
+    public boolean isEstado() {
+        return estado;
+    }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
     }
 
 }

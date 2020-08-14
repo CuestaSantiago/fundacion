@@ -5,8 +5,6 @@
  */
 package com.software.fnj.model.Ionic;
 
-import com.software.fnj.modelo.Documento;
-import com.software.fnj.modelo.Salud;
 import java.util.Date;
 import java.util.List;
 

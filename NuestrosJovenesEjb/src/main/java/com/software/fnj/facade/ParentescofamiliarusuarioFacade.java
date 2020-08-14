@@ -44,7 +44,7 @@ public class ParentescofamiliarusuarioFacade extends AbstractFacade<Parentescofa
     public List<Parentescofamiliarusuario> obtenerUsuariosActivos() throws ServiceException {
         List<Parentescofamiliarusuario> usuarios = new ArrayList();
         try {
-            usuarios = em.createQuery("select p FROM Parentescofamiliarusuario p JOIN FETCH p.idusuario up JOIN FETCH up.idciudad JOIN FETCH up.idgenero JOIN FETCH up.idpais JOIN FETCH up.idlugarIngreso JOIN FETCH up.idnacionalidad WHERE up.estado=:estado",
+            usuarios = em.createQuery("select p FROM Parentescofamiliarusuario p JOIN FETCH p.idparentescoFamiliar JOIN FETCH p.idusuario up JOIN FETCH up.idciudad JOIN FETCH up.idgenero JOIN FETCH up.idpais JOIN FETCH up.idlugarIngreso JOIN FETCH up.idnacionalidad WHERE up.estado=:estado",
                     Parentescofamiliarusuario.class)
                     .setParameter("estado", Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId())
                     .getResultList();

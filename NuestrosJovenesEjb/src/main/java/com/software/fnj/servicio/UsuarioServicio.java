@@ -30,10 +30,15 @@ import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.util.Constante;
 import com.software.fnj.util.Constante.SaludConstante;
+import com.software.fnj.util.Constante.UsuarioConstante;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -72,8 +77,6 @@ public class UsuarioServicio {
     @EJB
     SaludFacade saludFacade;
 
-  
-
     /**
      *
      * @param idUsuario
@@ -111,10 +114,10 @@ public class UsuarioServicio {
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public List<Ciudad> obtenerCiudades(String paisCodigo) throws ServiceException {
+    public List<Ciudad> obtenerCiudades() throws ServiceException {
         List<Ciudad> ciudades = new ArrayList();
         try {
-            ciudades = ciudadFacade.obtenerCiudadesPorCodigoPais(paisCodigo);
+            ciudades = ciudadFacade.findAll();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener ciudades");
             LOG.log(Level.SEVERE, "", e);
@@ -186,6 +189,10 @@ public class UsuarioServicio {
                 documento.setIdusuario(usuario);
                 documento.setObservacion(docUsuario.getObservacion());
                 documentoFacade.create(documento);
+                if (docUsuario.isEstado()) {
+                    usuario.setEstado(UsuarioConstante.DESACTIVADO.getUsuarioConstanteId());
+                    usuarioFacade.edit(usuario);
+                }
                 exito = true;
             } else {
                 LOG.log(Level.SEVERE, "UsuarioServicio: Usuario ya registrado: " + docUsuario.getIdUsuario());
@@ -280,7 +287,7 @@ public class UsuarioServicio {
                 usuario.setIdlugarIngreso(lugarIngreso);
                 usuario.setIdnacionalidad(nacionaliad);
                 usuario.setIdpais(pais);
-                
+
                 usuarioFacade.create(usuario);
             } else {
                 throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
@@ -307,7 +314,9 @@ public class UsuarioServicio {
         if (newUsuario.getSalud() != null) {
             for (SaludIonic object : newUsuario.getSalud()) {
                 Salud salud = new Salud();
-                salud.setFoto(object.getFoto().getBytes());
+                if (object.getFoto() != null) {
+                    salud.setFoto(object.getFoto().getBytes());
+                }
                 salud.setIdusuario(usuario);
                 salud.setEstadoDiscapacidad(object.getEstadoDiscapacidad());
                 saludFacade.create(salud);

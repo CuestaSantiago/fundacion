@@ -51,18 +51,18 @@ public class CiudadFacade extends AbstractFacade<Ciudad> {
         return ciudad;
     }
 
-    public List<Ciudad> obtenerCiudadesPorCodigoPais(String paisCodigo) throws ServiceException {
-        List<Ciudad> ciudad = new ArrayList();
+    public List<Ciudad> obtenerCiudadesPorCiudad(String ciudad) throws ServiceException {
+        List<Ciudad> ciudades = new ArrayList();
         try {
-            ciudad = em.createQuery("SELECT c FROM Ciudad c WHERE c.paisCodigo = :paisCodigo",
+            ciudades = em.createQuery("SELECT c FROM Ciudad c WHERE c.ciudad = :ciudad",
                     Ciudad.class)
-                    .setParameter("paisCodigo", paisCodigo)
+                    .setParameter("ciudad", ciudad)
                     .getResultList();
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{paisCodigo, e.toString()});
+            LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{ciudad, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
-        return ciudad;
+        return ciudades;
     }
 
 }

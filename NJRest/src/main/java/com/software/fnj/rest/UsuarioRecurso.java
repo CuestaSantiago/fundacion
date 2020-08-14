@@ -58,12 +58,12 @@ public class UsuarioRecurso {
         return servicioRestUsuarioRecurso.getAllUsers();
     }
 
-    @POST
+    @GET
     @Path("obtener_ciudades")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<Ciudad> obtenerCiudades(CodigoPaisIonic codigoPais) throws ServiceException {
-        return servicioRestUsuarioRecurso.obtenerCiudades(codigoPais);
+    public List<Ciudad> obtenerCiudades() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerCiudades();
     }
 
     @GET
@@ -114,7 +114,7 @@ public class UsuarioRecurso {
        return servicioRestUsuarioRecurso.agregarUsuarios(newUsuario);
     }
     
-    @POST
+    @GET
     @Path("obtener_parentescos")
     @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)

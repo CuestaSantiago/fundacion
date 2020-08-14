@@ -11,14 +11,14 @@ package com.software.fnj.model.Ionic;
  */
 public class CodigoPaisIonic {
 
-    private String codigoPais;
+    private String ciudad;
 
-    public String getCodigoPais() {
-        return codigoPais;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCodigoPais(String codigoPais) {
-        this.codigoPais = codigoPais;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
 }

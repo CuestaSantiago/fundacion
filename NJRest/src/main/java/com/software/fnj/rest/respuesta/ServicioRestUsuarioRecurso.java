@@ -65,12 +65,12 @@ public class ServicioRestUsuarioRecurso {
         return usuariosIonic;
     }
 
-    public List<Ciudad> obtenerCiudades(CodigoPaisIonic codigoPais) throws ServiceException {
+    public List<Ciudad> obtenerCiudades() throws ServiceException {
         List<Ciudad> ciudades = new ArrayList();
-        ciudades = usuarioServicio.obtenerCiudades(codigoPais.getCodigoPais());
+        ciudades = usuarioServicio.obtenerCiudades();
         if (ciudades.size() > 0 || ciudades != null) {
-            for (Ciudad ciudad : ciudades) {
-                ciudad.setUsuarioCollection(null);
+            for (Ciudad ciu : ciudades) {
+                ciu.setUsuarioCollection(null);
             }
         } else {
             throw new ServiceException("No se ha podido encontrar ciudades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
@@ -131,13 +131,13 @@ public class ServicioRestUsuarioRecurso {
     }
 
     public Boolean agregarDocumento(DocumentoIonic documento) throws ServiceException {
-        boolean lugaringresos = false;
+        boolean agregado = false;
         if (documento != null) {
-            lugaringresos = usuarioServicio.agregarDocumento(documento);
+            agregado = usuarioServicio.agregarDocumento(documento);
         } else {
             throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
-        return lugaringresos;
+        return agregado;
     }
 
     public Boolean agregarUsuarios(List<UsuarioNuevoIonic> newUsuario) throws ServiceException {
@@ -157,6 +157,7 @@ public class ServicioRestUsuarioRecurso {
             for (Parentescofamiliar parentesco : parentescos) {
                 parentesco.setParentescofamiliarusuarioCollection(null);
             }
+            parentescos.remove(0);
         } else {
             throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
