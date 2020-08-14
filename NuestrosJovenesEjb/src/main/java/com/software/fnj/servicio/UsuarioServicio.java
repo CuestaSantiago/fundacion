@@ -16,6 +16,7 @@ import com.software.fnj.facade.ParentescofamiliarusuarioFacade;
 import com.software.fnj.facade.SaludFacade;
 import com.software.fnj.facade.UsuarioFacade;
 import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
 import com.software.fnj.modelo.Ciudad;
 import com.software.fnj.modelo.Documento;
@@ -200,7 +201,7 @@ public class UsuarioServicio {
         try {
             usuario = usuarioFacade.obtenerusuarioPorIdUusario(docUsuario.getIdUsuario());
             if (usuario != null) {
-                documento.setDocumento(docUsuario.getDocumento());
+                documento.setDocumento(docUsuario.getDocumento().getBytes());
                 documento.setIdusuario(usuario);
                 documento.setObservacion(docUsuario.getObservacion());
                 documentoFacade.create(documento);
@@ -225,7 +226,7 @@ public class UsuarioServicio {
             for (UsuarioNuevoIonic usuarioNuevoIonic : newUsuario) {
                 if (newUsuario.size() > 1) {
                     usuario = agrearUsaurio(usuarioNuevoIonic);
-                     if (newUsuario.size() == 0) {
+                    if (newUsuario.size() == 0) {
                         idCabezaHogar = usuario.getIdusuario();
                     }
                     parentesco.setIdusuario(usuario);
@@ -266,25 +267,21 @@ public class UsuarioServicio {
                 ciudad = ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad());
                 pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
                 nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
-                lugarIngreso = lugaringresoFacade.obtenerLugarIngresoPorId(newUsuario.getLugarIngreso());
-                if (lugarIngreso == null) {
+                if (lugaringresoFacade.verificarLugarIngreso(newUsuario.getLugarIngreso())) {
                     lugarIngreso.setNombre(newUsuario.getLugarIngreso());
                     lugaringresoFacade.create(lugarIngreso);
+                } else {
+                    lugarIngreso = lugaringresoFacade.obtenerLugarIngresoPorId(newUsuario.getLugarIngreso());
                 }
                 usuario.setApellidos(newUsuario.getApellidos());
                 usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
                 usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
                 usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
-                usuario.setFechaIngresoFundacion(new Date());
+                usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
                 usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
                 usuario.setFoto(newUsuario.getFoto());
                 usuario.setHabilidades(newUsuario.getHabilidades());
-                usuario.setIdciudad(ciudad);
                 usuario.setIdentificacion(newUsuario.getIdentificacion());
-                usuario.setIdgenero(genero);
-                usuario.setIdlugarIngreso(lugarIngreso);
-                usuario.setIdnacionalidad(nacionaliad);
-                usuario.setIdpais(pais);
                 usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());
                 usuario.setNombres(newUsuario.getNombres());
                 usuario.setOficio(newUsuario.getOficio());
@@ -293,6 +290,16 @@ public class UsuarioServicio {
                 usuario.setRazonEgreso(newUsuario.getRazonEgreso());
                 usuario.setSituacionMigratoria(newUsuario.getSituacionMigratoria());
                 usuario.setIdRegistrador(newUsuario.getIdRegistrador());
+                usuario.setTelefono(newUsuario.getTelefono());
+                usuario.setTelefonoContacto(newUsuario.getTelefonoContacto());
+                usuario.setTipoIdentificacion(newUsuario.getTipoIdentificacion());
+                usuario.setObservacionIngreso(newUsuario.getObservacionIngreso());
+                usuario.setIdciudad(ciudad);
+                usuario.setIdgenero(genero);
+                usuario.setIdlugarIngreso(lugarIngreso);
+                usuario.setIdnacionalidad(nacionaliad);
+                usuario.setIdpais(pais);
+                
                 usuarioFacade.create(usuario);
             } else {
                 throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
@@ -307,19 +314,26 @@ public class UsuarioServicio {
     }
 
     private void llenarDocumentos(UsuarioNuevoIonic newUsuario, Usuario usuario) {
-        Salud salud = new Salud();
         if (newUsuario.getDocumento() != null) {
-            for (Documento object : newUsuario.getDocumento()) {
-                object.setIdusuario(usuario);
-                documentoFacade.create(object);
+            for (DocumentoIonic object : newUsuario.getDocumento()) {
+                Documento doc = new Documento();
+                doc.setDocumento(object.getDocumento().getBytes());
+                doc.setIdusuario(usuario);
+                doc.setObservacion(object.getObservacion());
+                documentoFacade.create(doc);
             }
         }
         if (newUsuario.getSalud() != null) {
-            for (Salud object : newUsuario.getSalud()) {
-                object.setIdusuario(usuario);
-                saludFacade.create(object);
+            for (SaludIonic object : newUsuario.getSalud()) {
+                Salud salud = new Salud();
+                salud.setFoto(object.getFoto().getBytes());
+                salud.setIdusuario(usuario);
+                salud.setEstadoDiscapacidad(object.getEstadoDiscapacidad());
+                saludFacade.create(salud);
             }
-        }else{
+        } else {
+            Salud salud = new Salud();
+            salud.setCondicionMedica("No se registro ninguna condición medica");
             salud.setEstadoDiscapacidad(SaludConstante.SALUDABLE.getSaludConstanteId());
             salud.setIdusuario(usuario);
             saludFacade.create(salud);

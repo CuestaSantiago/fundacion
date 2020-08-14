@@ -13,7 +13,7 @@ public class DocumentoIonic {
 
     private Integer idUsuario;
     private String observacion;
-    private byte[] documento;
+    private String documento;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -31,11 +31,11 @@ public class DocumentoIonic {
         this.observacion = observacion;
     }
 
-    public byte[] getDocumento() {
+    public String getDocumento() {
         return documento;
     }
 
-    public void setDocumento(byte[] documento) {
+    public void setDocumento(String documento) {
         this.documento = documento;
     }
 

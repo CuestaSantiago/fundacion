@@ -48,4 +48,16 @@ public class LugaringresoFacade extends AbstractFacade<Lugaringreso> {
         return lugarIngreso;
     }
     
+    public Boolean verificarLugarIngreso(String lugarIngreso) throws ServiceException {
+        Long userBoolean = -1l;
+        try {
+            userBoolean = em.createQuery("SELECT count(l.nombre) FROM Lugaringreso l WHERE l.nombre = :nombre", Long.class)
+                    .setParameter("nombre", lugarIngreso).getSingleResult();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por identificación: {0}{1}", new Object[]{lugarIngreso, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return userBoolean.equals(0l);//es cero long no uno   si encuentra algo es falso 
+    }
+    
 }

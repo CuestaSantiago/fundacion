@@ -19,28 +19,33 @@ public class UsuarioNuevoIonic {
     private Integer idusuario;
     private String nombres;
     private String apellidos;
-    private Date fechaNacimiento;
     private String identificacion;
     private String oficio;
     private String profesion;
     private String habilidades;
     private String nivelInstruccion;
-    private Date fechaIngresoEcuador;
-    private Integer estado;
     private String razonEgreso;
-    private byte[] foto;
-    private Date fechaEgresoFundacion;
     private String provincia;
     private String situacionMigratoria;
+    private String lugarIngreso;
+    private String telefono;
+    private String telefonoContacto;
+    private String observacionIngreso;
+    private Date fechaNacimiento;
+    private Date fechaEgresoFundacion;
+    private Date fechaIngresoFundacion;
+    private Date fechaIngresoEcuador;
+    private byte[] foto;
+    private Integer tipoIdentificacion;
+    private Integer estado;
     private Integer idciudad;
     private Integer idgenero;
-    private String lugarIngreso;
     private Integer idnacionalidad;
     private Integer idpais;
     private Integer idRegistrador;
     private Integer idParentesco;
-    private List<Salud> salud;
-    private List<Documento> documento;
+    private List<SaludIonic> salud;
+    private List<DocumentoIonic> documento;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -64,14 +69,6 @@ public class UsuarioNuevoIonic {
 
     public void setApellidos(String apellidos) {
         this.apellidos = apellidos;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public String getIdentificacion() {
@@ -114,44 +111,12 @@ public class UsuarioNuevoIonic {
         this.nivelInstruccion = nivelInstruccion;
     }
 
-    public Date getFechaIngresoEcuador() {
-        return fechaIngresoEcuador;
-    }
-
-    public void setFechaIngresoEcuador(Date fechaIngresoEcuador) {
-        this.fechaIngresoEcuador = fechaIngresoEcuador;
-    }
-
-    public Integer getEstado() {
-        return estado;
-    }
-
-    public void setEstado(Integer estado) {
-        this.estado = estado;
-    }
-
     public String getRazonEgreso() {
         return razonEgreso;
     }
 
     public void setRazonEgreso(String razonEgreso) {
         this.razonEgreso = razonEgreso;
-    }
-
-    public byte[] getFoto() {
-        return foto;
-    }
-
-    public void setFoto(byte[] foto) {
-        this.foto = foto;
-    }
-
-    public Date getFechaEgresoFundacion() {
-        return fechaEgresoFundacion;
-    }
-
-    public void setFechaEgresoFundacion(Date fechaEgresoFundacion) {
-        this.fechaEgresoFundacion = fechaEgresoFundacion;
     }
 
     public String getProvincia() {
@@ -170,6 +135,94 @@ public class UsuarioNuevoIonic {
         this.situacionMigratoria = situacionMigratoria;
     }
 
+    public String getLugarIngreso() {
+        return lugarIngreso;
+    }
+
+    public void setLugarIngreso(String lugarIngreso) {
+        this.lugarIngreso = lugarIngreso;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getTelefonoContacto() {
+        return telefonoContacto;
+    }
+
+    public void setTelefonoContacto(String telefonoContacto) {
+        this.telefonoContacto = telefonoContacto;
+    }
+
+    public String getObservacionIngreso() {
+        return observacionIngreso;
+    }
+
+    public void setObservacionIngreso(String observacionIngreso) {
+        this.observacionIngreso = observacionIngreso;
+    }
+
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Date getFechaEgresoFundacion() {
+        return fechaEgresoFundacion;
+    }
+
+    public void setFechaEgresoFundacion(Date fechaEgresoFundacion) {
+        this.fechaEgresoFundacion = fechaEgresoFundacion;
+    }
+
+    public Date getFechaIngresoFundacion() {
+        return fechaIngresoFundacion;
+    }
+
+    public void setFechaIngresoFundacion(Date fechaIngresoFundacion) {
+        this.fechaIngresoFundacion = fechaIngresoFundacion;
+    }
+
+    public Date getFechaIngresoEcuador() {
+        return fechaIngresoEcuador;
+    }
+
+    public void setFechaIngresoEcuador(Date fechaIngresoEcuador) {
+        this.fechaIngresoEcuador = fechaIngresoEcuador;
+    }
+
+    public byte[] getFoto() {
+        return foto;
+    }
+
+    public void setFoto(byte[] foto) {
+        this.foto = foto;
+    }
+
+    public Integer getTipoIdentificacion() {
+        return tipoIdentificacion;
+    }
+
+    public void setTipoIdentificacion(Integer tipoIdentificacion) {
+        this.tipoIdentificacion = tipoIdentificacion;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
     public Integer getIdciudad() {
         return idciudad;
     }
@@ -184,14 +237,6 @@ public class UsuarioNuevoIonic {
 
     public void setIdgenero(Integer idgenero) {
         this.idgenero = idgenero;
-    }
-
-    public String getLugarIngreso() {
-        return lugarIngreso;
-    }
-
-    public void setLugarIngreso(String lugarIngreso) {
-        this.lugarIngreso = lugarIngreso;
     }
 
     public Integer getIdnacionalidad() {
@@ -210,22 +255,6 @@ public class UsuarioNuevoIonic {
         this.idpais = idpais;
     }
 
-    public List<Salud> getSalud() {
-        return salud;
-    }
-
-    public void setSalud(List<Salud> salud) {
-        this.salud = salud;
-    }
-
-    public List<Documento> getDocumento() {
-        return documento;
-    }
-
-    public void setDocumento(List<Documento> documento) {
-        this.documento = documento;
-    }
-
     public Integer getIdRegistrador() {
         return idRegistrador;
     }
@@ -240,6 +269,22 @@ public class UsuarioNuevoIonic {
 
     public void setIdParentesco(Integer idParentesco) {
         this.idParentesco = idParentesco;
+    }
+
+    public List<SaludIonic> getSalud() {
+        return salud;
+    }
+
+    public void setSalud(List<SaludIonic> salud) {
+        this.salud = salud;
+    }
+
+    public List<DocumentoIonic> getDocumento() {
+        return documento;
+    }
+
+    public void setDocumento(List<DocumentoIonic> documento) {
+        this.documento = documento;
     }
 
 }

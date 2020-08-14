@@ -6,9 +6,7 @@
 package com.software.fnj.servicio;
 
 import com.software.fnj.facade.ParentescofamiliarusuarioFacade;
-import com.software.fnj.facade.UsuarioFacade;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
-import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import java.util.ArrayList;
 import java.util.List;
