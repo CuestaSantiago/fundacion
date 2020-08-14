@@ -14,6 +14,7 @@ import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Parentescofamiliar;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.ServicioRestUsuarioRecurso;
 import com.software.fnj.util.Constante;
@@ -111,6 +112,14 @@ public class UsuarioRecurso {
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
     public boolean registrarUsuario(List<UsuarioNuevoIonic>  newUsuario) throws ServiceException {
        return servicioRestUsuarioRecurso.agregarUsuarios(newUsuario);
+    }
+    
+    @POST
+    @Path("obtener_parentescos")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Parentescofamiliar>  obtenerParentescos() throws ServiceException {
+        return servicioRestUsuarioRecurso.obtenerParentescos();
     }
     
 }

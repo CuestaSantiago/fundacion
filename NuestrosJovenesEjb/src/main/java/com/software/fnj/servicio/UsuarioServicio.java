@@ -260,7 +260,7 @@ public class UsuarioServicio {
                 usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
                 usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
                 usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
-                usuario.setFoto(newUsuario.getFoto());
+                usuario.setFoto(newUsuario.getFoto().getBytes());
                 usuario.setHabilidades(newUsuario.getHabilidades());
                 usuario.setIdentificacion(newUsuario.getIdentificacion());
                 usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());

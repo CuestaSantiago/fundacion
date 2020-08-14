@@ -35,7 +35,7 @@ public class UsuarioNuevoIonic {
     private Date fechaEgresoFundacion;
     private Date fechaIngresoFundacion;
     private Date fechaIngresoEcuador;
-    private byte[] foto;
+    private String foto;
     private Integer tipoIdentificacion;
     private Integer estado;
     private Integer idciudad;
@@ -199,11 +199,11 @@ public class UsuarioNuevoIonic {
         this.fechaIngresoEcuador = fechaIngresoEcuador;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

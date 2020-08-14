@@ -5,7 +5,9 @@
  */
 package com.software.fnj.servicio;
 
+import com.software.fnj.facade.ParentescofamiliarFacade;
 import com.software.fnj.facade.ParentescofamiliarusuarioFacade;
+import com.software.fnj.modelo.Parentescofamiliar;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.response.exception.ServiceException;
 import java.util.ArrayList;
@@ -30,6 +32,10 @@ public class ParentescoFamiliarUsuarioServicio {
 
     @EJB
     ParentescofamiliarusuarioFacade parentescoFamiliarUsuarioFacade;
+
+    @EJB
+    ParentescofamiliarFacade parentescoFamiliarFacade;
+
     /**
      *
      * @return @throws ServiceException
@@ -47,5 +53,19 @@ public class ParentescoFamiliarUsuarioServicio {
         }
         return usuarios;
     }
-    
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Parentescofamiliar> obtenerParentescos() throws ServiceException {
+        List<Parentescofamiliar> parentesco = new ArrayList();
+        try {
+            parentesco = parentescoFamiliarFacade.findAll();
+            LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + parentesco);
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return parentesco;
+    }
+
 }

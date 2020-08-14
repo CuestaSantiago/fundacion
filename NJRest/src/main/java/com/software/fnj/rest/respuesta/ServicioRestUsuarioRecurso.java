@@ -17,6 +17,7 @@ import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
+import com.software.fnj.modelo.Parentescofamiliar;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.servicio.DocumentoServicio;
 import com.software.fnj.servicio.ParentescoFamiliarUsuarioServicio;
@@ -138,8 +139,8 @@ public class ServicioRestUsuarioRecurso {
         }
         return lugaringresos;
     }
-    
-    public Boolean agregarUsuarios(List<UsuarioNuevoIonic>  newUsuario) throws ServiceException {
+
+    public Boolean agregarUsuarios(List<UsuarioNuevoIonic> newUsuario) throws ServiceException {
         boolean lugaringresos = false;
         if (newUsuario != null) {
             lugaringresos = usuarioServicio.agregarUsuarios(newUsuario);
@@ -147,5 +148,18 @@ public class ServicioRestUsuarioRecurso {
             throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return lugaringresos;
+    }
+
+    public List<Parentescofamiliar> obtenerParentescos() throws ServiceException {
+        List<Parentescofamiliar> parentescos = new ArrayList();
+        parentescos = parentescoFamiliarUsuarioServicio.obtenerParentescos();
+        if (parentescos.size() > 0 || parentescos != null) {
+            for (Parentescofamiliar parentesco : parentescos) {
+                parentesco.setParentescofamiliarusuarioCollection(null);
+            }
+        } else {
+            throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return parentescos;
     }
 }
