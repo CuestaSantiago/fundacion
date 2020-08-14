@@ -72,26 +72,7 @@ public class UsuarioServicio {
     @EJB
     SaludFacade saludFacade;
 
-    /**
-     * Method that carries out the edition of an event already created in the
-     * database
-     *
-     * @param user is the complete event to be edited
-     * @boolean return with the edit response
-     */
-    public boolean editarUsuario(Usuario user) throws ServiceException {
-        Boolean edit = false;
-        try {
-            usuarioFacade.edit(user);
-            edit = true;
-            LOG.log(Level.SEVERE, "UsuarioServicio: User: " + user.getNombres() + " successfully edited");
-        } catch (Exception ex) {
-            LOG.log(Level.SEVERE, "UsuarioServicio: Error editing user: " + user);
-            LOG.log(Level.SEVERE, "", ex);
-            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return edit;
-    }
+  
 
     /**
      *

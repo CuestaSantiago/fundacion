@@ -27,6 +27,8 @@ public class IonicFormato {
     /**
      *
      * @param usuario
+     * @param salud
+     * @param documento
      * @return
      */
     public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, List<Salud> salud, List<Documento> documento) {
@@ -34,13 +36,13 @@ public class IonicFormato {
         usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
         usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
         for (Documento doc : documento) {
-        doc.setIdusuario(null);
+            doc.setIdusuario(null);
         }
         for (Salud sal : salud) {
-        sal.setIdusuario(null);
+            sal.setIdusuario(null);
         }
         //usuario.getIdusuario().getIdlugarIngreso().setUsuarioCollection(null);
-        
+
         user.setIdusuario(usuario.getIdusuario().getIdusuario());
         user.setNombres(usuario.getIdusuario().getNombres());
         user.setApellidos(usuario.getIdusuario().getApellidos());
@@ -60,13 +62,12 @@ public class IonicFormato {
         Lugaringreso lugarIngreso = new Lugaringreso();
         Nacionalidad nacionalidad = new Nacionalidad();
         Pais pais = new Pais();
-        
+
 //        ciudad.setIdciudad(usuarioIonic.getIdciudad());
 //        genero.setIdgenero(usuarioIonic.getIdgenero());
 //        lugarIngreso.setIdlugarIngreso(usuarioIonic.getIdlugarIngreso());
 //        nacionalidad.setIdnacionalidad(usuarioIonic.getIdgenero());
 //        pais.setIdpais(usuarioIonic.getIdpais());
-        
         user.setNombres(usuarioIonic.getNombres());
         user.setApellidos(usuarioIonic.getApellidos());
         user.setIdentificacion(usuarioIonic.getIdentificacion());

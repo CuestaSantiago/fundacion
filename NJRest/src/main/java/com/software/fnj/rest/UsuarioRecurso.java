@@ -112,5 +112,5 @@ public class UsuarioRecurso {
     public boolean registrarUsuario(List<UsuarioNuevoIonic>  newUsuario) throws ServiceException {
        return servicioRestUsuarioRecurso.agregarUsuarios(newUsuario);
     }
-
+    
 }

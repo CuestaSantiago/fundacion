@@ -8,6 +8,7 @@ package com.software.fnj.rest.respuesta;
 import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
 import com.software.fnj.model.Ionic.AutoIonic;
+import com.software.fnj.model.Ionic.DesactivadorAdminIonic;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.servicio.AsignacionPerfilServicio;
 import java.util.ArrayList;
@@ -48,11 +49,11 @@ public class AutenticacionRestRecurso {
         }
     }
 
-    public Boolean desactivarAsignacionPerfil(Integer idAdministrador) throws ServiceException {
+    public Boolean desactivarAsignacionPerfil(DesactivadorAdminIonic idAdministrador) throws ServiceException {
         boolean asignacion = false;
 
         if (idAdministrador != null) {
-            asignacion = asignacionPerfilServicio.desactivarAsignacionPerfil(idAdministrador);
+            asignacion = asignacionPerfilServicio.desactivarAsignacionPerfil(idAdministrador.getIdAdministrador());
         } else {
             throw new ServiceException("No se ha podido desactivar asignaciones de perfiles por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }

@@ -7,6 +7,7 @@ package com.software.fnj.rest;
 
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
 import com.software.fnj.model.Ionic.AutoIonic;
+import com.software.fnj.model.Ionic.DesactivadorAdminIonic;
 import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.AutenticacionRestRecurso;
@@ -63,8 +64,8 @@ public class AutenticacionRecurso {
     @Path("desactivar_administrador")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public boolean desactivarAsignacionPerfil(@QueryParam("idAsignacionPerfil") Integer idAsignacionPerfil) throws ServiceException {
-        return servicioRestAcceso.desactivarAsignacionPerfil(idAsignacionPerfil);
+    public boolean desactivarAsignacionPerfil(DesactivadorAdminIonic desactivador) throws ServiceException {
+        return servicioRestAcceso.desactivarAsignacionPerfil(desactivador);
     }
 
     
