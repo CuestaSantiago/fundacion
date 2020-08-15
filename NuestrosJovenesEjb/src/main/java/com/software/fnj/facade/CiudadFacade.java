@@ -40,9 +40,9 @@ public class CiudadFacade extends AbstractFacade<Ciudad> {
     public boolean obtenerCiudadPorId(String idciudad) throws ServiceException {
         Long userBoolean = -1l;
         try {
-            userBoolean = em.createQuery("SELECT count(c.ciudad) FROM Ciudad c WHERE c.idciudad = :idciudad",
+            userBoolean = em.createQuery("SELECT count(c.ciudad) FROM Ciudad c WHERE c.ciudad = :ciudad",
                     Long.class)
-                    .setParameter("idciudad", idciudad)
+                    .setParameter("ciudad", idciudad)
                     .getSingleResult();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{idciudad, e.toString()});
