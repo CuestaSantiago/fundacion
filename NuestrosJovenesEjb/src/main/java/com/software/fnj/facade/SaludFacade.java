@@ -23,8 +23,8 @@ import javax.ws.rs.core.Response;
  */
 @Stateless
 public class SaludFacade extends AbstractFacade<Salud> {
-    
-     private static final Logger LOG = Logger.getLogger(Salud.class.getName());
+
+    private static final Logger LOG = Logger.getLogger(Salud.class.getName());
 
     @PersistenceContext(unitName = "fundacion")
     private EntityManager em;
@@ -39,16 +39,31 @@ public class SaludFacade extends AbstractFacade<Salud> {
     }
 
     public List<Salud> obtenerSaludPorUsuarios(Usuario usuario) throws ServiceException {
-    List<Salud> salud = new ArrayList();
+        List<Salud> salud = new ArrayList();
         try {
-            salud = em.createQuery("SELECT s FROM Salud s WHERE s.idusuario=:usuario", 
+            salud = em.createQuery("SELECT s FROM Salud s WHERE s.idusuario=:usuario",
                     Salud.class)
                     .setParameter("usuario", usuario)
                     .getResultList();
         } catch (Exception e) {
-            LOG.log(Level.SEVERE,"SaludFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{usuario, e.toString()});
+            LOG.log(Level.SEVERE, "SaludFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{usuario, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
-        return salud;    }
+        return salud;
+    }
     
+     public Salud obtenerSaludPorIdSalud(int idSalud) throws ServiceException {
+        Salud salud = null;
+        try {
+            salud = em.createQuery("SELECT s FROM Salud s WHERE s.idsalud=:idsalud",
+                    Salud.class)
+                    .setParameter("idsalud", idSalud)
+                    .getSingleResult();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "SaludFacade: Error al consultar salud por idsalud: {0}{1}", new Object[]{idSalud, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return salud;
+    }
+
 }

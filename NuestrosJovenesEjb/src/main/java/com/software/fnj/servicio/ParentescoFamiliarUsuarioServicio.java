@@ -67,5 +67,19 @@ public class ParentescoFamiliarUsuarioServicio {
         }
         return parentesco;
     }
+    
+     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Parentescofamiliarusuario> obenerTodosLosUsuarios() throws ServiceException {
+        List<Parentescofamiliarusuario> usuarios = new ArrayList();
+        try {
+            usuarios = parentescoFamiliarUsuarioFacade.obtenerUsuariosActivos();
+            LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuarios;
+    }
 
 }

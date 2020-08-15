@@ -122,4 +122,19 @@ public class UsuarioRecurso {
         return servicioRestUsuarioRecurso.obtenerParentescos();
     }
     
+    @GET
+    @Path("obtener_todos_usuarios")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException {
+        return servicioRestUsuarioRecurso.obenerTodosLosUsuarios();
+    }
+    
+    @PUT
+    @Path("editar_usuario")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public boolean editarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        return servicioRestUsuarioRecurso.editarUsuario(newUsuario);
+    }
 }

@@ -71,6 +71,10 @@ public class UsuarioServicio {
     ParentescofamiliarusuarioFacade parentescofamiliarusuarioFacade;
     @EJB
     SaludFacade saludFacade;
+    @EJB
+    SaludServicio saludServicio;
+    @EJB
+    DocumentoServicio documentoServicio;
 
     /**
      *
@@ -250,8 +254,8 @@ public class UsuarioServicio {
                 if (ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad())) {
                     ciudad.setCiudad(newUsuario.getIdciudad());
                     ciudadFacade.create(ciudad);
-                }else{
-                ciudad = ciudadFacade.obtenerCiudadesPorCiudad(newUsuario.getIdciudad());
+                } else {
+                    ciudad = ciudadFacade.obtenerCiudadesPorCiudad(newUsuario.getIdciudad());
                 }
                 pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
                 nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
@@ -267,7 +271,9 @@ public class UsuarioServicio {
                 usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
                 usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
                 usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
-                usuario.setFoto(newUsuario.getFoto().getBytes());
+                if (newUsuario.getFoto() != null) {
+                    usuario.setFoto(newUsuario.getFoto().getBytes());
+                }
                 usuario.setHabilidades(newUsuario.getHabilidades());
                 usuario.setIdentificacion(newUsuario.getIdentificacion());
                 usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());
@@ -287,7 +293,6 @@ public class UsuarioServicio {
                 usuario.setIdlugarIngreso(lugarIngreso);
                 usuario.setIdnacionalidad(nacionaliad);
                 usuario.setIdpais(pais);
-
                 usuarioFacade.create(usuario);
             } else {
                 throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
@@ -319,15 +324,117 @@ public class UsuarioServicio {
                 }
                 salud.setIdusuario(usuario);
                 salud.setEstadoDiscapacidad(object.getEstadoDiscapacidad());
+                salud.setCondicionMedica(object.getCondicionMedica());
                 saludFacade.create(salud);
             }
         } else {
             Salud salud = new Salud();
-            salud.setCondicionMedica("No se registro ninguna condición medica");
+            salud.setCondicionMedica("No se registró ninguna condición médica.");
             salud.setEstadoDiscapacidad(SaludConstante.SALUDABLE.getSaludConstanteId());
             salud.setIdusuario(usuario);
             saludFacade.create(salud);
         }
     }
 
+    public boolean editarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        boolean exito = false;
+        Usuario usuario = new Usuario();
+        try {
+            usuario = llenarUsuario(newUsuario);
+            if (usuario != null) {
+                for (SaludIonic saludIonic : newUsuario.getSalud()) {
+                    Salud salud = new Salud();
+                    if (saludIonic.getIdSalud() == null) {
+                        if (saludIonic.getFoto() != null) {
+                            salud.setFoto(saludIonic.getFoto().getBytes());
+                        }
+                        salud.setIdusuario(usuario);
+                        salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
+                        salud.setCondicionMedica(saludIonic.getCondicionMedica());
+                        saludFacade.create(salud);
+                    } else {
+                        if (saludIonic.getFoto() != null) {
+                            salud.setFoto(saludIonic.getFoto().getBytes());
+                        }
+                        salud.setIdusuario(usuario);
+                        salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
+                        salud.setCondicionMedica(saludIonic.getCondicionMedica());
+                        saludFacade.edit(salud);
+                    }
+                }
+                usuarioFacade.edit(usuario);
+                exito = true;
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
+    }
+
+    private Usuario llenarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        Usuario usuario = new Usuario();
+        Genero genero = new Genero();
+        Ciudad ciudad = new Ciudad();
+        Pais pais = new Pais();
+        Nacionalidad nacionaliad = new Nacionalidad();
+        Lugaringreso lugarIngreso = new Lugaringreso();
+        try {
+            if (usuarioFacade.verificarUsuarioRegistrado(newUsuario.getIdentificacion())) {
+                genero = generoFacade.obtenerGeneroPorId(newUsuario.getIdgenero());
+                if (ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad())) {
+                    ciudad.setCiudad(newUsuario.getIdciudad());
+                    ciudadFacade.create(ciudad);
+                } else {
+                    ciudad = ciudadFacade.obtenerCiudadesPorCiudad(newUsuario.getIdciudad());
+                }
+                pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
+                nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
+                if (lugaringresoFacade.verificarLugarIngreso(newUsuario.getLugarIngreso())) {
+                    lugarIngreso.setNombre(newUsuario.getLugarIngreso());
+                    lugaringresoFacade.create(lugarIngreso);
+                } else {
+                    lugarIngreso = lugaringresoFacade.obtenerLugarIngresoPorId(newUsuario.getLugarIngreso());
+                }
+                usuario.setIdusuario(newUsuario.getIdusuario());
+                usuario.setApellidos(newUsuario.getApellidos());
+                usuario.setEstado(newUsuario.getEstado());
+                usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
+                usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
+                usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
+                usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
+                if (newUsuario.getFoto() != null) {
+                    usuario.setFoto(newUsuario.getFoto().getBytes());
+                }
+                usuario.setHabilidades(newUsuario.getHabilidades());
+                usuario.setIdentificacion(newUsuario.getIdentificacion());
+                usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());
+                usuario.setNombres(newUsuario.getNombres());
+                usuario.setOficio(newUsuario.getOficio());
+                usuario.setProfesion(newUsuario.getProfesion());
+                usuario.setProvincia(newUsuario.getProvincia());
+                usuario.setRazonEgreso(newUsuario.getRazonEgreso());
+                usuario.setSituacionMigratoria(newUsuario.getSituacionMigratoria());
+                usuario.setIdRegistrador(newUsuario.getIdRegistrador());
+                usuario.setTelefono(newUsuario.getTelefono());
+                usuario.setTelefonoContacto(newUsuario.getTelefonoContacto());
+                usuario.setTipoIdentificacion(newUsuario.getTipoIdentificacion());
+                usuario.setObservacionIngreso(newUsuario.getObservacionIngreso());
+                usuario.setIdciudad(ciudad);
+                usuario.setIdgenero(genero);
+                usuario.setIdlugarIngreso(lugarIngreso);
+                usuario.setIdnacionalidad(nacionaliad);
+                usuario.setIdpais(pais);
+                usuarioFacade.create(usuario);
+            } else {
+                throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error al contruir el usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuario;
+    }
 }

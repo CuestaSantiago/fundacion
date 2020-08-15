@@ -11,9 +11,18 @@ package com.software.fnj.model.Ionic;
  */
 public class SaludIonic {
 
+    private Integer idSalud;
     private String condicionMedica;
     private String foto;
     private Integer estadoDiscapacidad;
+
+    public Integer getIdSalud() {
+        return idSalud;
+    }
+
+    public void setIdSalud(Integer idSalud) {
+        this.idSalud = idSalud;
+    }
 
     public String getCondicionMedica() {
         return condicionMedica;
@@ -39,5 +48,4 @@ public class SaludIonic {
         this.estadoDiscapacidad = estadoDiscapacidad;
     }
 
-    
 }

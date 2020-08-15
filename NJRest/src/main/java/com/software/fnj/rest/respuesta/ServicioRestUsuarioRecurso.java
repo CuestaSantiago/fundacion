@@ -163,4 +163,32 @@ public class ServicioRestUsuarioRecurso {
         }
         return parentescos;
     }
+
+    public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException {
+         List<UsuarioIonic> usuariosIonic = new ArrayList();
+        List<Parentescofamiliarusuario> usuarios = new ArrayList();
+        usuarios = parentescoFamiliarUsuarioServicio.obenerTodosLosUsuarios();
+        if (usuarios.size() > 0 || usuarios != null) {
+            for (Parentescofamiliarusuario usuario : usuarios) {
+                List<Salud> salud = new ArrayList();
+                List<Documento> documento = new ArrayList();
+                salud = saludServicio.obtenerSaludPorUsuario(usuario.getIdusuario());
+                documento = documentoServicio.obtenerDocumentoPorUsuario(usuario.getIdusuario());
+                usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario, salud, documento));
+            }
+        } else {
+            throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuariosIonic;
+    }
+
+    public boolean editarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+          boolean lugaringresos = false;
+        if (newUsuario != null) {
+            lugaringresos = usuarioServicio.editarUsuario(newUsuario);
+        } else {
+            throw new ServiceException("No se ha podido editar usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return lugaringresos;
+    }
 }
