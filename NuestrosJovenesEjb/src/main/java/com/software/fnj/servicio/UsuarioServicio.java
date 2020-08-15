@@ -31,14 +31,9 @@ import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.util.Constante;
 import com.software.fnj.util.Constante.SaludConstante;
 import com.software.fnj.util.Constante.UsuarioConstante;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.logging.Level;
-import java.util.stream.Collectors;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -252,7 +247,12 @@ public class UsuarioServicio {
         try {
             if (usuarioFacade.verificarUsuarioRegistrado(newUsuario.getIdentificacion())) {
                 genero = generoFacade.obtenerGeneroPorId(newUsuario.getIdgenero());
-                ciudad = ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad());
+                if (ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad())) {
+                    ciudad.setCiudad(newUsuario.getIdciudad());
+                    ciudadFacade.create(ciudad);
+                }else{
+                ciudad = ciudadFacade.obtenerCiudadesPorCiudad(newUsuario.getIdciudad());
+                }
                 pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
                 nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
                 if (lugaringresoFacade.verificarLugarIngreso(newUsuario.getLugarIngreso())) {

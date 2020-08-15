@@ -37,27 +37,28 @@ public class CiudadFacade extends AbstractFacade<Ciudad> {
         super(Ciudad.class);
     }
 
-    public Ciudad obtenerCiudadPorId(Integer idciudad) throws ServiceException {
-        Ciudad ciudad = new Ciudad();
+    public boolean obtenerCiudadPorId(String idciudad) throws ServiceException {
+        Long userBoolean = -1l;
         try {
-            ciudad = em.createQuery("SELECT c FROM Ciudad c WHERE c.idciudad = :idciudad",
-                    Ciudad.class)
+            userBoolean = em.createQuery("SELECT count(c.ciudad) FROM Ciudad c WHERE c.idciudad = :idciudad",
+                    Long.class)
                     .setParameter("idciudad", idciudad)
                     .getSingleResult();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{idciudad, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
-        return ciudad;
+        return userBoolean.equals(0l);
+
     }
 
-    public List<Ciudad> obtenerCiudadesPorCiudad(String ciudad) throws ServiceException {
-        List<Ciudad> ciudades = new ArrayList();
+    public Ciudad obtenerCiudadesPorCiudad(String ciudad) throws ServiceException {
+        Ciudad ciudades = null;
         try {
             ciudades = em.createQuery("SELECT c FROM Ciudad c WHERE c.ciudad = :ciudad",
                     Ciudad.class)
                     .setParameter("ciudad", ciudad)
-                    .getResultList();
+                    .getSingleResult();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{ciudad, e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());

@@ -36,7 +36,7 @@ public class UsuarioNuevoIonic {
     private String foto;
     private Integer tipoIdentificacion;
     private Integer estado;
-    private Integer idciudad;
+    private String idciudad;
     private Integer idgenero;
     private Integer idnacionalidad;
     private Integer idpais;
@@ -221,11 +221,11 @@ public class UsuarioNuevoIonic {
         this.estado = estado;
     }
 
-    public Integer getIdciudad() {
+    public String getIdciudad() {
         return idciudad;
     }
 
-    public void setIdciudad(Integer idciudad) {
+    public void setIdciudad(String idciudad) {
         this.idciudad = idciudad;
     }
 
