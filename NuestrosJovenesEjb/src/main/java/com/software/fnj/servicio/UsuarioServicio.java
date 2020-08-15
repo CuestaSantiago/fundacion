@@ -381,7 +381,6 @@ public class UsuarioServicio {
         Nacionalidad nacionaliad = new Nacionalidad();
         Lugaringreso lugarIngreso = new Lugaringreso();
         try {
-            if (usuarioFacade.verificarUsuarioRegistrado(newUsuario.getIdentificacion())) {
                 genero = generoFacade.obtenerGeneroPorId(newUsuario.getIdgenero());
                 if (ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad())) {
                     ciudad.setCiudad(newUsuario.getIdciudad());
@@ -426,10 +425,7 @@ public class UsuarioServicio {
                 usuario.setIdlugarIngreso(lugarIngreso);
                 usuario.setIdnacionalidad(nacionaliad);
                 usuario.setIdpais(pais);
-                usuarioFacade.create(usuario);
-            } else {
-                throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
-            }
+      
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");
             LOG.log(Level.SEVERE, "", e);
