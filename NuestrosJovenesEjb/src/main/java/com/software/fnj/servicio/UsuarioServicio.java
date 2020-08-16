@@ -32,6 +32,7 @@ import com.software.fnj.util.Constante;
 import com.software.fnj.util.Constante.SaludConstante;
 import com.software.fnj.util.Constante.UsuarioConstante;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.EJB;
@@ -272,7 +273,8 @@ public class UsuarioServicio {
                 usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
                 usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
                 if (newUsuario.getFoto() != null) {
-                    usuario.setFoto(newUsuario.getFoto().getBytes());
+                    byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
+                    usuario.setFoto(foto);
                 }
                 usuario.setHabilidades(newUsuario.getHabilidades());
                 usuario.setIdentificacion(newUsuario.getIdentificacion());
@@ -310,7 +312,8 @@ public class UsuarioServicio {
         if (newUsuario.getDocumento() != null) {
             for (DocumentoIonic object : newUsuario.getDocumento()) {
                 Documento doc = new Documento();
-                doc.setDocumento(object.getDocumento().getBytes());
+                byte[] document = Base64.getEncoder().encode(object.getDocumento().getBytes());
+                doc.setDocumento(document);
                 doc.setIdusuario(usuario);
                 doc.setObservacion(object.getObservacion());
                 documentoFacade.create(doc);
@@ -320,7 +323,8 @@ public class UsuarioServicio {
             for (SaludIonic object : newUsuario.getSalud()) {
                 Salud salud = new Salud();
                 if (object.getFoto() != null) {
-                    salud.setFoto(object.getFoto().getBytes());
+                    byte[] foto = Base64.getEncoder().encode(object.getFoto().getBytes());
+                    salud.setFoto(foto);
                 }
                 salud.setIdusuario(usuario);
                 salud.setEstadoDiscapacidad(object.getEstadoDiscapacidad());
@@ -346,7 +350,8 @@ public class UsuarioServicio {
                     Salud salud = new Salud();
                     if (saludIonic.getIdSalud() == null) {
                         if (saludIonic.getFoto() != null) {
-                            salud.setFoto(saludIonic.getFoto().getBytes());
+                            byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
+                            salud.setFoto(foto);
                         }
                         salud.setIdusuario(usuario);
                         salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
@@ -354,7 +359,8 @@ public class UsuarioServicio {
                         saludFacade.create(salud);
                     } else {
                         if (saludIonic.getFoto() != null) {
-                            salud.setFoto(saludIonic.getFoto().getBytes());
+                            byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
+                            salud.setFoto(foto);
                         }
                         salud.setIdusuario(usuario);
                         salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
@@ -381,51 +387,51 @@ public class UsuarioServicio {
         Nacionalidad nacionaliad = new Nacionalidad();
         Lugaringreso lugarIngreso = new Lugaringreso();
         try {
-                genero = generoFacade.obtenerGeneroPorId(newUsuario.getIdgenero());
-                if (ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad())) {
-                    ciudad.setCiudad(newUsuario.getIdciudad());
-                    ciudadFacade.create(ciudad);
-                } else {
-                    ciudad = ciudadFacade.obtenerCiudadesPorCiudad(newUsuario.getIdciudad());
-                }
-                pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
-                nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
-                if (lugaringresoFacade.verificarLugarIngreso(newUsuario.getLugarIngreso())) {
-                    lugarIngreso.setNombre(newUsuario.getLugarIngreso());
-                    lugaringresoFacade.create(lugarIngreso);
-                } else {
-                    lugarIngreso = lugaringresoFacade.obtenerLugarIngresoPorId(newUsuario.getLugarIngreso());
-                }
-                usuario.setIdusuario(newUsuario.getIdusuario());
-                usuario.setApellidos(newUsuario.getApellidos());
-                usuario.setEstado(newUsuario.getEstado());
-                usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
-                usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
-                usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
-                usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
-                if (newUsuario.getFoto() != null) {
-                    usuario.setFoto(newUsuario.getFoto().getBytes());
-                }
-                usuario.setHabilidades(newUsuario.getHabilidades());
-                usuario.setIdentificacion(newUsuario.getIdentificacion());
-                usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());
-                usuario.setNombres(newUsuario.getNombres());
-                usuario.setOficio(newUsuario.getOficio());
-                usuario.setProfesion(newUsuario.getProfesion());
-                usuario.setProvincia(newUsuario.getProvincia());
-                usuario.setRazonEgreso(newUsuario.getRazonEgreso());
-                usuario.setSituacionMigratoria(newUsuario.getSituacionMigratoria());
-                usuario.setIdRegistrador(newUsuario.getIdRegistrador());
-                usuario.setTelefono(newUsuario.getTelefono());
-                usuario.setTelefonoContacto(newUsuario.getTelefonoContacto());
-                usuario.setTipoIdentificacion(newUsuario.getTipoIdentificacion());
-                usuario.setObservacionIngreso(newUsuario.getObservacionIngreso());
-                usuario.setIdciudad(ciudad);
-                usuario.setIdgenero(genero);
-                usuario.setIdlugarIngreso(lugarIngreso);
-                usuario.setIdnacionalidad(nacionaliad);
-                usuario.setIdpais(pais);
-      
+            genero = generoFacade.obtenerGeneroPorId(newUsuario.getIdgenero());
+            if (ciudadFacade.obtenerCiudadPorId(newUsuario.getIdciudad())) {
+                ciudad.setCiudad(newUsuario.getIdciudad());
+                ciudadFacade.create(ciudad);
+            } else {
+                ciudad = ciudadFacade.obtenerCiudadesPorCiudad(newUsuario.getIdciudad());
+            }
+            pais = paisFacade.obtenerPaisPorId(newUsuario.getIdpais());
+            nacionaliad = nacionalidadFacade.obtenerNaionalidadPorId(newUsuario.getIdnacionalidad());
+            if (lugaringresoFacade.verificarLugarIngreso(newUsuario.getLugarIngreso())) {
+                lugarIngreso.setNombre(newUsuario.getLugarIngreso());
+                lugaringresoFacade.create(lugarIngreso);
+            } else {
+                lugarIngreso = lugaringresoFacade.obtenerLugarIngresoPorId(newUsuario.getLugarIngreso());
+            }
+            usuario.setIdusuario(newUsuario.getIdusuario());
+            usuario.setApellidos(newUsuario.getApellidos());
+            usuario.setEstado(newUsuario.getEstado());
+            usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
+            usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
+            usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
+            usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
+            if (newUsuario.getFoto() != null) {
+                byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
+                usuario.setFoto(foto);
+            }
+            usuario.setHabilidades(newUsuario.getHabilidades());
+            usuario.setIdentificacion(newUsuario.getIdentificacion());
+            usuario.setNivelInstruccion(newUsuario.getNivelInstruccion());
+            usuario.setNombres(newUsuario.getNombres());
+            usuario.setOficio(newUsuario.getOficio());
+            usuario.setProfesion(newUsuario.getProfesion());
+            usuario.setProvincia(newUsuario.getProvincia());
+            usuario.setRazonEgreso(newUsuario.getRazonEgreso());
+            usuario.setSituacionMigratoria(newUsuario.getSituacionMigratoria());
+            usuario.setIdRegistrador(newUsuario.getIdRegistrador());
+            usuario.setTelefono(newUsuario.getTelefono());
+            usuario.setTelefonoContacto(newUsuario.getTelefonoContacto());
+            usuario.setTipoIdentificacion(newUsuario.getTipoIdentificacion());
+            usuario.setObservacionIngreso(newUsuario.getObservacionIngreso());
+            usuario.setIdciudad(ciudad);
+            usuario.setIdgenero(genero);
+            usuario.setIdlugarIngreso(lugarIngreso);
+            usuario.setIdnacionalidad(nacionaliad);
+            usuario.setIdpais(pais);
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");
             LOG.log(Level.SEVERE, "", e);

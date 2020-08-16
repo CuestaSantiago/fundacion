@@ -9,6 +9,8 @@ import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.modelo.Salud;
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -24,7 +26,7 @@ public class IonicFormato {
      * @param documento
      * @return
      */
-    public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, List<Salud> salud, List<Documento> documento) {
+    public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, List<Salud> salud, List<Documento> documento) throws UnsupportedEncodingException {
         UsuarioIonic user = new UsuarioIonic();
         usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
         usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
@@ -37,9 +39,13 @@ public class IonicFormato {
         usuario.getIdusuario().setParentescofamiliarusuarioCollection(null);
         usuario.getIdusuario().setSaludCollection(null);
         for (Documento doc : documento) {
+            byte[] decodedString = Base64.getDecoder().decode(new String(doc.getDocumento()).getBytes("UTF-8"));
+            doc.setDocumento(decodedString);
             doc.setIdusuario(null);
         }
         for (Salud sal : salud) {
+            byte[] decodedString = Base64.getDecoder().decode(new String(sal.getFoto()).getBytes("UTF-8"));
+            sal.setFoto(decodedString);
             sal.setIdusuario(null);
         }
         user.setIdusuario(usuario.getIdusuario().getIdusuario());
@@ -54,8 +60,10 @@ public class IonicFormato {
         user.setFechaIngresoFundacion(usuario.getIdusuario().getFechaIngresoFundacion());
         user.setEstado(usuario.getIdusuario().getEstado());
         user.setRazonEgreso(usuario.getIdusuario().getRazonEgreso());
-        user.setFoto(usuario.getIdusuario().getFoto());
+        byte[] decodedString = Base64.getDecoder().decode(new String(usuario.getIdusuario().getFoto()).getBytes("UTF-8"));
+        user.setFoto(decodedString);
         user.setFechaEgresoFundacion(usuario.getIdusuario().getFechaEgresoFundacion());
+        user.setFechaNacimiento(usuario.getIdusuario().getFechaNacimiento());
         user.setProvincia(usuario.getIdusuario().getProvincia());
         user.setSituacionMigratoria(usuario.getIdusuario().getSituacionMigratoria());
         user.setIdciudad(usuario.getIdusuario().getIdciudad());
