@@ -45,8 +45,10 @@ public class IonicFormato {
                 doc.setIdusuario(null);
             }
             for (Salud sal : salud) {
-                byte[] decodedString = Base64.getDecoder().decode(new String(sal.getFoto()).getBytes("UTF-8"));
-                sal.setFoto(decodedString);
+                if (sal.getFoto() != null) {
+                    byte[] decodedString = Base64.getDecoder().decode(new String(sal.getFoto()).getBytes("UTF-8"));
+                    sal.setFoto(decodedString);
+                }
                 sal.setIdusuario(null);
             }
             user.setIdusuario(usuario.getIdusuario().getIdusuario());
