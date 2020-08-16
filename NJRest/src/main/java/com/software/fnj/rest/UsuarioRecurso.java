@@ -18,6 +18,7 @@ import com.software.fnj.modelo.Parentescofamiliar;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.ServicioRestUsuarioRecurso;
 import com.software.fnj.util.Constante;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -54,7 +55,7 @@ public class UsuarioRecurso {
     @Path("obtener_usuarios")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<UsuarioIonic> autenticarUsuario() throws ServiceException {
+    public List<UsuarioIonic> autenticarUsuario() throws ServiceException, UnsupportedEncodingException {
         return servicioRestUsuarioRecurso.getAllUsers();
     }
 
@@ -126,7 +127,7 @@ public class UsuarioRecurso {
     @Path("obtener_todos_usuarios")
     @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException {
+    public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException, UnsupportedEncodingException {
         return servicioRestUsuarioRecurso.obenerTodosLosUsuarios();
     }
     

@@ -23,6 +23,7 @@ import com.software.fnj.servicio.DocumentoServicio;
 import com.software.fnj.servicio.ParentescoFamiliarUsuarioServicio;
 import com.software.fnj.servicio.SaludServicio;
 import com.software.fnj.servicio.UsuarioServicio;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -47,7 +48,7 @@ public class ServicioRestUsuarioRecurso {
     @EJB
     DocumentoServicio documentoServicio;
 
-    public List<UsuarioIonic> getAllUsers() throws ServiceException {
+    public List<UsuarioIonic> getAllUsers() throws ServiceException, UnsupportedEncodingException {
         List<UsuarioIonic> usuariosIonic = new ArrayList();
         List<Parentescofamiliarusuario> usuarios = new ArrayList();
         usuarios = parentescoFamiliarUsuarioServicio.obtenerUsuariosActivos();
@@ -164,7 +165,7 @@ public class ServicioRestUsuarioRecurso {
         return parentescos;
     }
 
-    public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException {
+    public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException, UnsupportedEncodingException {
          List<UsuarioIonic> usuariosIonic = new ArrayList();
         List<Parentescofamiliarusuario> usuarios = new ArrayList();
         usuarios = parentescoFamiliarUsuarioServicio.obenerTodosLosUsuarios();
