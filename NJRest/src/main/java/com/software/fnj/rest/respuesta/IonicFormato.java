@@ -5,11 +5,14 @@
  */
 package com.software.fnj.rest.respuesta;
 
+import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.modelo.Salud;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 
@@ -28,6 +31,8 @@ public class IonicFormato {
      */
     public static UsuarioIonic ConstruirUsuarioIonic(Parentescofamiliarusuario usuario, List<Salud> salud, List<Documento> documento) throws UnsupportedEncodingException {
         UsuarioIonic user = new UsuarioIonic();
+        List<DocumentoIonic> docsIonic = new ArrayList();
+        List<SaludIonic> saludes = new ArrayList();
         try {
             usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
             usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
@@ -40,15 +45,23 @@ public class IonicFormato {
             usuario.getIdusuario().setParentescofamiliarusuarioCollection(null);
             usuario.getIdusuario().setSaludCollection(null);
             for (Documento doc : documento) {
+                DocumentoIonic docionic = new DocumentoIonic();
                 byte[] decodedString = Base64.getDecoder().decode(new String(doc.getDocumento()).getBytes("UTF-8"));
-                doc.setDocumento(decodedString);
+                docionic.setObservacion(doc.getObservacion());
+                docionic.setDocumento(new String(decodedString));
+                docsIonic.add(docionic);
                 doc.setIdusuario(null);
             }
             for (Salud sal : salud) {
+                SaludIonic saludIonic = new SaludIonic();
                 if (sal.getFoto() != null) {
                     byte[] decodedString = Base64.getDecoder().decode(new String(sal.getFoto()).getBytes("UTF-8"));
-                    sal.setFoto(decodedString);
+                    saludIonic.setFoto(new String(decodedString));
                 }
+                saludIonic.setCondicionMedica(sal.getCondicionMedica());
+                saludIonic.setEstadoDiscapacidad(sal.getEstadoDiscapacidad());
+                saludIonic.setIdSalud(sal.getIdsalud());
+                saludes.add(saludIonic);
                 sal.setIdusuario(null);
             }
             user.setIdusuario(usuario.getIdusuario().getIdusuario());
@@ -64,7 +77,7 @@ public class IonicFormato {
             user.setEstado(usuario.getIdusuario().getEstado());
             user.setRazonEgreso(usuario.getIdusuario().getRazonEgreso());
             byte[] decodedString = Base64.getDecoder().decode(new String(usuario.getIdusuario().getFoto()).getBytes("UTF-8"));
-            user.setFoto(decodedString);
+            user.setFoto(new String(decodedString));
             user.setFechaEgresoFundacion(usuario.getIdusuario().getFechaEgresoFundacion());
             user.setFechaNacimiento(usuario.getIdusuario().getFechaNacimiento());
             user.setProvincia(usuario.getIdusuario().getProvincia());
@@ -79,8 +92,8 @@ public class IonicFormato {
             user.setTelefono(usuario.getIdusuario().getTelefono());
             user.setTelefonoContacto(usuario.getIdusuario().getTelefonoContacto());
             user.setObservacionIngreso(usuario.getIdusuario().getObservacionIngreso());
-            user.setDocumento(documento);
-            user.setSalud(salud);
+            user.setDocumento(docsIonic);
+            user.setSalud(saludes);
             user.setIdCabezaHogar(usuario.getIdusuarioCabezaHogar());
             user.setParentesco(usuario.getIdparentescoFamiliar().getParentesco());
         } catch (UnsupportedEncodingException e) {

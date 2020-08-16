@@ -6,12 +6,10 @@
 package com.software.fnj.model.Ionic;
 
 import com.software.fnj.modelo.Ciudad;
-import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Genero;
 import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
-import com.software.fnj.modelo.Salud;
 import java.util.Date;
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class UsuarioIonic {
     private Date fechaIngresoFundacion;
     private Integer estado;
     private String razonEgreso;
-    private byte[] foto;
+    private String foto;
     private Date fechaEgresoFundacion;
     private String provincia;
     private String situacionMigratoria;
@@ -48,8 +46,8 @@ public class UsuarioIonic {
     private String telefono;
     private String telefonoContacto;
     private String observacionIngreso;
-    private List<Salud> salud;
-    private List<Documento> documento;
+    private List<SaludIonic> salud;
+    private List<DocumentoIonic> documento;
     private Integer idCabezaHogar;
     private String parentesco;
 
@@ -157,11 +155,11 @@ public class UsuarioIonic {
         this.razonEgreso = razonEgreso;
     }
 
-    public byte[] getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(byte[] foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 
@@ -269,19 +267,19 @@ public class UsuarioIonic {
         this.observacionIngreso = observacionIngreso;
     }
 
-    public List<Salud> getSalud() {
+    public List<SaludIonic> getSalud() {
         return salud;
     }
 
-    public void setSalud(List<Salud> salud) {
+    public void setSalud(List<SaludIonic> salud) {
         this.salud = salud;
     }
 
-    public List<Documento> getDocumento() {
+    public List<DocumentoIonic> getDocumento() {
         return documento;
     }
 
-    public void setDocumento(List<Documento> documento) {
+    public void setDocumento(List<DocumentoIonic> documento) {
         this.documento = documento;
     }
 
