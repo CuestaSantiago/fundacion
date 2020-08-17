@@ -331,12 +331,6 @@ public class UsuarioServicio {
                 salud.setCondicionMedica(object.getCondicionMedica());
                 saludFacade.create(salud);
             }
-        } else {
-            Salud salud = new Salud();
-            salud.setCondicionMedica("No se registró ninguna condición médica.");
-            salud.setEstadoDiscapacidad(SaludConstante.SALUDABLE.getSaludConstanteId());
-            salud.setIdusuario(usuario);
-            saludFacade.create(salud);
         }
     }
 
@@ -404,7 +398,7 @@ public class UsuarioServicio {
             }
             usuario.setIdusuario(newUsuario.getIdusuario());
             usuario.setApellidos(newUsuario.getApellidos());
-            usuario.setEstado(newUsuario.getEstado());
+            usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
             usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
             usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
             usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
