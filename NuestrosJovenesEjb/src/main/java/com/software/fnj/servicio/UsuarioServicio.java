@@ -456,6 +456,8 @@ public class UsuarioServicio {
                 documento.setIdusuario(usuario);
                 documento.setObservacion(newUsuario.getObservacion());
                 documento.setTipoDocumento("pdf");
+                 short noEsViolencia = 0;
+                documento.setEstado(noEsViolencia);
                 documentoFacade.create(documento);
                 if (newUsuario.isFirma()) {
                     usuario.setEstado(UsuarioConstante.DESACTIVADO.getUsuarioConstanteId());
