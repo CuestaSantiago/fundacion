@@ -56,5 +56,5 @@ public class DocumentoIonic {
     public void setFirma(boolean firma) {
         this.firma = firma;
     }
-
+    
 }

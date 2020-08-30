@@ -342,6 +342,7 @@ public class UsuarioServicio {
                         salud.setCondicionMedica(saludIonic.getCondicionMedica());
                         saludFacade.create(salud);
                     } else {
+                        salud = saludFacade.obtenerSaludPorIdSalud(saludIonic.getIdSalud());
                         if (saludIonic.getFoto() != null) {
                             byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
                             salud.setFoto(foto);
@@ -461,6 +462,7 @@ public class UsuarioServicio {
                 } else {
                     usuario.setEstado(UsuarioConstante.SINFIRMA.getUsuarioConstanteId());
                 }
+                usuario.setRazonEgreso(newUsuario.getObservacion());
                 usuarioFacade.edit(usuario);
                 exito = true;
             }

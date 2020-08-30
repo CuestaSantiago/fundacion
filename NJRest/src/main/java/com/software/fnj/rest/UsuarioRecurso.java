@@ -164,7 +164,7 @@ public class UsuarioRecurso {
         return servicioRestUsuarioRecurso.obtenerEstadosSalud();
     }
     
-    @DELETE
+    @POST
     @Path("eliminar_salud")
     @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
