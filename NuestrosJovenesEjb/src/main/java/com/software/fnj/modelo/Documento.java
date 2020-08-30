@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Documento.findAll", query = "SELECT d FROM Documento d")
     , @NamedQuery(name = "Documento.findByIddocumento", query = "SELECT d FROM Documento d WHERE d.iddocumento = :iddocumento")
     , @NamedQuery(name = "Documento.findByObservacion", query = "SELECT d FROM Documento d WHERE d.observacion = :observacion")
-    , @NamedQuery(name = "Documento.findByTipoDocumento", query = "SELECT d FROM Documento d WHERE d.tipoDocumento = :tipoDocumento")})
+    , @NamedQuery(name = "Documento.findByTipoDocumento", query = "SELECT d FROM Documento d WHERE d.tipoDocumento = :tipoDocumento")
+    , @NamedQuery(name = "Documento.findByEstado", query = "SELECT d FROM Documento d WHERE d.estado = :estado")})
 public class Documento implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,6 +52,8 @@ public class Documento implements Serializable {
     @Size(max = 5)
     @Column(name = "tipoDocumento")
     private String tipoDocumento;
+    @Column(name = "estado")
+    private Short estado;
     @JoinColumn(name = "idusuario", referencedColumnName = "idusuario")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Usuario idusuario;
@@ -92,6 +95,14 @@ public class Documento implements Serializable {
 
     public void setTipoDocumento(String tipoDocumento) {
         this.tipoDocumento = tipoDocumento;
+    }
+
+    public Short getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Short estado) {
+        this.estado = estado;
     }
 
     public Usuario getIdusuario() {

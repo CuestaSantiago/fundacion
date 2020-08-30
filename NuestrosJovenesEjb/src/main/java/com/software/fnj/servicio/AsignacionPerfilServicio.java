@@ -84,11 +84,11 @@ public class AsignacionPerfilServicio {
         try {
             asignacion = asignacionperfilFacade.obetenerAsignaciones();
             for (Asignacionperfil asignacionperfil : asignacion) {
-                asignacionperfil.getIdperfil().setAsignacionperfilCollection(null);
-                asignacionperfil.getIdusuario().setAsignacionperfilCollection(null);
-                asignacionperfil.getIdusuario().setDocumentoCollection(null);
-                asignacionperfil.getIdusuario().setParentescofamiliarusuarioCollection(null);
-                asignacionperfil.getIdusuario().setSaludCollection(null);
+                asignacionperfil.getIdperfil().setAsignacionperfilList(null);
+                asignacionperfil.getIdusuario().setAsignacionperfilList(null);
+                asignacionperfil.getIdusuario().setDocumentoList(null);
+                asignacionperfil.getIdusuario().setParentescofamiliarusuarioList(null);
+                asignacionperfil.getIdusuario().setSaludList(null);
                 asignacionperfil.getIdusuario().setIdciudad(null);
                 asignacionperfil.getIdusuario().setIdgenero(null);
                 asignacionperfil.getIdusuario().setIdlugarIngreso(null);
@@ -127,11 +127,11 @@ public class AsignacionPerfilServicio {
             asignacionperfil = asignacionperfilFacade.obtenerAsignacionPerfilPorNombre(autoIonic.getNombre());
             if (asignacionperfil != null) {
                 if (BCrypt.checkpw(autoIonic.getContrasena(), asignacionperfil.getContrasena())) {
-                    asignacionperfil.getIdperfil().setAsignacionperfilCollection(null);
-                    asignacionperfil.getIdusuario().setAsignacionperfilCollection(null);
-                    asignacionperfil.getIdusuario().setDocumentoCollection(null);
-                    asignacionperfil.getIdusuario().setParentescofamiliarusuarioCollection(null);
-                    asignacionperfil.getIdusuario().setSaludCollection(null);
+                    asignacionperfil.getIdperfil().setAsignacionperfilList(null);
+                    asignacionperfil.getIdusuario().setAsignacionperfilList(null);
+                    asignacionperfil.getIdusuario().setDocumentoList(null);
+                    asignacionperfil.getIdusuario().setParentescofamiliarusuarioList(null);
+                    asignacionperfil.getIdusuario().setSaludList(null);
                     asignacionperfil.getIdusuario().setIdciudad(null);
                     asignacionperfil.getIdusuario().setIdgenero(null);
                     asignacionperfil.getIdusuario().setIdlugarIngreso(null);

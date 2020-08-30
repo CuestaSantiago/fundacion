@@ -67,4 +67,18 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
         return usuario;
     }
+    
+    public Usuario obtenerusuarioPorIdentificacion(String identificacion) throws ServiceException{
+    Usuario usuario = new Usuario();
+        try {
+            usuario = em.createQuery("select u from Usuario u JOIN FETCH u.idciudad JOIN FETCH u.idgenero JOIN FETCH u.idlugarIngreso JOIN FETCH u.idnacionalidad JOIN FETCH u.idpais WHERE u.identificacion = :identificacion ", 
+                    Usuario.class)
+                    .setParameter("identificacion", identificacion)
+                    .getSingleResult();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,"UsuarioFacade: Error al consultar usuario por idUsuario: {0}{1}", new Object[]{identificacion, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuario;
+    }
 }

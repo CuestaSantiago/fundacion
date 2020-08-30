@@ -34,21 +34,26 @@ public class IonicFormato {
         List<DocumentoIonic> docsIonic = new ArrayList();
         List<SaludIonic> saludes = new ArrayList();
         try {
-            usuario.getIdusuario().getIdgenero().setUsuarioCollection(null);
-            usuario.getIdusuario().getIdciudad().setUsuarioCollection(null);
-            usuario.getIdusuario().getIdlugarIngreso().setUsuarioCollection(null);
-            usuario.getIdusuario().getIdpais().setUsuarioCollection(null);
-            usuario.getIdusuario().getIdnacionalidad().setUsuarioCollection(null);
-            usuario.getIdparentescoFamiliar().setParentescofamiliarusuarioCollection(null);
-            usuario.getIdusuario().setAsignacionperfilCollection(null);
-            usuario.getIdusuario().setDocumentoCollection(null);
-            usuario.getIdusuario().setParentescofamiliarusuarioCollection(null);
-            usuario.getIdusuario().setSaludCollection(null);
+            usuario.getIdusuario().getIdgenero().setUsuarioList(null);
+            usuario.getIdusuario().getIdciudad().setUsuarioList(null);
+            usuario.getIdusuario().getIdlugarIngreso().setUsuarioList(null);
+            usuario.getIdusuario().getIdpais().setUsuarioList(null);
+            usuario.getIdusuario().getIdnacionalidad().setUsuarioList(null);
+            usuario.getIdparentescoFamiliar().setParentescofamiliarusuarioList(null);
+            usuario.getIdusuario().setAsignacionperfilList(null);
+            usuario.getIdusuario().setDocumentoList(null);
+            usuario.getIdusuario().setParentescofamiliarusuarioList(null);
+            usuario.getIdusuario().setSaludList(null);
             for (Documento doc : documento) {
                 DocumentoIonic docionic = new DocumentoIonic();
                 if (doc.getDocumento() != null) {
                     byte[] decodedString = Base64.getDecoder().decode(new String(doc.getDocumento()).getBytes("UTF-8"));
                     docionic.setDocumento(new String(decodedString));
+                }
+                if (doc.getEstado() == 0) {
+                docionic.setViolencia(false);
+                }else{
+                docionic.setViolencia(true);
                 }
                 docionic.setObservacion(doc.getObservacion());
                 docsIonic.add(docionic);

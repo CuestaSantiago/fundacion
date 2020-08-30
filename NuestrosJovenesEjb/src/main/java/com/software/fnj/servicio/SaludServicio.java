@@ -6,6 +6,7 @@
 package com.software.fnj.servicio;
 
 import com.software.fnj.facade.SaludFacade;
+import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
@@ -61,11 +62,11 @@ public class SaludServicio {
         return salud;
     }
 
-    public boolean eliminarSalud(Integer idSalud) throws ServiceException {
+    public boolean eliminarSalud(SaludIonic idSalud) throws ServiceException {
         boolean exito = false;
         Salud salud = new Salud();
         try {
-            salud = saludFacade.find(idSalud);
+            salud = saludFacade.find(idSalud.getIdSalud());
             saludFacade.remove(salud);
             exito = true;
         } catch (Exception e) {

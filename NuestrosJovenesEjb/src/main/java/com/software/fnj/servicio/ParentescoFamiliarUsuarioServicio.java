@@ -72,7 +72,7 @@ public class ParentescoFamiliarUsuarioServicio {
     public List<Parentescofamiliarusuario> obenerTodosLosUsuarios() throws ServiceException {
         List<Parentescofamiliarusuario> usuarios = new ArrayList();
         try {
-            usuarios = parentescoFamiliarUsuarioFacade.obtenerUsuariosActivos();
+            usuarios = parentescoFamiliarUsuarioFacade.obenerTodosLosUsuarios();
             LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users actavete");

@@ -6,6 +6,7 @@
 package com.software.fnj.rest;
 
 import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
 import com.software.fnj.modelo.Ciudad;
@@ -167,7 +168,7 @@ public class UsuarioRecurso {
     @Path("eliminar_salud")
     @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
     @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
-    public boolean eliminarSalud(@QueryParam("idSalud")  Integer idSalud) throws ServiceException {
+    public boolean eliminarSalud(SaludIonic idSalud) throws ServiceException {
        return servicioRestUsuarioRecurso.eliminarSalud(idSalud);
     }
     

@@ -167,14 +167,21 @@ public class UsuarioServicio {
         try {
             usuario = usuarioFacade.obtenerusuarioPorIdUusario(docUsuario.getIdUsuario());
             if (usuario != null) {
-                documento.setDocumento(docUsuario.getDocumento().getBytes());
-                documento.setIdusuario(usuario);
-                documento.setObservacion(docUsuario.getObservacion());
-                documentoFacade.create(documento);
-                if (docUsuario.isEstado()) {
-                    usuario.setEstado(UsuarioConstante.DESACTIVADO.getUsuarioConstanteId());
-                    usuarioFacade.edit(usuario);
+                if (docUsuario.getDocumento() != null) {
+                    byte[] foto = Base64.getEncoder().encode(docUsuario.getDocumento().getBytes());
+                    documento.setDocumento(foto);
                 }
+                documento.setIdusuario(usuario);
+                documento.setTipoDocumento("pdf");
+                documento.setObservacion(docUsuario.getObservacion());
+                if (docUsuario.isViolencia()) {
+                    short esViolencia = 1;
+                    documento.setEstado(esViolencia);
+                } else {
+                    short noEsViolencia = 0;
+                    documento.setEstado(noEsViolencia);
+                }
+                documentoFacade.create(documento);
                 exito = true;
             } else {
                 LOG.log(Level.SEVERE, "UsuarioServicio: Usuario ya registrado: " + docUsuario.getIdUsuario());
@@ -421,7 +428,7 @@ public class UsuarioServicio {
         Usuario usuario = new Usuario();
         boolean exito = false;
         try {
-            usuario = usuarioFacade.obtenerusuarioPorIdUusario(newUsuario.getIdusuario());
+            usuario = usuarioFacade.obtenerusuarioPorIdentificacion(newUsuario.getIdentificacion());
             usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
             usuario.setObservacionIngreso(newUsuario.getObservacionIngreso());
             usuarioFacade.edit(usuario);
@@ -449,7 +456,7 @@ public class UsuarioServicio {
                 documento.setObservacion(newUsuario.getObservacion());
                 documento.setTipoDocumento("pdf");
                 documentoFacade.create(documento);
-                if (newUsuario.isEstado()) {
+                if (newUsuario.isFirma()) {
                     usuario.setEstado(UsuarioConstante.DESACTIVADO.getUsuarioConstanteId());
                 } else {
                     usuario.setEstado(UsuarioConstante.SINFIRMA.getUsuarioConstanteId());

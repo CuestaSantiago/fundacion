@@ -6,7 +6,7 @@
 package com.software.fnj.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +46,7 @@ public class Parentescofamiliar implements Serializable {
     @Column(name = "parentesco")
     private String parentesco;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idparentescoFamiliar", fetch = FetchType.LAZY)
-    private Collection<Parentescofamiliarusuario> parentescofamiliarusuarioCollection;
+    private List<Parentescofamiliarusuario> parentescofamiliarusuarioList;
 
     public Parentescofamiliar() {
     }
@@ -72,12 +72,12 @@ public class Parentescofamiliar implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Parentescofamiliarusuario> getParentescofamiliarusuarioCollection() {
-        return parentescofamiliarusuarioCollection;
+    public List<Parentescofamiliarusuario> getParentescofamiliarusuarioList() {
+        return parentescofamiliarusuarioList;
     }
 
-    public void setParentescofamiliarusuarioCollection(Collection<Parentescofamiliarusuario> parentescofamiliarusuarioCollection) {
-        this.parentescofamiliarusuarioCollection = parentescofamiliarusuarioCollection;
+    public void setParentescofamiliarusuarioList(List<Parentescofamiliarusuario> parentescofamiliarusuarioList) {
+        this.parentescofamiliarusuarioList = parentescofamiliarusuarioList;
     }
 
     @Override

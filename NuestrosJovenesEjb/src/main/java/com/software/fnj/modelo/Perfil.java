@@ -6,7 +6,7 @@
 package com.software.fnj.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +46,7 @@ public class Perfil implements Serializable {
     @Column(name = "rol")
     private String rol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idperfil", fetch = FetchType.LAZY)
-    private Collection<Asignacionperfil> asignacionperfilCollection;
+    private List<Asignacionperfil> asignacionperfilList;
 
     public Perfil() {
     }
@@ -72,12 +72,12 @@ public class Perfil implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Asignacionperfil> getAsignacionperfilCollection() {
-        return asignacionperfilCollection;
+    public List<Asignacionperfil> getAsignacionperfilList() {
+        return asignacionperfilList;
     }
 
-    public void setAsignacionperfilCollection(Collection<Asignacionperfil> asignacionperfilCollection) {
-        this.asignacionperfilCollection = asignacionperfilCollection;
+    public void setAsignacionperfilList(List<Asignacionperfil> asignacionperfilList) {
+        this.asignacionperfilList = asignacionperfilList;
     }
 
     @Override

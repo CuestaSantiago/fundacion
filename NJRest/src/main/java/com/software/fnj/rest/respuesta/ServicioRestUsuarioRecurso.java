@@ -7,6 +7,7 @@ package com.software.fnj.rest.respuesta;
 
 import com.software.fnj.model.Ionic.CodigoPaisIonic;
 import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.modelo.Salud;
@@ -71,7 +72,7 @@ public class ServicioRestUsuarioRecurso {
         ciudades = usuarioServicio.obtenerCiudades();
         if (ciudades.size() > 0 || ciudades != null) {
             for (Ciudad ciu : ciudades) {
-                ciu.setUsuarioCollection(null);
+                ciu.setUsuarioList(null);
             }
         } else {
             throw new ServiceException("No se ha podido encontrar ciudades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
@@ -84,7 +85,7 @@ public class ServicioRestUsuarioRecurso {
         paises = usuarioServicio.obtenerPaises();
         if (paises.size() > 0 || paises != null) {
             for (Pais pais : paises) {
-                pais.setUsuarioCollection(null);
+                pais.setUsuarioList(null);
             }
         } else {
             throw new ServiceException("No se ha podido encontrar paises por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
@@ -97,7 +98,7 @@ public class ServicioRestUsuarioRecurso {
         generos = usuarioServicio.obtenerGeneros();
         if (generos.size() > 0 || generos != null) {
             for (Genero genero : generos) {
-                genero.setUsuarioCollection(null);
+                genero.setUsuarioList(null);
             }
         } else {
             throw new ServiceException("No se ha podido encontrar generos por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
@@ -110,7 +111,7 @@ public class ServicioRestUsuarioRecurso {
         nacionalidades = usuarioServicio.obtenernacionalidades();
         if (nacionalidades.size() > 0 || nacionalidades != null) {
             for (Nacionalidad nacionalidad : nacionalidades) {
-                nacionalidad.setUsuarioCollection(null);
+                nacionalidad.setUsuarioList(null);
             }
         } else {
             throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
@@ -123,7 +124,7 @@ public class ServicioRestUsuarioRecurso {
         lugaringresos = usuarioServicio.obtenernLugarIngreso();
         if (lugaringresos.size() > 0 || lugaringresos != null) {
             for (Lugaringreso lugaringres : lugaringresos) {
-                lugaringres.setUsuarioCollection(null);
+                lugaringres.setUsuarioList(null);
             }
         } else {
             throw new ServiceException("No se ha podido encontrar nacionalidades por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
@@ -156,7 +157,7 @@ public class ServicioRestUsuarioRecurso {
         parentescos = parentescoFamiliarUsuarioServicio.obtenerParentescos();
         if (parentescos.size() > 0 || parentescos != null) {
             for (Parentescofamiliar parentesco : parentescos) {
-                parentesco.setParentescofamiliarusuarioCollection(null);
+                parentesco.setParentescofamiliarusuarioList(null);
             }
             parentescos.remove(0);
         } else {
@@ -196,7 +197,7 @@ public class ServicioRestUsuarioRecurso {
     public boolean activarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
         boolean lugaringresos = false;
         if (newUsuario != null) {
-            lugaringresos = usuarioServicio.editarUsuario(newUsuario);
+            lugaringresos = usuarioServicio.activarUsuario(newUsuario);
         } else {
             throw new ServiceException("No se ha podido editar usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
@@ -225,7 +226,7 @@ public class ServicioRestUsuarioRecurso {
         return lugaringresos;
     }
 
-    public boolean eliminarSalud(Integer idSalud) throws ServiceException {
+    public boolean eliminarSalud(SaludIonic idSalud) throws ServiceException {
         boolean exito = false;
         exito = saludServicio.eliminarSalud(idSalud);
         if (exito) {

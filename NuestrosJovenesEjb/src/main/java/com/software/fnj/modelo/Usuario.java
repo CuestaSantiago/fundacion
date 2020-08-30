@@ -6,8 +6,8 @@
 package com.software.fnj.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -131,11 +131,11 @@ public class Usuario implements Serializable {
     @Column(name = "observacionIngreso")
     private String observacionIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
-    private Collection<Parentescofamiliarusuario> parentescofamiliarusuarioCollection;
+    private List<Parentescofamiliarusuario> parentescofamiliarusuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
-    private Collection<Asignacionperfil> asignacionperfilCollection;
+    private List<Asignacionperfil> asignacionperfilList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
-    private Collection<Documento> documentoCollection;
+    private List<Documento> documentoList;
     @JoinColumn(name = "idlugarIngreso", referencedColumnName = "idlugarIngreso")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lugaringreso idlugarIngreso;
@@ -152,7 +152,7 @@ public class Usuario implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pais idpais;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
-    private Collection<Salud> saludCollection;
+    private List<Salud> saludList;
 
     public Usuario() {
     }
@@ -343,30 +343,30 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Parentescofamiliarusuario> getParentescofamiliarusuarioCollection() {
-        return parentescofamiliarusuarioCollection;
+    public List<Parentescofamiliarusuario> getParentescofamiliarusuarioList() {
+        return parentescofamiliarusuarioList;
     }
 
-    public void setParentescofamiliarusuarioCollection(Collection<Parentescofamiliarusuario> parentescofamiliarusuarioCollection) {
-        this.parentescofamiliarusuarioCollection = parentescofamiliarusuarioCollection;
-    }
-
-    @XmlTransient
-    public Collection<Asignacionperfil> getAsignacionperfilCollection() {
-        return asignacionperfilCollection;
-    }
-
-    public void setAsignacionperfilCollection(Collection<Asignacionperfil> asignacionperfilCollection) {
-        this.asignacionperfilCollection = asignacionperfilCollection;
+    public void setParentescofamiliarusuarioList(List<Parentescofamiliarusuario> parentescofamiliarusuarioList) {
+        this.parentescofamiliarusuarioList = parentescofamiliarusuarioList;
     }
 
     @XmlTransient
-    public Collection<Documento> getDocumentoCollection() {
-        return documentoCollection;
+    public List<Asignacionperfil> getAsignacionperfilList() {
+        return asignacionperfilList;
     }
 
-    public void setDocumentoCollection(Collection<Documento> documentoCollection) {
-        this.documentoCollection = documentoCollection;
+    public void setAsignacionperfilList(List<Asignacionperfil> asignacionperfilList) {
+        this.asignacionperfilList = asignacionperfilList;
+    }
+
+    @XmlTransient
+    public List<Documento> getDocumentoList() {
+        return documentoList;
+    }
+
+    public void setDocumentoList(List<Documento> documentoList) {
+        this.documentoList = documentoList;
     }
 
     public Lugaringreso getIdlugarIngreso() {
@@ -410,12 +410,12 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Salud> getSaludCollection() {
-        return saludCollection;
+    public List<Salud> getSaludList() {
+        return saludList;
     }
 
-    public void setSaludCollection(Collection<Salud> saludCollection) {
-        this.saludCollection = saludCollection;
+    public void setSaludList(List<Salud> saludList) {
+        this.saludList = saludList;
     }
 
     @Override

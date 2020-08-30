@@ -6,7 +6,7 @@
 package com.software.fnj.modelo;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -46,7 +46,7 @@ public class Lugaringreso implements Serializable {
     @Column(name = "nombre")
     private String nombre;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idlugarIngreso", fetch = FetchType.LAZY)
-    private Collection<Usuario> usuarioCollection;
+    private List<Usuario> usuarioList;
 
     public Lugaringreso() {
     }
@@ -72,12 +72,12 @@ public class Lugaringreso implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public List<Usuario> getUsuarioList() {
+        return usuarioList;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        this.usuarioList = usuarioList;
     }
 
     @Override
