@@ -72,7 +72,8 @@ public class Constante {
         DISCAPACITADO(1),
         ENFERMO(2),
         EMBARAZADA(3),
-        LACTANCIA(4);
+        LACTANCIA(4),
+        VIOLENCIA(5);
 
         private final Integer saludConstanteId;
 

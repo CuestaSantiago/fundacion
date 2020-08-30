@@ -46,9 +46,11 @@ public class IonicFormato {
             usuario.getIdusuario().setSaludCollection(null);
             for (Documento doc : documento) {
                 DocumentoIonic docionic = new DocumentoIonic();
-                byte[] decodedString = Base64.getDecoder().decode(new String(doc.getDocumento()).getBytes("UTF-8"));
+                if (doc.getDocumento() != null) {
+                    byte[] decodedString = Base64.getDecoder().decode(new String(doc.getDocumento()).getBytes("UTF-8"));
+                    docionic.setDocumento(new String(decodedString));
+                }
                 docionic.setObservacion(doc.getObservacion());
-                docionic.setDocumento(new String(decodedString));
                 docsIonic.add(docionic);
                 doc.setIdusuario(null);
             }
@@ -76,8 +78,10 @@ public class IonicFormato {
             user.setFechaIngresoFundacion(usuario.getIdusuario().getFechaIngresoFundacion());
             user.setEstado(usuario.getIdusuario().getEstado());
             user.setRazonEgreso(usuario.getIdusuario().getRazonEgreso());
-            byte[] decodedString = Base64.getDecoder().decode(new String(usuario.getIdusuario().getFoto()).getBytes("UTF-8"));
-            user.setFoto(new String(decodedString));
+            if (usuario.getIdusuario().getFoto() != null) {
+                byte[] decodedString = Base64.getDecoder().decode(new String(usuario.getIdusuario().getFoto()).getBytes("UTF-8"));
+                user.setFoto(new String(decodedString));
+            }
             user.setFechaEgresoFundacion(usuario.getIdusuario().getFechaEgresoFundacion());
             user.setFechaNacimiento(usuario.getIdusuario().getFechaNacimiento());
             user.setProvincia(usuario.getIdusuario().getProvincia());

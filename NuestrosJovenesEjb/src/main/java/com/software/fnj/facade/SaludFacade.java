@@ -8,6 +8,7 @@ package com.software.fnj.facade;
 import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
+import com.software.fnj.util.Constante;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -61,6 +62,20 @@ public class SaludFacade extends AbstractFacade<Salud> {
                     .getSingleResult();
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "SaludFacade: Error al consultar salud por idsalud: {0}{1}", new Object[]{idSalud, e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return salud;
+    }
+
+    public List<Salud> obtenerEstadoSaludSinViolencia() throws ServiceException {
+          List<Salud> salud = null;
+        try {
+            salud = em.createQuery("SELECT s FROM Salud s WHERE s.estadoDiscapacidad<>:estadoDiscapacidad",
+                    Salud.class)
+                    .setParameter("estadoDiscapacidad",Constante.SaludConstante.VIOLENCIA.getSaludConstanteId())
+                    .getResultList();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "SaludFacade: Error al consultar salud sin violencia: {0}{1}", new Object[]{e.toString()});
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return salud;

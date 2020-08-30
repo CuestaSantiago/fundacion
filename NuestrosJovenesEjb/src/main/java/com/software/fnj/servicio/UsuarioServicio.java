@@ -29,7 +29,6 @@ import com.software.fnj.modelo.Salud;
 import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.util.Constante;
-import com.software.fnj.util.Constante.SaludConstante;
 import com.software.fnj.util.Constante.UsuarioConstante;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -94,23 +93,6 @@ public class UsuarioServicio {
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuario;
-    }
-
-    public boolean crearUsuario(Usuario usuario) throws ServiceException {
-        boolean exito = false;
-        try {
-            if (usuarioFacade.verificarUsuarioRegistrado(usuario.getIdentificacion())) {
-                usuarioFacade.create(usuario);
-                exito = true;
-            } else {
-                LOG.log(Level.SEVERE, "UsuarioServicio: Usuario ya registrado: " + usuario.getNombres());
-            }
-        } catch (Exception e) {
-            LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario: " + usuario.getNombres());
-            LOG.log(Level.SEVERE, "", e);
-            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
-        }
-        return exito;
     }
 
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
@@ -221,7 +203,7 @@ public class UsuarioServicio {
                     parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
                     parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
                     parentesco.setIdusuarioCabezaHogar(idCabezaHogar);
-                    llenarDocumentos(usuarioNuevoIonic, usuario);
+                    llenarDocumentoSalud(usuarioNuevoIonic, usuario);
                     parentescofamiliarusuarioFacade.create(parentesco);
                 } else {
                     usuario = agrearUsaurio(usuarioNuevoIonic);
@@ -229,7 +211,7 @@ public class UsuarioServicio {
                     parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
                     parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
                     parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
-                    llenarDocumentos(usuarioNuevoIonic, usuario);
+                    llenarDocumentoSalud(usuarioNuevoIonic, usuario);
                     parentescofamiliarusuarioFacade.create(parentesco);
                 }
             }
@@ -304,16 +286,17 @@ public class UsuarioServicio {
             LOG.log(Level.SEVERE, "", e);
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
-
         return usuario;
     }
 
-    private void llenarDocumentos(UsuarioNuevoIonic newUsuario, Usuario usuario) {
+    private void llenarDocumentoSalud(UsuarioNuevoIonic newUsuario, Usuario usuario) {
         if (newUsuario.getDocumento() != null) {
             for (DocumentoIonic object : newUsuario.getDocumento()) {
                 Documento doc = new Documento();
-                byte[] document = Base64.getEncoder().encode(object.getDocumento().getBytes());
-                doc.setDocumento(document);
+                if (object.getDocumento() != null) {
+                    byte[] document = Base64.getEncoder().encode(object.getDocumento().getBytes());
+                    doc.setDocumento(document);
+                }
                 doc.setIdusuario(usuario);
                 doc.setObservacion(object.getObservacion());
                 documentoFacade.create(doc);
@@ -432,5 +415,53 @@ public class UsuarioServicio {
             throw new ServiceException("Se ha producido un error al contruir el usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuario;
+    }
+
+    public Boolean activarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        Usuario usuario = new Usuario();
+        boolean exito = false;
+        try {
+            usuario = usuarioFacade.obtenerusuarioPorIdUusario(newUsuario.getIdusuario());
+            usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
+            usuario.setObservacionIngreso(newUsuario.getObservacionIngreso());
+            usuarioFacade.edit(usuario);
+            exito = true;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al obtener usuario por id:" + newUsuario.getIdusuario());
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
+    }
+
+    public boolean desactivarUsuario(DocumentoIonic newUsuario) throws ServiceException {
+        boolean exito = false;
+        Usuario usuario = new Usuario();
+        try {
+            usuario = usuarioFacade.find(newUsuario.getIdUsuario());
+            if (usuario != null) {
+                Documento documento = new Documento();
+                if (newUsuario.getDocumento() != null) {
+                    byte[] foto = Base64.getEncoder().encode(newUsuario.getDocumento().getBytes());
+                    documento.setDocumento(foto);
+                }
+                documento.setIdusuario(usuario);
+                documento.setObservacion(newUsuario.getObservacion());
+                documento.setTipoDocumento("pdf");
+                documentoFacade.create(documento);
+                if (newUsuario.isEstado()) {
+                    usuario.setEstado(UsuarioConstante.DESACTIVADO.getUsuarioConstanteId());
+                } else {
+                    usuario.setEstado(UsuarioConstante.SINFIRMA.getUsuarioConstanteId());
+                }
+                usuarioFacade.edit(usuario);
+                exito = true;
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error al dar de baja al usuario usuario");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
     }
 }

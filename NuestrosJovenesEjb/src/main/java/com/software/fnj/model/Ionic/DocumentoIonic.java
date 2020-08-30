@@ -15,6 +15,8 @@ public class DocumentoIonic {
     private String observacion;
     private String documento;
     private boolean estado;
+    private boolean violencia;
+    private boolean firma;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -46,6 +48,22 @@ public class DocumentoIonic {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public boolean isViolencia() {
+        return violencia;
+    }
+
+    public void setViolencia(boolean violencia) {
+        this.violencia = violencia;
+    }
+
+    public boolean isFirma() {
+        return firma;
+    }
+
+    public void setFirma(boolean firma) {
+        this.firma = firma;
     }
 
 }

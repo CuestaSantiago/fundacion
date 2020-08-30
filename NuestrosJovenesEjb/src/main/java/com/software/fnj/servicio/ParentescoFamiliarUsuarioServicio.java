@@ -75,11 +75,24 @@ public class ParentescoFamiliarUsuarioServicio {
             usuarios = parentescoFamiliarUsuarioFacade.obtenerUsuariosActivos();
             LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
         } catch (Exception e) {
-            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users: " + usuarios);
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users actavete");
             LOG.log(Level.SEVERE, "", e);
             throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuarios;
     }
 
+     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Parentescofamiliarusuario> obtenerUsuariosInactivos() throws ServiceException {
+        List<Parentescofamiliarusuario> usuarios = new ArrayList();
+        try {
+            usuarios = parentescoFamiliarUsuarioFacade.obtenerUsuariosInactivos();
+            LOG.log(Level.SEVERE, "UsuarioServicio: User: successfully edited");
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "UsuarioServicio: Error get all users inactivate");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuarios;
+    }
 }

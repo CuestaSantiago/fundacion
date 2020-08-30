@@ -166,7 +166,7 @@ public class ServicioRestUsuarioRecurso {
     }
 
     public List<UsuarioIonic> obenerTodosLosUsuarios() throws ServiceException, UnsupportedEncodingException {
-         List<UsuarioIonic> usuariosIonic = new ArrayList();
+        List<UsuarioIonic> usuariosIonic = new ArrayList();
         List<Parentescofamiliarusuario> usuarios = new ArrayList();
         usuarios = parentescoFamiliarUsuarioServicio.obenerTodosLosUsuarios();
         if (usuarios.size() > 0 || usuarios != null) {
@@ -184,12 +184,72 @@ public class ServicioRestUsuarioRecurso {
     }
 
     public boolean editarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
-          boolean lugaringresos = false;
+        boolean lugaringresos = false;
         if (newUsuario != null) {
             lugaringresos = usuarioServicio.editarUsuario(newUsuario);
         } else {
             throw new ServiceException("No se ha podido editar usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return lugaringresos;
+    }
+
+    public boolean activarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        boolean lugaringresos = false;
+        if (newUsuario != null) {
+            lugaringresos = usuarioServicio.editarUsuario(newUsuario);
+        } else {
+            throw new ServiceException("No se ha podido editar usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return lugaringresos;
+    }
+
+    public List<Salud> obtenerEstadosSalud() throws ServiceException, UnsupportedEncodingException {
+
+        List<Salud> salud = new ArrayList();
+        salud = saludServicio.obtenerEstadosSalud();
+        if (salud.size() > 0 || salud != null) {
+            return salud;
+        } else {
+            throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+
+    }
+
+    public boolean desactivarUsuario(DocumentoIonic newUsuario) throws ServiceException {
+        boolean lugaringresos = false;
+        if (newUsuario != null) {
+            lugaringresos = usuarioServicio.desactivarUsuario(newUsuario);
+        } else {
+            throw new ServiceException("No se ha podido editar usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return lugaringresos;
+    }
+
+    public boolean eliminarSalud(Integer idSalud) throws ServiceException {
+        boolean exito = false;
+        exito = saludServicio.eliminarSalud(idSalud);
+        if (exito) {
+            return exito;
+        } else {
+            throw new ServiceException("No se ha podido editar usuario", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+    }
+
+    public List<UsuarioIonic> obtenerUsariosInactivos() throws ServiceException, UnsupportedEncodingException {
+        List<UsuarioIonic> usuariosIonic = new ArrayList();
+        List<Parentescofamiliarusuario> usuarios = new ArrayList();
+        usuarios = parentescoFamiliarUsuarioServicio.obtenerUsuariosInactivos();
+        if (usuarios.size() > 0 || usuarios != null) {
+            for (Parentescofamiliarusuario usuario : usuarios) {
+                List<Salud> salud = new ArrayList();
+                List<Documento> documento = new ArrayList();
+                salud = saludServicio.obtenerSaludPorUsuario(usuario.getIdusuario());
+                documento = documentoServicio.obtenerDocumentoPorUsuario(usuario.getIdusuario());
+                usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario, salud, documento));
+            }
+        } else {
+            throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuariosIonic;
     }
 }

@@ -31,6 +31,7 @@ public class SaludServicio {
 
     @EJB
     SaludFacade saludFacade;
+
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
     public List<Salud> obtenerSaludPorUsuario(Usuario usuario) throws ServiceException {
         List<Salud> salud = new ArrayList();
@@ -43,4 +44,36 @@ public class SaludServicio {
         }
         return salud;
     }
+
+    @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
+    public List<Salud> obtenerEstadosSalud() throws ServiceException {
+        List<Salud> salud = new ArrayList();
+        try {
+            salud = saludFacade.obtenerEstadoSaludSinViolencia();
+            for (Salud salud1 : salud) {
+                salud1.setIdusuario(null);
+            }
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "SaludServicio: Error al obtener lista de usuarios ");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return salud;
+    }
+
+    public boolean eliminarSalud(Integer idSalud) throws ServiceException {
+        boolean exito = false;
+        Salud salud = new Salud();
+        try {
+            salud = saludFacade.find(idSalud);
+            saludFacade.remove(salud);
+            exito = true;
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "SaludServicio: Error al obtener lista de usuarios ");
+            LOG.log(Level.SEVERE, "", e);
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return exito;
+    }
+
 }

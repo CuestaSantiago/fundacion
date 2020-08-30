@@ -5,7 +5,6 @@
  */
 package com.software.fnj.rest;
 
-import com.software.fnj.model.Ionic.CodigoPaisIonic;
 import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.model.Ionic.UsuarioIonic;
 import com.software.fnj.model.Ionic.UsuarioNuevoIonic;
@@ -15,6 +14,7 @@ import com.software.fnj.modelo.Lugaringreso;
 import com.software.fnj.modelo.Nacionalidad;
 import com.software.fnj.modelo.Pais;
 import com.software.fnj.modelo.Parentescofamiliar;
+import com.software.fnj.modelo.Salud;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.rest.respuesta.ServicioRestUsuarioRecurso;
 import com.software.fnj.util.Constante;
@@ -138,4 +138,45 @@ public class UsuarioRecurso {
     public boolean editarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
         return servicioRestUsuarioRecurso.editarUsuario(newUsuario);
     }
+    
+    @PUT
+    @Path("activar_usuario")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public boolean activarUsuario(UsuarioNuevoIonic newUsuario) throws ServiceException {
+        return servicioRestUsuarioRecurso.activarUsuario(newUsuario);
+    }
+    
+    @PUT
+    @Path("desactivar_usuario")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public boolean desactivarUsuario(DocumentoIonic newUsuario) throws ServiceException {
+        return servicioRestUsuarioRecurso.desactivarUsuario(newUsuario);
+    }
+    
+    @GET
+    @Path("obtener_saludes")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<Salud>  obtenerEstadosSalud() throws ServiceException, UnsupportedEncodingException {
+        return servicioRestUsuarioRecurso.obtenerEstadosSalud();
+    }
+    
+    @DELETE
+    @Path("eliminar_salud")
+    @Consumes(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public boolean eliminarSalud(@QueryParam("idSalud")  Integer idSalud) throws ServiceException {
+       return servicioRestUsuarioRecurso.eliminarSalud(idSalud);
+    }
+    
+    @GET
+    @Path("obtener_usuarios_inactivos")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON + Constante.UTF8_CHARSET)
+    public List<UsuarioIonic> obtenerUsariosInactivos() throws ServiceException, UnsupportedEncodingException {
+        return servicioRestUsuarioRecurso.obtenerUsariosInactivos();
+    }
+
 }

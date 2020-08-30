@@ -67,4 +67,19 @@ public class ParentescofamiliarusuarioFacade extends AbstractFacade<Parentescofa
         }
         return usuarios;
     }
+        public List<Parentescofamiliarusuario> obtenerUsuariosInactivos() throws ServiceException {
+        List<Parentescofamiliarusuario> usuarios = new ArrayList();
+        try {
+            usuarios = em.createQuery("select p FROM Parentescofamiliarusuario p JOIN FETCH p.idparentescoFamiliar JOIN FETCH p.idusuario up JOIN FETCH up.idciudad JOIN FETCH up.idgenero JOIN FETCH up.idpais JOIN FETCH up.idlugarIngreso JOIN FETCH up.idnacionalidad WHERE up.estado=:estado1 OR up.estado=:estado2",
+                    Parentescofamiliarusuario.class)
+                    .setParameter("estado1", Constante.UsuarioConstante.DESACTIVADO.getUsuarioConstanteId())
+                    .setParameter("estado2", Constante.UsuarioConstante.SINFIRMA.getUsuarioConstanteId())
+                    .getResultList();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE,"ParentescoFamiliarUsuarioFacade: Error al consultar usuario por id del Usuario: {0}{1}", new Object[]{Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId(), e.toString()});
+            throw new ServiceException("Se ha producido un error en el servidor", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
+        }
+        return usuarios;
+    }
+    
 }
