@@ -131,11 +131,13 @@ public class Usuario implements Serializable {
     @Column(name = "observacionIngreso")
     private String observacionIngreso;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
+    private List<Documento> documentoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
+    private List<Salud> saludList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
     private List<Parentescofamiliarusuario> parentescofamiliarusuarioList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
     private List<Asignacionperfil> asignacionperfilList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
-    private List<Documento> documentoList;
     @JoinColumn(name = "idlugarIngreso", referencedColumnName = "idlugarIngreso")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lugaringreso idlugarIngreso;
@@ -151,8 +153,6 @@ public class Usuario implements Serializable {
     @JoinColumn(name = "idpais", referencedColumnName = "idpais")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Pais idpais;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idusuario", fetch = FetchType.LAZY)
-    private List<Salud> saludList;
 
     public Usuario() {
     }
@@ -343,6 +343,24 @@ public class Usuario implements Serializable {
     }
 
     @XmlTransient
+    public List<Documento> getDocumentoList() {
+        return documentoList;
+    }
+
+    public void setDocumentoList(List<Documento> documentoList) {
+        this.documentoList = documentoList;
+    }
+
+    @XmlTransient
+    public List<Salud> getSaludList() {
+        return saludList;
+    }
+
+    public void setSaludList(List<Salud> saludList) {
+        this.saludList = saludList;
+    }
+
+    @XmlTransient
     public List<Parentescofamiliarusuario> getParentescofamiliarusuarioList() {
         return parentescofamiliarusuarioList;
     }
@@ -358,15 +376,6 @@ public class Usuario implements Serializable {
 
     public void setAsignacionperfilList(List<Asignacionperfil> asignacionperfilList) {
         this.asignacionperfilList = asignacionperfilList;
-    }
-
-    @XmlTransient
-    public List<Documento> getDocumentoList() {
-        return documentoList;
-    }
-
-    public void setDocumentoList(List<Documento> documentoList) {
-        this.documentoList = documentoList;
     }
 
     public Lugaringreso getIdlugarIngreso() {
@@ -407,15 +416,6 @@ public class Usuario implements Serializable {
 
     public void setIdpais(Pais idpais) {
         this.idpais = idpais;
-    }
-
-    @XmlTransient
-    public List<Salud> getSaludList() {
-        return saludList;
-    }
-
-    public void setSaludList(List<Salud> saludList) {
-        this.saludList = saludList;
     }
 
     @Override

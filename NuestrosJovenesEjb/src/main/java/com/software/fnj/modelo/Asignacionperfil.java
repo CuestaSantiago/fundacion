@@ -34,7 +34,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Asignacionperfil.findByIdasignacionPerfil", query = "SELECT a FROM Asignacionperfil a WHERE a.idasignacionPerfil = :idasignacionPerfil")
     , @NamedQuery(name = "Asignacionperfil.findByContrasena", query = "SELECT a FROM Asignacionperfil a WHERE a.contrasena = :contrasena")
     , @NamedQuery(name = "Asignacionperfil.findByNombrePerfil", query = "SELECT a FROM Asignacionperfil a WHERE a.nombrePerfil = :nombrePerfil")
-    , @NamedQuery(name = "Asignacionperfil.findByCorreo", query = "SELECT a FROM Asignacionperfil a WHERE a.correo = :correo")
     , @NamedQuery(name = "Asignacionperfil.findByEstado", query = "SELECT a FROM Asignacionperfil a WHERE a.estado = :estado")})
 public class Asignacionperfil implements Serializable {
 
@@ -50,9 +49,6 @@ public class Asignacionperfil implements Serializable {
     @Size(max = 50)
     @Column(name = "nombrePerfil")
     private String nombrePerfil;
-    @Size(max = 100)
-    @Column(name = "correo")
-    private String correo;
     @Basic(optional = false)
     @NotNull
     @Column(name = "estado")
@@ -98,14 +94,6 @@ public class Asignacionperfil implements Serializable {
 
     public void setNombrePerfil(String nombrePerfil) {
         this.nombrePerfil = nombrePerfil;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
     public int getEstado() {

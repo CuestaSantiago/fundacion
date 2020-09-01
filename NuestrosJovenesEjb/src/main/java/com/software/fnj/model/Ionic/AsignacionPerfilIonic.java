@@ -13,7 +13,6 @@ public class AsignacionPerfilIonic {
 
     private String contrasena;
     private String nombrePerfil;
-    private String correo;
     private Integer idusuario;
 
     public String getContrasena() {
@@ -30,14 +29,6 @@ public class AsignacionPerfilIonic {
 
     public void setNombrePerfil(String nombrePerfil) {
         this.nombrePerfil = nombrePerfil;
-    }
-
-    public String getCorreo() {
-        return correo;
-    }
-
-    public void setCorreo(String correo) {
-        this.correo = correo;
     }
 
     public Integer getIdusuario() {

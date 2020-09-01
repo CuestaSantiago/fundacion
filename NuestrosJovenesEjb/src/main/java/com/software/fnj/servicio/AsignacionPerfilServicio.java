@@ -57,13 +57,12 @@ public class AsignacionPerfilServicio {
         Usuario usuario = new Usuario();
         Asignacionperfil asignaciones = new Asignacionperfil();
         try {
-            if (asignacionperfilFacade.verificarEmail(asignacionPerfil.getCorreo()) && asignacionperfilFacade.verificarNombre(asignacionPerfil.getNombrePerfil())) {
+            if (asignacionperfilFacade.verificarNombre(asignacionPerfil.getNombrePerfil())) {
                 perfil = perfilFacade.obtenerPerfilAdmin();
                 usuario = usuarioFacade.obtenerusuarioPorIdUusario(asignacionPerfil.getIdusuario());
                 asignaciones.setIdperfil(perfil);
                 asignaciones.setIdusuario(usuario);
                 asignaciones.setContrasena(BCrypt.hashpw(asignacionPerfil.getContrasena(), BCrypt.gensalt()));
-                asignaciones.setCorreo(asignacionPerfil.getCorreo());
                 asignaciones.setNombrePerfil(asignacionPerfil.getNombrePerfil());
                 asignaciones.setEstado(UsuarioConstante.ACTIVO.getUsuarioConstanteId());
                 asignacionperfilFacade.create(asignaciones);
