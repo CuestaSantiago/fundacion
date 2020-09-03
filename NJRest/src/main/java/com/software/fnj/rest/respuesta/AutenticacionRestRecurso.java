@@ -7,10 +7,12 @@ package com.software.fnj.rest.respuesta;
 
 import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
+import com.software.fnj.model.Ionic.AsignacionPerfilNewIonic;
 import com.software.fnj.model.Ionic.AutoIonic;
 import com.software.fnj.model.Ionic.DesactivadorAdminIonic;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.servicio.AsignacionPerfilServicio;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
@@ -39,11 +41,15 @@ public class AutenticacionRestRecurso {
         return asignacion;
     }
 
-    public List<Asignacionperfil> obtenerAdministradores() throws ServiceException {
+    public List<AsignacionPerfilNewIonic> obtenerAdministradores() throws ServiceException, UnsupportedEncodingException {
         List<Asignacionperfil> asignacionperfil = new ArrayList();
+        List<AsignacionPerfilNewIonic> asignacionUsuario = new ArrayList();
         asignacionperfil = asignacionPerfilServicio.obtenerAsignaciones();
         if (asignacionperfil != null && asignacionperfil.size() > 0) {
-            return asignacionperfil;
+            for (Asignacionperfil asignacionperfil1 : asignacionperfil) {
+                asignacionUsuario.add(IonicFormato.asignacionPerfilUsuario(asignacionperfil1));
+            }
+            return asignacionUsuario;
         } else {
             throw new ServiceException("No se ha podido encontrar asignaciones de perfiles por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
@@ -61,7 +67,7 @@ public class AutenticacionRestRecurso {
     }
 
     //metodo para asignacion perfil penultimo paso
-    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException {
+    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException, UnsupportedEncodingException {
         Asignacionperfil asignacionperfil = new Asignacionperfil();
         asignacionperfil = asignacionPerfilServicio.login(autoIonic);
         if (asignacionperfil != null) {

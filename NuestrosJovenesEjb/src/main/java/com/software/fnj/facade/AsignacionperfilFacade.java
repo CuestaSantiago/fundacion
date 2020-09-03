@@ -54,7 +54,7 @@ public class AsignacionperfilFacade extends AbstractFacade<Asignacionperfil> {
     public List<Asignacionperfil> obetenerAsignaciones() throws ServiceException {
         List<Asignacionperfil> asignacion = new ArrayList();
         try {
-            asignacion = em.createQuery("select a FROM Asignacionperfil a JOIN FETCH a.idperfil pa JOIN FETCH a.idusuario au  WHERE au.estado = :estadoActivo and pa.idperfil=:admin", Asignacionperfil.class)
+            asignacion = em.createQuery("select a FROM Asignacionperfil a JOIN FETCH a.idperfil pa JOIN FETCH a.idusuario au  WHERE au.estado = :estadoActivo AND a.estado = :estadoActivo AND pa.idperfil=:admin", Asignacionperfil.class)
                     .setParameter("admin", Constante.PerfilConstante.ADMIN.getProfileId())
                     .setParameter("estadoActivo", UsuarioConstante.ACTIVO.getUsuarioConstanteId())
                     .getResultList();

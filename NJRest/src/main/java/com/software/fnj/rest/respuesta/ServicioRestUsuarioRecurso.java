@@ -5,7 +5,6 @@
  */
 package com.software.fnj.rest.respuesta;
 
-import com.software.fnj.model.Ionic.CodigoPaisIonic;
 import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.modelo.Documento;

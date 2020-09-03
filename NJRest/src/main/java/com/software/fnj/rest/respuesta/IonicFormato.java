@@ -5,11 +5,13 @@
  */
 package com.software.fnj.rest.respuesta;
 
+import com.software.fnj.model.Ionic.AsignacionPerfilNewIonic;
 import com.software.fnj.model.Ionic.DocumentoIonic;
 import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
 import com.software.fnj.model.Ionic.UsuarioIonic;
+import com.software.fnj.modelo.Asignacionperfil;
 import com.software.fnj.modelo.Salud;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -51,9 +53,9 @@ public class IonicFormato {
                     docionic.setDocumento(new String(decodedString));
                 }
                 if (doc.getEstado() == 0) {
-                docionic.setViolencia(false);
-                }else{
-                docionic.setViolencia(true);
+                    docionic.setViolencia(false);
+                } else {
+                    docionic.setViolencia(true);
                 }
                 docionic.setObservacion(doc.getObservacion());
                 docsIonic.add(docionic);
@@ -108,7 +110,17 @@ public class IonicFormato {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
         return user;
+    }
+
+    public static AsignacionPerfilNewIonic asignacionPerfilUsuario(Asignacionperfil asignacion) throws UnsupportedEncodingException {
+        AsignacionPerfilNewIonic asignacionUsuario = new AsignacionPerfilNewIonic();
+        byte[] decodedString = Base64.getDecoder().decode(asignacion.getContrasena().getBytes("UTF-8"));
+        asignacionUsuario.setContrasena(new String(decodedString));
+        asignacionUsuario.setEstado(asignacion.getEstado());
+        asignacionUsuario.setIdperfil(asignacion.getIdperfil());
+        asignacionUsuario.setIdusuario(asignacion.getIdusuario());
+        asignacionUsuario.setNombrePerfil(asignacion.getNombrePerfil());
+        return asignacionUsuario;
     }
 }

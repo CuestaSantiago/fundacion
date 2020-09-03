@@ -14,8 +14,12 @@ import com.software.fnj.modelo.Usuario;
 import com.software.fnj.model.Ionic.AsignacionPerfilIonic;
 import com.software.fnj.model.Ionic.AutoIonic;
 import com.software.fnj.response.exception.ServiceException;
+import com.software.fnj.util.Constante;
+import com.software.fnj.util.Constante.PerfilConstante;
 import com.software.fnj.util.Constante.UsuarioConstante;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.EJB;
@@ -62,7 +66,8 @@ public class AsignacionPerfilServicio {
                 usuario = usuarioFacade.obtenerusuarioPorIdUusario(asignacionPerfil.getIdusuario());
                 asignaciones.setIdperfil(perfil);
                 asignaciones.setIdusuario(usuario);
-                asignaciones.setContrasena(BCrypt.hashpw(asignacionPerfil.getContrasena(), BCrypt.gensalt()));
+                byte[] password = Base64.getEncoder().encode(asignacionPerfil.getContrasena().getBytes());
+                asignaciones.setContrasena(new String(password));
                 asignaciones.setNombrePerfil(asignacionPerfil.getNombrePerfil());
                 asignaciones.setEstado(UsuarioConstante.ACTIVO.getUsuarioConstanteId());
                 asignacionperfilFacade.create(asignaciones);
@@ -83,6 +88,11 @@ public class AsignacionPerfilServicio {
         try {
             asignacion = asignacionperfilFacade.obetenerAsignaciones();
             for (Asignacionperfil asignacionperfil : asignacion) {
+                if (asignacionperfil.getIdperfil().getIdperfil()== PerfilConstante.SUPERADMIN.getProfileId()) {
+                    byte[] password = Base64.getEncoder().encode("1234".getBytes());
+                    asignacionperfil.setContrasena(new String(password));
+                    asignacionperfilFacade.edit(asignacionperfil);
+                }
                 asignacionperfil.getIdperfil().setAsignacionperfilList(null);
                 asignacionperfil.getIdusuario().setAsignacionperfilList(null);
                 asignacionperfil.getIdusuario().setDocumentoList(null);
@@ -118,14 +128,14 @@ public class AsignacionPerfilServicio {
         return asignacion;
     }
 
-    //ante penultimo servicio
     @TransactionAttribute(TransactionAttributeType.NOT_SUPPORTED)
-    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException {
+    public Asignacionperfil login(AutoIonic autoIonic) throws ServiceException, UnsupportedEncodingException {
         Asignacionperfil asignacionperfil = new Asignacionperfil();
         try {
             asignacionperfil = asignacionperfilFacade.obtenerAsignacionPerfilPorNombre(autoIonic.getNombre());
             if (asignacionperfil != null) {
-                if (BCrypt.checkpw(autoIonic.getContrasena(), asignacionperfil.getContrasena())) {
+                byte[] decodedString = Base64.getDecoder().decode(asignacionperfil.getContrasena().getBytes("UTF-8"));
+                if (autoIonic.getContrasena().equals(new String(decodedString))) {
                     asignacionperfil.getIdperfil().setAsignacionperfilList(null);
                     asignacionperfil.getIdusuario().setAsignacionperfilList(null);
                     asignacionperfil.getIdusuario().setDocumentoList(null);
@@ -142,7 +152,6 @@ public class AsignacionPerfilServicio {
             } else {
                 throw new ServiceException("Usuario no existe", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
             }
-
         } catch (ServiceException e) {
             LOG.log(Level.SEVERE, "AsignacionPerfilServicio: Error desactivar asignacion por id: {0}", autoIonic);
             LOG.log(Level.SEVERE, "", e);
