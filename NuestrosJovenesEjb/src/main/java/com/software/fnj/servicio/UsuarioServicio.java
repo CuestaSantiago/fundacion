@@ -30,9 +30,11 @@ import com.software.fnj.modelo.Usuario;
 import com.software.fnj.response.exception.ServiceException;
 import com.software.fnj.util.Constante;
 import com.software.fnj.util.Constante.UsuarioConstante;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.EJB;
@@ -259,22 +261,17 @@ public class UsuarioServicio {
                 usuario.setApellidos(newUsuario.getApellidos());
                 usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
 
-                Calendar fechaEgreso = Calendar.getInstance();
-                Long fechaEgresoLong = new Long(newUsuario.getFechaEgresoFundacion());
-                fechaEgreso.setTimeInMillis(fechaEgresoLong);
-                usuario.setFechaEgresoFundacion(fechaEgreso.getTime());
-                Calendar fechaIngreso = Calendar.getInstance();
-                Long fechaIngresoLong = new Long(newUsuario.getFechaIngresoEcuador());
-                fechaIngreso.setTimeInMillis(fechaIngresoLong);
-                usuario.setFechaIngresoEcuador(fechaIngreso.getTime());
-                Calendar fechaIngresoFundacion = Calendar.getInstance();
-                Long fechaIngresoFundacionLong = new Long(newUsuario.getFechaIngresoFundacion());
-                fechaIngresoFundacion.setTimeInMillis(fechaIngresoFundacionLong);
-                usuario.setFechaIngresoFundacion(fechaIngresoFundacion.getTime());
-                Calendar fechaNacimiento = Calendar.getInstance();
-                Long fechaNacimientoLong = new Long(newUsuario.getFechaNacimiento());
-                fechaNacimiento.setTimeInMillis(fechaNacimientoLong);
-                usuario.setFechaNacimiento(fechaNacimiento.getTime());
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                if (newUsuario.getFechaEgresoFundacion() != null) {
+                    Date fechaEgreso = sdf.parse(newUsuario.getFechaEgresoFundacion());
+                    usuario.setFechaEgresoFundacion(fechaEgreso);
+                }
+                Date fechaIngreso = sdf.parse(newUsuario.getFechaIngresoEcuador());
+                usuario.setFechaIngresoEcuador(fechaIngreso);
+                Date fechaIngresoFundacion = sdf.parse(newUsuario.getFechaIngresoFundacion());
+                usuario.setFechaIngresoFundacion(fechaIngresoFundacion);
+                Date fechaNacimiento = sdf.parse(newUsuario.getFechaNacimiento());
+                usuario.setFechaNacimiento(fechaNacimiento);
 
                 if (newUsuario.getFoto() != null) {
                     byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
@@ -345,27 +342,29 @@ public class UsuarioServicio {
         try {
             usuario = llenarUsuario(newUsuario);
             if (usuario != null) {
-                for (SaludIonic saludIonic : newUsuario.getSalud()) {
-                    Salud salud = new Salud();
-                    if (saludIonic.getIdSalud() == null) {
-                        if (saludIonic.getFoto() != null) {
-                            byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
-                            salud.setFoto(foto);
+                if (newUsuario.getSalud() != null) {
+                    for (SaludIonic saludIonic : newUsuario.getSalud()) {
+                        Salud salud = new Salud();
+                        if (saludIonic.getIdSalud() == null) {
+                            if (saludIonic.getFoto() != null) {
+                                byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
+                                salud.setFoto(foto);
+                            }
+                            salud.setIdusuario(usuario);
+                            salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
+                            salud.setCondicionMedica(saludIonic.getCondicionMedica());
+                            saludFacade.create(salud);
+                        } else {
+                            salud = saludFacade.obtenerSaludPorIdSalud(saludIonic.getIdSalud());
+                            if (saludIonic.getFoto() != null) {
+                                byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
+                                salud.setFoto(foto);
+                            }
+                            salud.setIdusuario(usuario);
+                            salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
+                            salud.setCondicionMedica(saludIonic.getCondicionMedica());
+                            saludFacade.edit(salud);
                         }
-                        salud.setIdusuario(usuario);
-                        salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
-                        salud.setCondicionMedica(saludIonic.getCondicionMedica());
-                        saludFacade.create(salud);
-                    } else {
-                        salud = saludFacade.obtenerSaludPorIdSalud(saludIonic.getIdSalud());
-                        if (saludIonic.getFoto() != null) {
-                            byte[] foto = Base64.getEncoder().encode(saludIonic.getFoto().getBytes());
-                            salud.setFoto(foto);
-                        }
-                        salud.setIdusuario(usuario);
-                        salud.setEstadoDiscapacidad(saludIonic.getEstadoDiscapacidad());
-                        salud.setCondicionMedica(saludIonic.getCondicionMedica());
-                        saludFacade.edit(salud);
                     }
                 }
                 usuarioFacade.edit(usuario);
@@ -406,22 +405,17 @@ public class UsuarioServicio {
             usuario.setApellidos(newUsuario.getApellidos());
             usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
 
-            Calendar fechaEgreso = Calendar.getInstance();
-            Long fechaEgresoLong = new Long(newUsuario.getFechaEgresoFundacion());
-            fechaEgreso.setTimeInMillis(fechaEgresoLong);
-            usuario.setFechaEgresoFundacion(fechaEgreso.getTime());
-            Calendar fechaIngreso = Calendar.getInstance();
-            Long fechaIngresoLong = new Long(newUsuario.getFechaIngresoEcuador());
-            fechaIngreso.setTimeInMillis(fechaIngresoLong);
-            usuario.setFechaIngresoEcuador(fechaIngreso.getTime());
-            Calendar fechaIngresoFundacion = Calendar.getInstance();
-            Long fechaIngresoFundacionLong = new Long(newUsuario.getFechaIngresoFundacion());
-            fechaIngresoFundacion.setTimeInMillis(fechaIngresoFundacionLong);
-            usuario.setFechaIngresoFundacion(fechaIngresoFundacion.getTime());
-            Calendar fechaNacimiento = Calendar.getInstance();
-            Long fechaNacimientoLong = new Long(newUsuario.getFechaNacimiento());
-            fechaNacimiento.setTimeInMillis(fechaNacimientoLong);
-            usuario.setFechaNacimiento(fechaNacimiento.getTime());
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            if (newUsuario.getFechaEgresoFundacion() != null) {
+                Date fechaEgreso = sdf.parse(newUsuario.getFechaEgresoFundacion());
+                usuario.setFechaEgresoFundacion(fechaEgreso);
+            }
+            Date fechaIngreso = sdf.parse(newUsuario.getFechaIngresoEcuador());
+            usuario.setFechaIngresoEcuador(fechaIngreso);
+            Date fechaIngresoFundacion = sdf.parse(newUsuario.getFechaIngresoFundacion());
+            usuario.setFechaIngresoFundacion(fechaIngresoFundacion);
+            Date fechaNacimiento = sdf.parse(newUsuario.getFechaNacimiento());
+            usuario.setFechaNacimiento(fechaNacimiento);
 
             if (newUsuario.getFoto() != null) {
                 byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
