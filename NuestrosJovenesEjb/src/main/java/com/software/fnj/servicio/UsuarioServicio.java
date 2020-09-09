@@ -260,16 +260,20 @@ public class UsuarioServicio {
                 usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
 
                 Calendar fechaEgreso = Calendar.getInstance();
-                fechaEgreso.setTimeInMillis(newUsuario.getFechaEgresoFundacion());
+                Long fechaEgresoLong = new Long(newUsuario.getFechaEgresoFundacion());
+                fechaEgreso.setTimeInMillis(fechaEgresoLong);
                 usuario.setFechaEgresoFundacion(fechaEgreso.getTime());
                 Calendar fechaIngreso = Calendar.getInstance();
-                fechaIngreso.setTimeInMillis(newUsuario.getFechaIngresoEcuador());
+                Long fechaIngresoLong = new Long(newUsuario.getFechaIngresoEcuador());
+                fechaIngreso.setTimeInMillis(fechaIngresoLong);
                 usuario.setFechaIngresoEcuador(fechaIngreso.getTime());
                 Calendar fechaIngresoFundacion = Calendar.getInstance();
-                fechaIngresoFundacion.setTimeInMillis(newUsuario.getFechaIngresoFundacion());
+                Long fechaIngresoFundacionLong = new Long(newUsuario.getFechaIngresoFundacion());
+                fechaIngresoFundacion.setTimeInMillis(fechaIngresoFundacionLong);
                 usuario.setFechaIngresoFundacion(fechaIngresoFundacion.getTime());
                 Calendar fechaNacimiento = Calendar.getInstance();
-                fechaNacimiento.setTimeInMillis(newUsuario.getFechaNacimiento());
+                Long fechaNacimientoLong = new Long(newUsuario.getFechaNacimiento());
+                fechaNacimiento.setTimeInMillis(fechaNacimientoLong);
                 usuario.setFechaNacimiento(fechaNacimiento.getTime());
 
                 if (newUsuario.getFoto() != null) {
@@ -401,20 +405,24 @@ public class UsuarioServicio {
             usuario.setIdusuario(newUsuario.getIdusuario());
             usuario.setApellidos(newUsuario.getApellidos());
             usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
-            
+
             Calendar fechaEgreso = Calendar.getInstance();
-            fechaEgreso.setTimeInMillis(newUsuario.getFechaEgresoFundacion());
+            Long fechaEgresoLong = new Long(newUsuario.getFechaEgresoFundacion());
+            fechaEgreso.setTimeInMillis(fechaEgresoLong);
             usuario.setFechaEgresoFundacion(fechaEgreso.getTime());
             Calendar fechaIngreso = Calendar.getInstance();
-            fechaIngreso.setTimeInMillis(newUsuario.getFechaIngresoEcuador());
+            Long fechaIngresoLong = new Long(newUsuario.getFechaIngresoEcuador());
+            fechaIngreso.setTimeInMillis(fechaIngresoLong);
             usuario.setFechaIngresoEcuador(fechaIngreso.getTime());
             Calendar fechaIngresoFundacion = Calendar.getInstance();
-            fechaIngresoFundacion.setTimeInMillis(newUsuario.getFechaIngresoFundacion());
+            Long fechaIngresoFundacionLong = new Long(newUsuario.getFechaIngresoFundacion());
+            fechaIngresoFundacion.setTimeInMillis(fechaIngresoFundacionLong);
             usuario.setFechaIngresoFundacion(fechaIngresoFundacion.getTime());
             Calendar fechaNacimiento = Calendar.getInstance();
-            fechaNacimiento.setTimeInMillis(newUsuario.getFechaNacimiento());
+            Long fechaNacimientoLong = new Long(newUsuario.getFechaNacimiento());
+            fechaNacimiento.setTimeInMillis(fechaNacimientoLong);
             usuario.setFechaNacimiento(fechaNacimiento.getTime());
-            
+
             if (newUsuario.getFoto() != null) {
                 byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
                 usuario.setFoto(foto);
