@@ -32,6 +32,7 @@ import com.software.fnj.util.Constante;
 import com.software.fnj.util.Constante.UsuarioConstante;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Calendar;
 import java.util.List;
 import java.util.logging.Level;
 import javax.ejb.EJB;
@@ -257,10 +258,20 @@ public class UsuarioServicio {
                 }
                 usuario.setApellidos(newUsuario.getApellidos());
                 usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
-                usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
-                usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
-                usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
-                usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
+
+                Calendar fechaEgreso = Calendar.getInstance();
+                fechaEgreso.setTimeInMillis(newUsuario.getFechaEgresoFundacion());
+                usuario.setFechaEgresoFundacion(fechaEgreso.getTime());
+                Calendar fechaIngreso = Calendar.getInstance();
+                fechaIngreso.setTimeInMillis(newUsuario.getFechaIngresoEcuador());
+                usuario.setFechaIngresoEcuador(fechaIngreso.getTime());
+                Calendar fechaIngresoFundacion = Calendar.getInstance();
+                fechaIngresoFundacion.setTimeInMillis(newUsuario.getFechaIngresoFundacion());
+                usuario.setFechaIngresoFundacion(fechaIngresoFundacion.getTime());
+                Calendar fechaNacimiento = Calendar.getInstance();
+                fechaNacimiento.setTimeInMillis(newUsuario.getFechaNacimiento());
+                usuario.setFechaNacimiento(fechaNacimiento.getTime());
+
                 if (newUsuario.getFoto() != null) {
                     byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
                     usuario.setFoto(foto);
@@ -390,10 +401,20 @@ public class UsuarioServicio {
             usuario.setIdusuario(newUsuario.getIdusuario());
             usuario.setApellidos(newUsuario.getApellidos());
             usuario.setEstado(Constante.UsuarioConstante.ACTIVO.getUsuarioConstanteId());
-            usuario.setFechaEgresoFundacion(newUsuario.getFechaEgresoFundacion());
-            usuario.setFechaIngresoEcuador(newUsuario.getFechaIngresoEcuador());
-            usuario.setFechaIngresoFundacion(newUsuario.getFechaIngresoFundacion());
-            usuario.setFechaNacimiento(newUsuario.getFechaNacimiento());
+            
+            Calendar fechaEgreso = Calendar.getInstance();
+            fechaEgreso.setTimeInMillis(newUsuario.getFechaEgresoFundacion());
+            usuario.setFechaEgresoFundacion(fechaEgreso.getTime());
+            Calendar fechaIngreso = Calendar.getInstance();
+            fechaIngreso.setTimeInMillis(newUsuario.getFechaIngresoEcuador());
+            usuario.setFechaIngresoEcuador(fechaIngreso.getTime());
+            Calendar fechaIngresoFundacion = Calendar.getInstance();
+            fechaIngresoFundacion.setTimeInMillis(newUsuario.getFechaIngresoFundacion());
+            usuario.setFechaIngresoFundacion(fechaIngresoFundacion.getTime());
+            Calendar fechaNacimiento = Calendar.getInstance();
+            fechaNacimiento.setTimeInMillis(newUsuario.getFechaNacimiento());
+            usuario.setFechaNacimiento(fechaNacimiento.getTime());
+            
             if (newUsuario.getFoto() != null) {
                 byte[] foto = Base64.getEncoder().encode(newUsuario.getFoto().getBytes());
                 usuario.setFoto(foto);
@@ -456,7 +477,7 @@ public class UsuarioServicio {
                 documento.setIdusuario(usuario);
                 documento.setObservacion(newUsuario.getObservacion());
                 documento.setTipoDocumento("pdf");
-                 short noEsViolencia = 0;
+                short noEsViolencia = 0;
                 documento.setEstado(noEsViolencia);
                 documentoFacade.create(documento);
                 if (newUsuario.isFirma()) {

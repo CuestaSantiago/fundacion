@@ -29,10 +29,10 @@ public class UsuarioNuevoIonic {
     private String telefono;
     private String telefonoContacto;
     private String observacionIngreso;
-    private Date fechaNacimiento;
-    private Date fechaEgresoFundacion;
-    private Date fechaIngresoFundacion;
-    private Date fechaIngresoEcuador;
+    private Long fechaNacimiento;
+    private Long fechaEgresoFundacion;
+    private Long fechaIngresoFundacion;
+    private Long fechaIngresoEcuador;
     private String foto;
     private Integer tipoIdentificacion;
     private Integer estado;
@@ -165,35 +165,35 @@ public class UsuarioNuevoIonic {
         this.observacionIngreso = observacionIngreso;
     }
 
-    public Date getFechaNacimiento() {
+    public Long getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(Long fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public Date getFechaEgresoFundacion() {
+    public Long getFechaEgresoFundacion() {
         return fechaEgresoFundacion;
     }
 
-    public void setFechaEgresoFundacion(Date fechaEgresoFundacion) {
+    public void setFechaEgresoFundacion(Long fechaEgresoFundacion) {
         this.fechaEgresoFundacion = fechaEgresoFundacion;
     }
 
-    public Date getFechaIngresoFundacion() {
+    public Long getFechaIngresoFundacion() {
         return fechaIngresoFundacion;
     }
 
-    public void setFechaIngresoFundacion(Date fechaIngresoFundacion) {
+    public void setFechaIngresoFundacion(Long fechaIngresoFundacion) {
         this.fechaIngresoFundacion = fechaIngresoFundacion;
     }
 
-    public Date getFechaIngresoEcuador() {
+    public Long getFechaIngresoEcuador() {
         return fechaIngresoEcuador;
     }
 
-    public void setFechaIngresoEcuador(Date fechaIngresoEcuador) {
+    public void setFechaIngresoEcuador(Long fechaIngresoEcuador) {
         this.fechaIngresoEcuador = fechaIngresoEcuador;
     }
 
