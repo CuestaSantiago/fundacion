@@ -50,6 +50,7 @@ public class UsuarioIonic {
     private List<DocumentoIonic> documento;
     private Integer idCabezaHogar;
     private String parentesco;
+    private List<FamiliaIonic> familia;
 
     public Integer getIdusuario() {
         return idusuario;
@@ -297,6 +298,14 @@ public class UsuarioIonic {
 
     public void setParentesco(String parentesco) {
         this.parentesco = parentesco;
+    }
+
+    public List<FamiliaIonic> getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(List<FamiliaIonic> familia) {
+        this.familia = familia;
     }
 
 }

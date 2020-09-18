@@ -6,6 +6,7 @@
 package com.software.fnj.rest.respuesta;
 
 import com.software.fnj.model.Ionic.DocumentoIonic;
+import com.software.fnj.model.Ionic.FamiliaIonic;
 import com.software.fnj.model.Ionic.SaludIonic;
 import com.software.fnj.modelo.Documento;
 import com.software.fnj.modelo.Parentescofamiliarusuario;
@@ -60,6 +61,7 @@ public class ServicioRestUsuarioRecurso {
                 documento = documentoServicio.obtenerDocumentoPorUsuario(usuario.getIdusuario());
                 usuariosIonic.add(IonicFormato.ConstruirUsuarioIonic(usuario, salud, documento));
             }
+            usuariosIonic = llenarFamilias(usuariosIonic);
         } else {
             throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
@@ -251,5 +253,28 @@ public class ServicioRestUsuarioRecurso {
             throw new ServiceException("No se ha podido encontrar usuarios por el momento", Response.Status.INTERNAL_SERVER_ERROR.getStatusCode());
         }
         return usuariosIonic;
+    }
+
+    private List<UsuarioIonic> llenarFamilias(List<UsuarioIonic> usuarios) throws ServiceException {
+        for (UsuarioIonic user : usuarios) {
+            List<FamiliaIonic> familias = new ArrayList<>();
+            List<Parentescofamiliarusuario> newUsers = new ArrayList<>();
+            newUsers = parentescoFamiliarUsuarioServicio.obtenerUsuariosActivosPorIdCabezaHogar(user.getIdCabezaHogar());
+            for (Parentescofamiliarusuario newUser : newUsers) {
+                if (!newUser.getIdparentescoFamiliar().getParentesco().equals("NINGUNO")) {
+                    if (newUsers.get(0).getIdusuarioCabezaHogar() != newUser.getIdusuario().getIdusuario()) {
+                        FamiliaIonic familia = new FamiliaIonic();
+                        familia.setIdetificacion(newUser.getIdusuario().getIdentificacion());
+                        familia.setNombre(newUser.getIdusuario().getNombres() + " " + newUser.getIdusuario().getApellidos());
+                        familia.setParentesco(newUser.getIdparentescoFamiliar().getParentesco());
+                        familias.add(familia);
+                    }
+                }
+            }
+            if (familias != null && !familias.isEmpty()) {
+                user.setFamilia(familias);
+            }
+        }
+        return usuarios;
     }
 }
