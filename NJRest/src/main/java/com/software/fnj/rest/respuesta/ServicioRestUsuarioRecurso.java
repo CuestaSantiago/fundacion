@@ -262,16 +262,16 @@ public class ServicioRestUsuarioRecurso {
             newUsers = parentescoFamiliarUsuarioServicio.obtenerUsuariosActivosPorIdCabezaHogar(user.getIdCabezaHogar());
             for (Parentescofamiliarusuario newUser : newUsers) {
                 if (!newUser.getIdparentescoFamiliar().getParentesco().equals("NINGUNO")) {
-                    if (newUsers.get(0).getIdusuarioCabezaHogar() != newUser.getIdusuario().getIdusuario()) {
+                    if (user.getIdCabezaHogar() != newUser.getIdusuario().getIdusuario()) {
                         FamiliaIonic familia = new FamiliaIonic();
-                        familia.setIdetificacion(newUser.getIdusuario().getIdentificacion());
+                        familia.setIdentificacion(newUser.getIdusuario().getIdentificacion());
                         familia.setNombre(newUser.getIdusuario().getNombres() + " " + newUser.getIdusuario().getApellidos());
                         familia.setParentesco(newUser.getIdparentescoFamiliar().getParentesco());
                         familias.add(familia);
                     }
                 }
             }
-            if (familias != null && !familias.isEmpty()) {
+            if (familias != null && !familias.isEmpty() && user.getIdusuario().equals(newUsers.get(0).getIdusuarioCabezaHogar())) {
                 user.setFamilia(familias);
             }
         }

@@ -5,7 +5,6 @@
  */
 package com.software.fnj.model.Ionic;
 
-import java.util.Date;
 import java.util.List;
 
 /**

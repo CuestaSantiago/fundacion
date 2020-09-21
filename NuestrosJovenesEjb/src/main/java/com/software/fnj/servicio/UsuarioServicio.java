@@ -199,33 +199,45 @@ public class UsuarioServicio {
 
     public boolean agregarUsuarios(List<UsuarioNuevoIonic> newUsuario) throws ServiceException {
         boolean exito = false;
+        boolean confirmado = false;
         int idCabezaHogar = 0;
         int contador = 0;
         try {
             for (UsuarioNuevoIonic usuarioNuevoIonic : newUsuario) {
-                Usuario usuario = new Usuario();
-                Parentescofamiliarusuario parentesco = new Parentescofamiliarusuario();
-                if (newUsuario.size() > 1) {
-
-                    usuario = agrearUsaurio(usuarioNuevoIonic);
-                    if (contador == 0) {
-                        idCabezaHogar = usuario.getIdusuario();
-                    }
-                    parentesco.setIdusuario(usuario);
-                    parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
-                    parentesco.setIdusuarioCabezaHogar(idCabezaHogar);
-                    llenarDocumentoSalud(usuarioNuevoIonic, usuario);
-                    parentescofamiliarusuarioFacade.create(parentesco);
-                    contador++;
+                if (usuarioFacade.verificarUsuarioRegistrado(usuarioNuevoIonic.getIdentificacion())) {
+                    confirmado = true;
                 } else {
-                    usuario = agrearUsaurio(usuarioNuevoIonic);
-                    parentesco.setIdusuario(usuario);
-                    parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
-                    parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
-                    llenarDocumentoSalud(usuarioNuevoIonic, usuario);
-                    parentescofamiliarusuarioFacade.create(parentesco);
+                    throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
                 }
             }
+            if (confirmado) {
+                for (UsuarioNuevoIonic usuarioNuevoIonic : newUsuario) {
+                    Usuario usuario = new Usuario();
+                    Parentescofamiliarusuario parentesco = new Parentescofamiliarusuario();
+                    if (newUsuario.size() > 1) {
+                        usuario = agrearUsaurio(usuarioNuevoIonic);
+                        if (contador == 0) {
+                            idCabezaHogar = usuario.getIdusuario();
+                        }
+                        parentesco.setIdusuario(usuario);
+                        parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
+                        parentesco.setIdusuarioCabezaHogar(idCabezaHogar);
+                        llenarDocumentoSalud(usuarioNuevoIonic, usuario);
+                        parentescofamiliarusuarioFacade.create(parentesco);
+                        contador++;
+                    } else {
+                        usuario = agrearUsaurio(usuarioNuevoIonic);
+                        parentesco.setIdusuario(usuario);
+                        parentesco.setIdparentescoFamiliar(parentescofamiliarFacade.find(usuarioNuevoIonic.getIdParentesco()));
+                        parentesco.setIdusuarioCabezaHogar(usuario.getIdusuario());
+                        llenarDocumentoSalud(usuarioNuevoIonic, usuario);
+                        parentescofamiliarusuarioFacade.create(parentesco);
+                    }
+                }
+            } else {
+                throw new ServiceException("Usuario ya registrado", Response.Status.NOT_FOUND.getStatusCode());
+            }
+
             exito = true;
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "UsuarioServicio: Error al crear usuario usuario");

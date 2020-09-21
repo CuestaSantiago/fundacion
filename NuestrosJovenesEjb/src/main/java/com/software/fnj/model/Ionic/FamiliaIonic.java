@@ -13,7 +13,7 @@ public class FamiliaIonic {
 
     private String nombre;
     private String parentesco;
-    private String idetificacion;
+    private String identificacion;
 
     public String getNombre() {
         return nombre;
@@ -31,12 +31,12 @@ public class FamiliaIonic {
         this.parentesco = parentesco;
     }
 
-    public String getIdetificacion() {
-        return idetificacion;
+    public String getIdentificacion() {
+        return identificacion;
     }
 
-    public void setIdetificacion(String idetificacion) {
-        this.idetificacion = idetificacion;
+    public void setIdentificacion(String identificacion) {
+        this.identificacion = identificacion;
     }
 
 }
