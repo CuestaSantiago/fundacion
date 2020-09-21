@@ -500,6 +500,11 @@ public class UsuarioServicio {
                 } else {
                     usuario.setEstado(UsuarioConstante.SINFIRMA.getUsuarioConstanteId());
                 }
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                if (newUsuario.getFecha()!= null) {
+                    Date fechaEgreso = sdf.parse(newUsuario.getFecha());
+                    usuario.setFechaEgresoFundacion(fechaEgreso);
+                }
                 usuario.setRazonEgreso(newUsuario.getObservacion());
                 usuarioFacade.edit(usuario);
                 exito = true;

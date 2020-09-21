@@ -16,6 +16,7 @@ public class DocumentoIonic {
     private String documento;
     private boolean violencia;
     private boolean firma;
+    private String fecha;
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -56,5 +57,12 @@ public class DocumentoIonic {
     public void setFirma(boolean firma) {
         this.firma = firma;
     }
-    
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
 }
